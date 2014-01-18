@@ -182,11 +182,62 @@ class di_m2_item_manufacturer extends data_interface
 		$this->pop_args();
 	}
 
+	public function unset_for_manufacturer($eObj, $ids, $args)
+	{
+		$this->push_args(array());
+		if (!is_array($ids) && $ids > 0)
+		{
+			$this->set_args(array(
+				'_smanufacturer_id' => $ids,
+			));
+			$this->_flush();
+			$this->_get();
+			$res =  $this->get_results();
+			if(count($res)>0)
+			{
+				foreach($res as $key=>$value)
+				{
+					$this->set_args(array(
+						'_sid' => $value->id,
+					));
+					$this->sys_unset(true);
+				}
+			}
+		}
+		else if (is_array($ids))
+		{
+			foreach ($ids as $id)
+			{
+				$this->set_args(array(
+					'_smanufacturer_id' => $id,
+				));
+				$this->_flush();
+				$this->_get();
+				$res =  $this->get_results();
+				if(count($res)>0)
+				{
+					foreach($res as $key=>$value)
+					{
+						$this->set_args(array(
+							'_sid' => $value->id,
+						));
+						$this->sys_unset(true);
+					}
+				}
+			}
+		}
+		else
+		{
+			// Some error, because unknown project ID
+		}
+		$this->pop_args();
+	}
 
 	public function _listeners()
 	{
 		return array(
 			array('di' => 'm2_item', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
+			array('di' => 'm2_manufacturers', 'event' => 'onUnset', 'handler' => 'unset_for_manufacturer'),
 		);
 	}
 

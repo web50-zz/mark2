@@ -46,6 +46,16 @@ class di_m2_item_text extends data_interface
 	{
 		$this->_flush();
 		$this->set_order('order', 'ASC');
+		$di =  $this->join_with_di('m2_text_types',array('type'=>'id'),array('title'=>'type_str'));
+		$this->extjs_grid_json(array(
+					'id', 
+					'order',
+					'name',
+					'type',
+					'title',
+					array('di'=>$di,'name'=>'title'),
+		));
+
 		$this->extjs_grid_json(array('id', 'order', 'name', 'title'));
 	}
 	

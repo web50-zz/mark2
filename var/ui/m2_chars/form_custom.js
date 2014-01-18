@@ -89,11 +89,6 @@ ui.m2_chars.form_custom = Ext.extend(Ext.form.FormPanel, {
 				{name: 'target_type', xtype: 'hidden'},
 				{name: 'is_custom', xtype: 'hidden'},
 				{fieldLabel: this.fldStrTitle, name: 'str_title', maxLength: 255, maxLengthText: 'Не больше 255 символов'},
-				{fieldLabel: this.lblVal, hiddenName: 'type_value', value: 0, xtype: 'combo', anchor: '90%',
-								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Не установлено'],[1, 'Отлично'], [2, 'Посредственно'], [3, 'Плохо']]}),
-								valueField: 'value', displayField: 'title', mode: 'local',
-								triggerAction: 'all', selectOnFocus: true, editable: false
-				},
 				{fieldLabel: this.fldVariableVal, name: 'variable_value', xtype:'textarea',maxLength: 255, maxLengthText: 'Не больше 255 символов'},
 			],
 			buttonAlign: 'right',

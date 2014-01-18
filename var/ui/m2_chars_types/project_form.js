@@ -9,6 +9,7 @@ ui.m2_chars_types.project_form = Ext.extend(Ext.form.FormPanel, {
 	fldComment: 'Полное описание',
 	fldShort_description: 'Описание',
 	lblType2: 'Тип вывода узла',
+	lblCharType:'Тип',
 	loadText: 'Загрузка данных формы',
 	saveText: 'Сохранение...',
 
@@ -90,8 +91,13 @@ ui.m2_chars_types.project_form = Ext.extend(Ext.form.FormPanel, {
 						{name: '_sid', inputType: 'hidden'},
 						{name: 'pid', xtype: 'hidden'},
 						{name: 'type', xtype: 'hidden', value: '1'},
-						{fieldLabel: this.fldTitle, name: 'title', maxLength: 255, maxLengthText: 'Не больше 255 символов'},
-						{fieldLabel: this.fldName, name: 'name', allowBlank: false, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
+						{fieldLabel: this.fldTitle, name: 'title',  allowBlank: false, maxLength: 255, maxLengthText: 'Не больше 255 символов'},
+						{fieldLabel: this.lblCharType, hiddenName: 'char_type', value: 0, xtype: 'combo', anchor: '90%',
+										store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Произвольное значение'],[1, 'Выбор из списка - один из подузлов']]}),
+										valueField: 'value', displayField: 'title', mode: 'local',
+										triggerAction: 'all', selectOnFocus: true, editable: false
+						},
+						{fieldLabel: this.fldName, name: 'name', allowBlank: true, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
 						{fieldLabel: this.fldURI, name: 'uri', disabled: true},
 						{fieldLabel: this.fldBrief, name: 'brief', height: 100, xtype: 'htmleditor'}
 					]}

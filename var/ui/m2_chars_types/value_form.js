@@ -1,4 +1,4 @@
-ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
+ui.m2_chars_types.value_form = Ext.extend(Ext.form.FormPanel, {
 	formWidth: 1000,
 	formHeight: 620,
 
@@ -9,6 +9,7 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 	fldComment: 'Полное описание',
 	fldShort_description: 'Описание',
 	lblType2: 'Тип вывода узла',
+	lblCharType:'Тип',
 	loadText: 'Загрузка данных формы',
 	saveText: 'Сохранение...',
 
@@ -19,14 +20,10 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 	errInputText: 'Корректно заполните все необходимые поля',
 	errConnectionText: "Ошибка связи с сервером",
 
-	getForm: function(){
-		return this.getComponent('category-form').getForm();
-	},
-
 	Load: function(data){
 		var f = this.getForm();
 		f.load({
-			url: 'di/m2_category/get.json',
+			url: 'di/m2_chars_types/get.json',
 			params: {_sid: data.id},
 			waitMsg: this.loadText,
 			success: function(frm, act){
@@ -42,19 +39,16 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 
 	Save: function(){
 		var f = this.getForm();
-		console.log(f);
-		console.log(f.getValues());
 		if (f.isValid()){
 			f.submit({
-				url: 'di/m2_category/set.do',
+				url: 'di/m2_chars_types/set.do',
 				waitMsg: this.saveText,
 				success: function(form, action){
 					var d = Ext.util.JSON.decode(action.response.responseText);
-					if (d.success){
+					if (d.success)
 						this.fireEvent('data_saved', !(f.findField('_sid').getValue() > 0), d.data, f.getValues());
-					}else{
+					else
 						showError(d.errors);
-					}
 				},
 				failure: function(form, action){
 					switch (action.failureType){
@@ -77,89 +71,38 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 		this.fireEvent('cancelled');
 	},
 
-	get_id: function(){
-		return this.getForm().findField('_sid').getValue();
-	},
-
-	openImages: function(btt){
-		var id = this.get_id();
-		if (id > 0){
-			var app = new App({waitMsg: this.frmLoading});
-			app.on({
-				apploaded: function(){
-					var f = new ui.m2_category_file.main();
-					new Ext.Window({title: btt.text, iconCls: btt.iconCls, modal: true, layout: 'fit', maximizable: true, width: 640, height: 480, items: f}).show(null, function(){f.setParams({'_spid': id}, true)});
-				},
-				apperror: showError,
-				scope: this
-			});
-			app.Load('m2_category_file', 'main');
-		}
-	},
-
-	openTabs: function(btt){
-		var id = this.get_id();
-		if (id > 0){
-			var app = new App({waitMsg: this.frmLoading});
-			app.on({
-				apploaded: function(){
-					var f = new ui.m2_category_tabs.main();
-					new Ext.Window({title: btt.text, iconCls: btt.iconCls, modal: true, layout: 'fit', maximizable: true, width: 640, height: 480, items: f}).show(null, function(){f.setParams({'_spid': id}, true)});
-				},
-				apperror: showError,
-				scope: this
-			});
-			app.Load('m2_category_tabs', 'main');
-		}
-	},
-
-	openChars: function(btt){
-		var id = this.get_id();
-		if (id > 0){
-			var app = new App({waitMsg: this.frmLoading});
-			app.on({
-				apploaded: function(){
-					var f = new ui.m2_chars.main();
-					new Ext.Window({title: btt.text, iconCls: btt.iconCls, modal: true, layout: 'fit', maximizable: true, width: 640, height: 480, items: f}).show(null, function(){f.setParams({'_spid': id}, true)});
-				},
-				apperror: showError,
-				scope: this
-			});
-			app.Load('m2_chars', 'main');
-		}
-	},
-
 	/**
 	 * @constructor
 	 */
 	constructor: function(config){
 		config = config || {};
 		Ext.apply(this, {
-			xtype: 'panel',
+			//frame: true, 
+			//labelWidth: 100, 
+			//defaults: {xtype: 'textfield', width: 200, anchor: '100%'},
 			border: false,
 			layout: 'fit',
-			tbar: [
-				{text: 'Файлы', iconCls: 'application_view_tile', handler: this.openImages, scope: this},
-				{text: 'Тексты', iconCls: 'page_white_text' , handler: this.openTabs, scope: this},
-				{text: 'Характеристики', iconCls: 'chart_organisation', handler: this.openChars, scope: this}
-			],
 			items: [
-				{xtype: 'form', id: 'category-form', layout: 'form', frame: true, border: false, autoScroll: true,
+				{xtype: 'tabpanel', activeItem: 0, border: false, defferedRender: false,
+				defaults: {hideMode: 'offsets', frame: false}, items: [
+					{id: 'tab-main', title: 'Тип', autoScroll: true, layout: 'form', border: false, frame: true,
 					labelWidth: 150, defaults: {xtype: 'textfield', width: 200, anchor: '97%'},
 					items: [
-						{name: '_sid', xtype: 'hidden'},
+						{name: '_sid', inputType: 'hidden'},
 						{name: 'pid', xtype: 'hidden'},
-						{name: 'type', xtype: 'hidden', value: '1'},
-						{fieldLabel: this.lblType2, hiddenName: 'output_type', value: 0, xtype: 'combo', anchor: '90%',
-								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'По умолчанию']]}),
-								valueField: 'value', displayField: 'title', mode: 'local',
-								triggerAction: 'all', selectOnFocus: true, editable: false
-						},
-						{fieldLabel: this.fldTitle, name: 'title', maxLength: 255, maxLengthText: 'Не больше 255 символов'},
-						{fieldLabel: this.fldName, name: 'name', allowBlank: false, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
-						{fieldLabel: this.fldURI, name: 'uri', disabled: true}
-					]
-				}
+						{name: 'type', xtype: 'hidden', value: '2'},
+						{fieldLabel: this.fldTitle, name: 'title',  allowBlank: false, maxLength: 255, maxLengthText: 'Не больше 255 символов'},
+						{fieldLabel: this.fldName, name: 'name', allowBlank: true, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
+						{fieldLabel: this.fldURI, name: 'uri', disabled: true},
+						{fieldLabel: this.fldBrief, name: 'brief', height: 100, xtype: 'htmleditor'}
+					]}
+				], listeners: {
+					beforetabchange: function(form, newTab, curTab){
+						var id = this.getForm().findField('_sid').getValue();
+						return ((newTab.id != 'tab-main' && id > 0) || newTab.id == 'tab-main');
+					},
+					scope: this
+				}}
 			],
 			buttonAlign: 'right',
 			buttons: [
@@ -171,7 +114,7 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 			]
 		});
 		Ext.apply(this, config);
-		ui.m2_category.node_form.superclass.constructor.call(this, config);
+		ui.m2_chars_types.value_form.superclass.constructor.call(this, config);
 		this.on({
 			data_saved: function(isNew, data, id){
 				this.getForm().setValues([{id: '_sid', value: data.id}, {id: 'uri', value: data.uri}]);

@@ -30,12 +30,14 @@ class di_m2_chars extends data_interface
 	public $fields = array(
 		'id' => array('type' => 'integer', 'serial' => TRUE, 'readonly' => TRUE),
 		'm2_id' => array('type' => 'integer', 'alias' => 'pid'),
-		'type_value' => array('type' => 'integer'),
-		'type_id' => array('type' => 'integer'),
+		'type_value' => array('type' => 'integer'),// id значение из справочника  если оно выбирается из фиксироанных
+		'type_id' => array('type' => 'integer'),// id парамера из справочника
+		'type_value_str'=>array('type'=>'string'),// строковое наименование ввыбранного фиксированного значени из справочника если  выбор шел из фиксированных
 		'target_type' => array('type' => 'integer'),
-		'variable_value' => array('type' => 'string'),
-		'str_title' => array('type' => 'string'),
-		'is_custom' => array('type' => 'integer'),
+		'variable_value' => array('type' => 'string'),// Произвольное значение
+		'str_title' => array('type' => 'string'),// название характеристики  в строковом виде 
+		'char_type' => array('type' => 'string'),// 1 если характеристика из справочника и подразумевает выбор из фиксировванных значений. в остельных случаях 0
+		'is_custom' => array('type' => 'integer'),//  1  если это не из справочника
 	);
 	
 	public function __construct () {
@@ -53,8 +55,8 @@ class di_m2_chars extends data_interface
 		$flds[] = array('di'=>$di,'name'=>'title');
 		$flds[] = 'str_title';
 		$flds[] = 'is_custom';
-		$flds[] = 'if(type_value != 0,
-				case type_value when 1 then "Отлично" when 2 then "Посредственно" when 3 then "Плохо" END,
+		$flds[] = 'if('.$this->get_alias().'.char_type = 1,
+				type_value_str,
 				variable_value) as type_str';
 		$this->extjs_grid_json($flds);
 	}

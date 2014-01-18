@@ -7,6 +7,7 @@ ui.m2_item_text.form = Ext.extend(Ext.form.FormPanel, {
 	lblFile: 'Файл',
 	lblTitle: 'Название',
 	lblContent: 'Контент',
+	lblType:'Тип',
 
 	saveText: 'Сохранение...',
 	blankText: 'Необходимо заполнить',
@@ -83,6 +84,21 @@ ui.m2_item_text.form = Ext.extend(Ext.form.FormPanel, {
 				{name: '_sid', xtype: 'hidden'},
 				{name: 'item_id', xtype: 'hidden'},
 				{fieldLabel:this.lblTitle, name: 'title', xtype: 'textfield'},
+				{fieldLabel: this.lblType, hiddenName: 'type', xtype: 'combo',
+						valueField: 'id', displayField: 'title', value: '', emptyText: '', 
+						store: new Ext.data.JsonStore({url: 'di/m2_text_types/type_list.json', root: 'records', fields: ['id', 'title'], autoLoad: true,
+							listeners: {
+								load: function(store,ops){
+									var f = this.getForm().findField('type');
+									f.setValue(f.getValue());
+								}, 
+								beforeload:function(store,ops){
+								},
+								scope: this
+							}
+						}),
+						mode: 'local', triggerAction: 'all', selectOnFocus: true, editable: false
+				},
 				{fieldLabel:this.lblContent,  name: 'content', xtype: 'ckeditor', CKConfig: {
 					height: 260,
 					filebrowserImageBrowseUrl: 'ui/file_manager/browser.html'

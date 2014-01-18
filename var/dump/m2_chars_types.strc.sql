@@ -13,7 +13,8 @@ CREATE TABLE `m2_chars_types` (
   `right` smallint(5) unsigned NOT NULL,
   `level` smallint(5) unsigned NOT NULL,
   `output_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `char_type` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `node` (`left`,`right`,`level`)
-) ENGINE=MyISAM AUTO_INCREMENT=90 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=utf8

@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `m2_manufacturers`
+-- Dumping data for table `m2_text_types`
 --
 
-LOCK TABLES `m2_manufacturers` WRITE;
-/*!40000 ALTER TABLE `m2_manufacturers` DISABLE KEYS */;
-INSERT INTO `m2_manufacturers` VALUES (2,2,'IBM',0,3),(3,1,'Motorola',0,3),(4,3,'Lenovo',1,3),(5,4,'Test',0,3);
-/*!40000 ALTER TABLE `m2_manufacturers` ENABLE KEYS */;
+LOCK TABLES `m2_text_types` WRITE;
+/*!40000 ALTER TABLE `m2_text_types` DISABLE KEYS */;
+INSERT INTO `m2_text_types` VALUES (2,2,'только для раздела','Описание раздела',0),(3,1,'только для товара','Описание товара',0),(4,3,'Только для раздела','Краткое описание раздела',0),(5,4,'Только для раздеа','Краткое описание раздела',0);
+/*!40000 ALTER TABLE `m2_text_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -143,12 +143,42 @@ class di_m2_item_category extends data_interface
 		}
 		$this->pop_args();
 	}
+	public function unset_for_category($eObj, $ids, $args)
+	{
+		$this->push_args(array());
+		if (!is_array($ids) && $ids > 0)
+		{
+			$this->set_args(array(
+				'_scategory_id' => $ids,
+			));
+			$this->_flush();
+			$this->_unset();
+		}
+		else if (is_array($ids))
+		{
+			foreach ($ids as $id)
+			{
+				$this->set_args(array(
+					'_scategory_id' => $id,
+				));
+				$this->_flush();
+				$this->insert_on_empty = true;
+				$this->_unset();
+			}
+		}
+		else
+		{
+			// Some error, because unknown project ID
+		}
+		$this->pop_args();
+	}
 
 
 	public function _listeners()
 	{
 		return array(
 			array('di' => 'm2_item', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
+			array('di' => 'm2_category', 'event' => 'onUnset', 'handler' => 'unset_for_category'),
 		);
 	}
 

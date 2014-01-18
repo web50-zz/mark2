@@ -12,7 +12,12 @@ class ui_m2_chars_types extends user_interface
 		'main' => array(
 			'm2_chars_types.tree',
 		),
+		'types_selector' => array(
+			'm2_chars_types.tree',
+		),
 		'project_form' => array(
+		),
+		'value_form' => array(
 		),
 	);
 	
@@ -57,5 +62,17 @@ class ui_m2_chars_types extends user_interface
 		$tmpl = new tmpl($this->pwd() . 'project_form.js');
 		response::send($tmpl->parse($this), 'js');
 	}
+	
+	public function sys_value_form()
+	{
+		$tmpl = new tmpl($this->pwd() . 'value_form.js');
+		response::send($tmpl->parse($this), 'js');
+	}
+	public function sys_types_selector()
+	{
+		$tmpl = new tmpl($this->pwd() . 'types_selector.js');
+		response::send($tmpl->parse($this), 'js');
+	}
+
 }
 ?>

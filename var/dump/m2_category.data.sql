@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_category` WRITE;
 /*!40000 ALTER TABLE `m2_category` DISABLE KEYS */;
-INSERT INTO `m2_category` VALUES (1,'root','','',1,0,1,'','','',1,18,1,0),(80,'Авто','Auto','Mounts/Auto',1,0,1,'','','',3,4,3,0),(85,'Кронштейн (штанга)','Kronstein','Kronstein',1,0,1,'','','',16,17,2,0),(86,'X-Grip','X-Grip','Dergatel/X-Grip',1,0,1,'','','',11,12,3,0),(89,'test','werwer','Dergatel/werwer',1,0,1,'','','',13,14,3,0),(81,'Мото-Вело','Moto','Mounts/Moto',1,0,1,'','','',5,6,3,0),(82,'лодка - катер','Boat','Mounts/Boat',1,0,1,'','','',7,8,3,0),(83,'Крепеж (основа)','Mounts','Mounts',1,0,1,'','','',2,9,2,0),(84,'Держатель','Dergatel','Dergatel',1,0,1,'','','',10,15,2,0);
+INSERT INTO `m2_category` VALUES (1,'root','','',1,0,1,'','','',1,18,1,0),(80,'Авто','Auto','/Mounts/Auto/',1,0,1,'','','',3,4,3,0),(85,'Кронштейн (штанга)','Kronstein','/Kronstein/',1,0,1,'','','',16,17,2,0),(86,'X-Grip','X-Grip','/Dergatel/X-Grip/',1,0,1,'','','',11,12,3,0),(89,'test','werwer','/Dergatel/werwer/',1,0,1,'','','',13,14,3,0),(81,'Мото-Вело','Moto','/Mounts/Moto/',1,0,1,'','','',5,6,3,0),(82,'лодка - катер','Boat','/Mounts/Boat/',1,0,1,'','','',7,8,3,0),(83,'Крепеж (основа)','Mounts','/Mounts/',1,0,1,'','','',2,9,2,0),(84,'Держатель','Dergatel','/Dergatel/',1,0,1,'','','',10,15,2,0);
 /*!40000 ALTER TABLE `m2_category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-09 20:10:09
+-- Dump completed on 2014-01-18  2:27:01

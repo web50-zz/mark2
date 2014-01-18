@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_item_manufacturer` WRITE;
 /*!40000 ALTER TABLE `m2_item_manufacturer` DISABLE KEYS */;
-INSERT INTO `m2_item_manufacturer` VALUES (1,0,0,0),(2,0,1,0),(3,0,2,0),(4,0,3,0),(5,0,4,0),(6,0,5,0),(11,1,6,5),(8,3,7,3),(9,2,6,2),(10,2,6,4),(12,0,6,2),(13,0,7,3),(14,22,8,2),(15,22,8,3);
+INSERT INTO `m2_item_manufacturer` VALUES (1,0,0,0),(2,0,1,0),(3,0,2,0),(4,0,3,0),(5,0,4,0),(6,0,5,0),(11,1,6,5),(8,3,7,3),(9,2,6,2),(10,2,6,4),(12,0,6,2),(13,0,7,3),(14,22,8,2),(15,22,8,3),(20,34,8,2);
 /*!40000 ALTER TABLE `m2_item_manufacturer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-09 20:10:09
+-- Dump completed on 2014-01-18  2:27:01

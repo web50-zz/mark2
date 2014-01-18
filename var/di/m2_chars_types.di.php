@@ -30,8 +30,9 @@ class di_m2_chars_types extends data_interface
 			'title' => array('type' => 'string'),
 			'name' => array('type' => 'string'),
 			'uri' => array('type' => 'string'),
-			'type' => array('type' => 'integer'),		// Тип ноды (0 - Группа, 1 - Проект, 2 - Ссылка на проект)
+			'type' => array('type' => 'integer'),		// Тип ноды (0 - Группа, 1 - Произвольное значение, 2 - фиксированное значение для парента)  9*  0 - deprecated  издержки клонирования
 			'output_type' => array('type' => 'integer'),		// Тип вывода 
+			'char_type' => array('type' => 'integer'),		// Тип Значений харатктеристики 
 			'link_id' => array('type' => 'integer'),	// ID проекта, если нода является ссылкой
 			'visible' => array('type' => 'integer'),	// Видимый (0 - Нет, 1 - Да)
 			'brief' => array('type' => 'text'),
@@ -68,7 +69,26 @@ class di_m2_chars_types extends data_interface
 	protected function sys_set()
 	{
 		$id = $this->get_args('_sid');
-	
+		$name = $this->get_args('name');
+		if(trim($name) == '')
+		{
+			if (($uri = $this->make_uri()) === false)
+			{
+				response::send(array('success' => false, 'errors' => 'Не удаётся создать уникальный URI, возможно не указано наименование'), 'json');
+			}
+			else
+			{
+				$this->set_args(array('name' => $uri), true);
+			}
+		}
+		else
+		{
+			if(!$this->check_uri($name,$id))
+			{
+				response::send(array('success' => false, 'errors' => 'Не удаётся создать уникальный URI, возможно не указано наименование'), 'json');
+			}
+		}
+
 		if ($this->args['_sid'] > 0)
 		{
 			$uri = $this->get_args('uri');
@@ -78,7 +98,10 @@ class di_m2_chars_types extends data_interface
 			$this->insert_on_empty = false;
 			$result = $this->extjs_set_json(false);
 			$result['data']['uri'] = $this->get_args('uri');
-			
+			$result['data']['type'] = $this->args['type'];
+			$result['data']['char_type'] = $this->args['char_type'];
+			$result['data']['name'] = $this->args['name'];
+
 			if ($result['data']['uri'] != $uri)
 				$this->recalc_uri($this->args['_sid']);
 			
@@ -102,6 +125,9 @@ class di_m2_chars_types extends data_interface
 				$this->insert_on_empty = false;
 				$result = $this->extjs_set_json(false);
 				$result['data']['uri'] = $this->args['uri'];
+				$result['data']['type'] = $this->args['type'];
+				$result['data']['char_type'] = $this->args['char_type'];
+				$result['data']['name'] = $this->args['name'];
 			}
 			else
 			{
@@ -276,7 +302,7 @@ class di_m2_chars_types extends data_interface
 	{
                 $pid = intval($this->args['node']);
 		$table = $this->get_name();
-                $fields = array('id', 'title' => 'text', 'type', 'link_id', "IF (`{$table}`.`type` = 2, 'link', '')" => 'iconCls');
+                $fields = array('id', 'title' => 'text', 'type','char_type','link_id', "IF (`{$table}`.`type` = 2, 'page_white_database', '')" => 'iconCls');
 		$this->mode = 'NESTED_SETS_SLICE';
                 if ($pid > 0)
                 {
@@ -289,7 +315,27 @@ class di_m2_chars_types extends data_interface
                         $this->extjs_slice_json($fields);
                 }
 	}
-	
+//9*  Списрк  узлов по входящему  паренту для нужд комбобксов
+	protected function sys_chld_list()
+	{
+                $pid = intval($this->args['node']);
+		$table = $this->get_name();
+                $fields = array('id', 'title', 'type','char_type','link_id', "IF (`{$table}`.`type` = 2, 'page_white_database', '')" => 'iconCls');
+		$this->mode = 'NESTED_SETS_SLICE';
+                if ($pid > 0)
+                {
+                        $this->set_args(array('_sid' => $pid));
+                        $res = $this->extjs_slice_json($fields,1, false);
+                }
+                else
+                {
+                        $this->set_args(array('_slevel' => 1));
+                        $res = $this->extjs_slice_json($fields,1,false);
+		}
+		$out = array('success'=>true,'records'=>$res);
+		response::send($out,'json');
+	}
+
 	/**
 	*	Удалить узел
 	* @access protected
@@ -451,5 +497,52 @@ class di_m2_chars_types extends data_interface
 		$data['childs'] = $ns->get_childs($node, NULL);
 		return $data;;
 	}
+
+	/**
+	*	Проверить уникальность введённого имени 
+	* @param	integer	$cid	ID компании
+	* @param	string	$name	Проверяемое имя
+	* @param	integer	$id	ID изменяемой записи
+	* @return	boolean		True - если имя уникально, иначе False
+	*/
+	protected function check_uri($name, $id)
+	{
+		$this->_flush();
+		$this->push_args(array('_sname' => $name));
+		if ($id > 0) $this->set_args(array('_nid' => $id), true);
+		$this->what = array('COUNT(*)' => 'check');
+		$this->_get();
+		$this->pop_args();
+		return (bool)((int)$this->get_results(0, 'check') == 0);
+	}
+
+	/**
+	*	Формируем URI для записи на основе его title
+	* @param	string	$title	Title записи, если не указан, то берётся из ARGS
+	* @param	boolean	$check	Проверить URI на уникальность, в случае не уникальности будет произведена попытка создать оный
+	* @return	string,boolean	Новый URI, либо FALSE, в случае ошибки.
+	*/
+	protected function make_uri($title = null, $check = true)
+	{
+		$uri = false;
+
+		if (empty($title))
+			$title = $this->get_args('title');
+
+		if ($check && !empty($title))
+		{
+			$b = $this->get_args(array('_sid'), null, true);
+			$uri = text::str2url($title);
+			$i = 0;
+
+			while (!$this->check_uri($uri, $b))
+			{
+				$uri = text::str2url($title . strval($i++));
+			}
+		}
+
+		return $uri;
+	}
+
 }
 ?>

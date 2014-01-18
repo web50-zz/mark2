@@ -218,7 +218,7 @@ class di_m2_category extends data_interface
 		}
 		$uri[] = $this->args['name'];
 		
-		$this->set_args(array('uri' => join('/', $uri)), true);
+		$this->set_args(array('uri' => '/'.join('/', $uri).'/'), true);
 		return TRUE;
 	}
 	

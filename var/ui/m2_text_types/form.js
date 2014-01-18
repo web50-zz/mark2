@@ -1,13 +1,13 @@
-ui.m2_category_tabs.form = Ext.extend(Ext.form.FormPanel, {
-	formWidth: 900,
-	formHeight: 600,
+ui.m2_text_types.form = Ext.extend(Ext.form.FormPanel, {
+	formWidth: 400,
+	formHeight: 350,
 
 	loadText: 'Загрузка данных формы',
 
-	lblFile: 'Файл',
 	lblTitle: 'Название',
-	lblContent: 'Контент',
-	lblType: 'Тип',
+	lblDescription: 'Описание',
+	lblAvailable: 'Доступен',
+	lblId: "Id",
 	saveText: 'Сохранение...',
 	blankText: 'Необходимо заполнить',
 	maxLengthText: 'Не больше 256 символов',
@@ -18,11 +18,12 @@ ui.m2_category_tabs.form = Ext.extend(Ext.form.FormPanel, {
 	errSaveText: 'Ошибка во время сохранения',
 	errInputText: 'Корректно заполните все необходимые поля',
 	errConnectionText: "Ошибка связи с сервером",
+	msgNotDefined: 'Операция не активна, пока не сохранена форма',
 
 	Load: function(data){
 		var f = this.getForm();
 		f.load({
-			url: 'di/m2_category_tabs/get.json',
+			url: 'di/m2_text_types/get.json',
 			params: {_sid: data._sid},
 			waitMsg: this.loadText,
 			success: function(frm, act){
@@ -38,7 +39,7 @@ ui.m2_category_tabs.form = Ext.extend(Ext.form.FormPanel, {
 		var f = this.getForm();
 		if (f.isValid()){
 			f.submit({
-				url: 'di/m2_category_tabs/set.do',
+				url: 'di/m2_text_types/set.do',
 				waitMsg: this.saveText,
 				success: function(form, action){
 					var d = Ext.util.JSON.decode(action.response.responseText);
@@ -73,35 +74,25 @@ ui.m2_category_tabs.form = Ext.extend(Ext.form.FormPanel, {
 	 */
 	constructor: function(config){
 		config = config || {};
+
 		Ext.apply(this, {
-			labelAlign: 'right', 
-			labelWidth: 70,
-			frame: true,
-			border: false,
-			defaults: {xtype: 'textfield', width: 150, anchor: '100%'},
+			layout: 'form',
+			frame: true, 
+			labelWidth: 100,
+			labelAlign: 'right',
+			autoScroll: true,
+			defaults: {xtype: 'textfield', width: 80, anchor: '98%'},
 			items: [
 				{name: '_sid', xtype: 'hidden'},
-				{name: 'm2_category_id', xtype: 'hidden'},
-				{fieldLabel:this.lblTitle, name: 'title', xtype: 'textfield'},
-				{fieldLabel: this.lblType, hiddenName: 'type', xtype: 'combo',
-						valueField: 'id', displayField: 'title', value: '', emptyText: '', 
-						store: new Ext.data.JsonStore({url: 'di/m2_text_types/type_list.json', root: 'records', fields: ['id', 'title'], autoLoad: true,
-							listeners: {
-								load: function(store,ops){
-									var f = this.getForm().findField('type');
-									f.setValue(f.getValue());
-								}, 
-								beforeload:function(store,ops){
-								},
-								scope: this
-							}
-						}),
-						mode: 'local', triggerAction: 'all', selectOnFocus: true, editable: false
+				{fieldLabel: this.lblId, name: 'id', xtype: 'displayfield'},
+				{fieldLabel:this.lblTitle, name: 'title'},
+				{fieldLabel: this.lblAvailable, hiddenName: 'not_available', value: 0, xtype: 'combo', anchor: '90%',
+								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Доступен'],[1, 'Не доступен']]}),
+								valueField: 'value', displayField: 'title', mode: 'local',
+								triggerAction: 'all', selectOnFocus: true, editable: false
 				},
-				{fieldLabel:this.lblContent,  name: 'content', xtype: 'ckeditor', CKConfig: {
-					height: 260,
-					filebrowserImageBrowseUrl: 'ui/file_manager/browser.html'
-				}}
+
+				{fieldLabel:this.lblDescription, name: 'content',xtype: 'textarea'}
 			],
 			buttonAlign: 'right',
 			buttons: [
@@ -110,7 +101,7 @@ ui.m2_category_tabs.form = Ext.extend(Ext.form.FormPanel, {
 			]
 		});
 		Ext.apply(this, config);
-		ui.m2_category_tabs.form.superclass.constructor.call(this, config);
+		ui.m2_text_types.form.superclass.constructor.call(this, config);
 		this.on({
 			data_saved: function(data, id){
 				this.getForm().setValues([{id: '_sid', value: id}]);

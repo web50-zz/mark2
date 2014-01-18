@@ -1,7 +1,6 @@
-ui.m2_category_tabs.grid = Ext.extend(Ext.grid.EditorGridPanel, {
-	clmnName: "Изображение",
+ui.m2_text_types.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 	clmnTitle: "Название",
-	clmnType:'Тип',
+	clmnId:"Id",
 	pagerSize: 50,
 	pagerEmptyMsg: 'Нет записей',
 	pagerDisplayMsg: 'Записи с {0} по {1}. Всего: {2}',
@@ -27,7 +26,7 @@ ui.m2_category_tabs.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 		var x = row.data;
 		var y = target.selections[0].data;
 		Ext.Ajax.request({
-			url: 'di/m2_category_tabs/reorder.do',
+			url: 'di/m2_text_types/reorder.do',
 			method: 'post',
 			params: {npos: y.order, opos: x.order, id: row.id, pid: this.getKey()},
 			disableCaching: true,
@@ -49,10 +48,10 @@ ui.m2_category_tabs.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 			store: new Ext.data.Store({
 				proxy: new Ext.data.HttpProxy({
 					api: {
-						read: 'di/m2_category_tabs/list.js',
-						create: 'di/m2_category_tabs/set.js',
-						update: 'di/m2_category_tabs/mset.js',
-						destroy: 'di/m2_category_tabs/unset.js'
+						read: 'di/m2_text_types/list.js',
+						create: 'di/m2_text_types/set.js',
+						update: 'di/m2_text_types/mset.js',
+						destroy: 'di/m2_text_types/unset.js'
 					}
 				}),
 				reader: new Ext.data.JsonReader({
@@ -67,7 +66,6 @@ ui.m2_category_tabs.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 						'real_name',
 						'name',
 						'title',
-						'type_str',
 						{name: 'size', type: 'int'},
 						{name: 'width', type: 'int'},
 						{name: 'height', type: 'int'}
@@ -79,22 +77,11 @@ ui.m2_category_tabs.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 					writeAllFields: false
 				}),
 				remoteSort: true,
+				autoLoad: true,
 				sortInfo: {field: 'order', direction: 'ASC'}
 			})
 		});
 		var fm = Ext.form;
-		var image = new Ext.XTemplate(
-			'<table><tr>',
-			'<td width="100" align="center"><img src="/filestorage/thumb-{real_name}" height="100" border="0"/></td>',
-			'<td><table>',
-			'<tr><td align="right">файл:</td><td>{name}</td></tr>',
-			'<tr><td align="right">размер:</td><td>{[Ext.util.Format.fileSize(values.size)]}</td></tr>',
-			'<tr><td align="right">Ш х В:</td><td>{width}px x {height}px</td></tr>',
-			'</table></td>',
-			'</tr></table>'
-		);
-		//var image = new Ext.XTemplate('<img src="/filestorage/thumb-{real_name}" width="175" height="175" border="0"/>');
-		image.compile();
 		var size = function(value){
 			return value ? Ext.util.Format.fileSize(value) : '0'
 		};
@@ -104,13 +91,12 @@ ui.m2_category_tabs.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 			autoScroll: true,
 			autoExpandColumn: 'expand',
 			enableDragDrop: true,
-			ddGroup: 'm2_category_tabs',
+			ddGroup: 'm2_text_types',
 			selModel: new Ext.grid.RowSelectionModel({singleSelect: true}),
 			colModel: new Ext.grid.ColumnModel({
 				defaults: {sortable: true, width: 200},
 				columns: [
-			//		{header: this.clmnTitle, id: 'expand', dataIndex: 'name', xtype: 'templatecolumn', tpl: image},
-					{header: this.clmnType,  dataIndex: 'type_str'},
+					{header: this.clmnId, dataIndex: 'id', width:70},
 					{header: this.clmnTitle, id: 'expand', dataIndex: 'title', editor: new fm.TextField({maxLength: 255, maxLengthText: 'Не больше 255 символов'})}
 				]
 			}),
@@ -124,7 +110,7 @@ ui.m2_category_tabs.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 			listeners: {
 				render: function(){
 					new Ext.dd.DropTarget(this.getView().mainBody, {
-						ddGroup: 'm2_category_tabs',
+						ddGroup: 'm2_text_types',
 						notifyDrop: function(ds, e, data){
 							var sm = ds.grid.getSelectionModel();
 							if (sm.hasSelection()){
@@ -148,7 +134,7 @@ ui.m2_category_tabs.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 
 		config = config || {};
 		Ext.apply(this, config);
-		ui.m2_category_tabs.grid.superclass.constructor.call(this, config);
+		ui.m2_text_types.grid.superclass.constructor.call(this, config);
 		this.init(config);
 	},
 

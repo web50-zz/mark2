@@ -48,11 +48,6 @@ class di_m2_category_tabs extends data_interface
 		'm2_category_id' => array('type' => 'integer', 'alias' => 'pid'),
 		'order' => array('type' => 'integer'),
 		'name' => array('type' => 'string'),
-		'real_name' => array('type' => 'string'),
-		'type' => array('type' => 'integer'),
-		'size' => array('type' => 'integer'),
-		'width' => array('type' => 'integer'),
-		'height' => array('type' => 'integer'),
 		'title' => array('type' => 'string'),
 		'content' => array('type' => 'string'),
 	);
@@ -106,7 +101,17 @@ class di_m2_category_tabs extends data_interface
 	{
 		$this->_flush();
 		$this->set_order('order', 'ASC');
-		$this->extjs_grid_json(array('id', 'order', 'name', 'real_name', 'size', 'width', 'height','title'));
+		$di =  $this->join_with_di('m2_text_types',array('type'=>'id'),array('title'=>'type_str'));
+		$this->extjs_grid_json(array(
+					'id', 
+					'order',
+					'name',
+					'type',
+					'title',
+					array('di'=>$di,'name'=>'title'),
+		));
+
+		$this->extjs_grid_json(array('id', 'order', 'name', 'title'));
 	}
 	
 	protected function sys_get()

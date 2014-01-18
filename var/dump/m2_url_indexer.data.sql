@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `m2_manufacturers`
+-- Dumping data for table `m2_url_indexer`
 --
 
-LOCK TABLES `m2_manufacturers` WRITE;
-/*!40000 ALTER TABLE `m2_manufacturers` DISABLE KEYS */;
-INSERT INTO `m2_manufacturers` VALUES (2,2,'IBM',0,3),(3,1,'Motorola',0,3),(4,3,'Lenovo',1,3),(5,4,'Test',0,3);
-/*!40000 ALTER TABLE `m2_manufacturers` ENABLE KEYS */;
+LOCK TABLES `m2_url_indexer` WRITE;
+/*!40000 ALTER TABLE `m2_url_indexer` DISABLE KEYS */;
+INSERT INTO `m2_url_indexer` VALUES (68,12,85,'/Kronstein/Universal X-Grip IV/'),(67,13,85,'/Kronstein/cronshtein/'),(66,0,85,'/Kronstein/'),(69,14,80,'/Mounts/Auto/cronshtein_3.69/'),(59,11,86,'/Dergatel/X-Grip/Universal X-Grip II/'),(60,12,86,'/Dergatel/X-Grip/Universal X-Grip IV/'),(70,0,83,'/Mounts/'),(62,0,89,'/Dergatel/werwer/'),(63,13,89,'/Dergatel/werwer/cronshtein/'),(64,14,0,'/cronshtein_3.69/'),(57,0,86,'/Dergatel/X-Grip/'),(58,10,86,'/Dergatel/X-Grip/Universal X-Grip/'),(56,0,84,'/Dergatel/'),(71,0,80,'/Mounts/Auto/'),(72,15,80,'/Mounts/Auto/prisoska v sbore/'),(73,0,81,'/Mounts/Moto/'),(74,16,81,'/Mounts/Moto/u-homut/'),(75,0,82,'/Mounts/Boat/'),(88,34,0,'/234234/'),(89,34,85,'/Kronstein/234234/'),(90,16,0,'/u-homut/');
+/*!40000 ALTER TABLE `m2_url_indexer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

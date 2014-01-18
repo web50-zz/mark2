@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_item` WRITE;
 /*!40000 ALTER TABLE `m2_item` DISABLE KEYS */;
-INSERT INTO `m2_item` VALUES (13,7,'cronshtein','кронштейн 2.38','0','0',0,'RAM-B-201U-A'),(14,8,'cronshtein 3.69','Кронштейн 3.69','0','0',0,'RAM-B-201U'),(10,4,'Universal X-Grip','Universal X-Grip','0','0',0,'RAM-HOL-UN7BU'),(11,5,'Universal X-Grip II','Universal X-Grip II','0','0',0,' RAM-HOL-UN8BU'),(12,6,'Universal X-Grip IV','Universal X-Grip IV','0','0',0,'RAM-HOL-UN10BU'),(15,9,'prisoska v sbore','присоска в сборе','0','0',0,'RAM-B-224-1U'),(16,10,'u-homut','U-хомут 0.5-1.25','0','0',0,'RAM-B-231ZU');
+INSERT INTO `m2_item` VALUES (13,7,'cronshtein','кронштейн 2.38','0','0',0,'RAM-B-201U-A'),(14,8,'cronshtein_3.69','Кронштейн 3.69','0','0',0,'RAM-B-201U'),(10,4,'Universal X-Grip','Universal X-Grip','0','0',0,'RAM-HOL-UN7BU'),(11,5,'Universal X-Grip II','Universal X-Grip II','0','0',0,' RAM-HOL-UN8BU'),(12,6,'Universal X-Grip IV','Universal X-Grip IV','0','0',0,'RAM-HOL-UN10BU'),(15,9,'prisoska v sbore','присоска в сборе','0','0',0,'RAM-B-224-1U'),(16,10,'u-homut','U-хомут 0.5-1.25','0','0',0,'RAM-B-231ZU'),(34,14,'234234','4234234234','0','0',0,'23423');
 /*!40000 ALTER TABLE `m2_item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-09 20:10:09
+-- Dump completed on 2014-01-18  2:27:01
