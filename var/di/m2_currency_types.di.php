@@ -1,12 +1,12 @@
 <?php
 /**
 *
-* @author	Fedot B Pozdnyakov 9@u9.ru 17072013	
+* @author	Fedot B Pozdnyakov 9@u9.ru 10072013	
 * @package	SBIN Diesel
 */
-class di_m2_manufacturers extends data_interface
+class di_m2_currency_types extends data_interface
 {
-	public $title = 'm2: Маркет 2 - Производители типы';
+	public $title = 'm2: Маркет 2 - Валюты типы';
 
 	/**
 	* @var	string	$cfg	Имя конфигурации БД
@@ -21,7 +21,7 @@ class di_m2_manufacturers extends data_interface
 	/**
 	* @var	string	$name	Имя таблицы
 	*/
-	protected $name = 'm2_manufacturers';
+	protected $name = 'm2_currency_types';
 
 	
 	/**
@@ -31,16 +31,14 @@ class di_m2_manufacturers extends data_interface
 		'id' => array('type' => 'integer', 'serial' => TRUE, 'readonly' => TRUE),
 		'order' => array('type' => 'integer'),
 		'not_available' => array('type' => 'integer'),
-		'type' => array('type' => 'integer'),
 		'title' => array('type' => 'string'),
-		'name' => array('type' => 'string'),
 	);
 	
 	public function __construct () {
 		// Call Base Constructor
 		parent::__construct(__CLASS__);
 	}
-	protected function sys_available_list()
+	protected function sys_type_list()
 	{
 		$this->_flush();
 		$this->set_order('order', 'ASC');
@@ -52,10 +50,7 @@ class di_m2_manufacturers extends data_interface
 	{
 		$this->_flush();
 		$this->set_order('order', 'ASC');
-		$di = $this->join_with_di('m2_manufacturer_types',array('type'=>'id'),array('title'=>'manufacturer_title'));
-		$this->extjs_grid_json(array('id', 'order', 'title',
-			array('di'=>$di,'name'=>'title'),
-		));
+		$this->extjs_grid_json(array('id', 'order', 'title'));
 	}
 	
 	protected function sys_get()
@@ -87,10 +82,17 @@ class di_m2_manufacturers extends data_interface
 	*/
 	protected function sys_set()
 	{
-		$id = $this->get_args('_sid');
+		$fid = $this->get_args('_sid');
+
+		if ($fid > 0)
+		{
+			$this->_flush();
+			$this->_get();
+			$file = $this->get_results(0);
+		}
+		$file = array();
 		$args =  $this->get_args();
-		$args['name'] = $this->prepare_uri();
-		if (!($id > 0))
+		if (!($fid > 0))
 		{
 			$args['order'] = $this->get_new_order();
 		}
@@ -126,32 +128,20 @@ class di_m2_manufacturers extends data_interface
 		$data = $this->extjs_unset_json(false);
 		response::send($data, 'json');
 	}
-	protected function prepare_uri()
-	{
-		$config = array();
-		$name = $this->get_args('name');
-		$title = $this->get_args('title');
-		$id = $this->get_args('_sid');
-		$di = data_interface::get_instance('m2_utils');
-		$config = array(
-			'm2_manufacturers'=>array(
-					'field'=>'name',
-					'id'=>$id
-				),
-			);
-		if($name == '')
-		{
-			$name = $title;
-		}
 
-		try{
-			$uri = $di->prepare_uri($config,$name);
-		}
-		catch(exception $e)
+	// 9* return object
+	public function get_type_data($type)
+	{
+		$this->_flush();
+		$this->set_args(array('_sid'=>$type));
+		$this->_get();
+		$data = $this->get_results();
+		if(count($data) == 1)
 		{
-			dbg::write($e->getMessage());
+			return $data[0];
 		}
-		return $uri;
+		return false;
+
 	}
 
 }

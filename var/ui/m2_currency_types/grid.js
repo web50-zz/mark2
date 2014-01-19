@@ -1,8 +1,6 @@
-ui.m2_item_price.grid = Ext.extend(Ext.grid.EditorGridPanel, {
-	clmnPrice: "Цена",
-	clmnTitle: "Тип",
-	clmnCurrency: "Валюта",
-
+ui.m2_currency_types.grid = Ext.extend(Ext.grid.EditorGridPanel, {
+	clmnTitle: "Название",
+	clmnId:"Id",
 	pagerSize: 50,
 	pagerEmptyMsg: 'Нет записей',
 	pagerDisplayMsg: 'Записи с {0} по {1}. Всего: {2}',
@@ -22,13 +20,13 @@ ui.m2_item_price.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 		if (reload) s.load({params:{start: 0, limit: this.pagerSize}});
 	},
 	getKey: function(){
-		return this.getStore().baseParams._sitem_id;
+		return this.getStore().baseParams._spid;
 	},
 	onRowMove: function(target, row){
 		var x = row.data;
 		var y = target.selections[0].data;
 		Ext.Ajax.request({
-			url: 'di/m2_item_price/reorder.do',
+			url: 'di/m2_currency_types/reorder.do',
 			method: 'post',
 			params: {npos: y.order, opos: x.order, id: row.id, pid: this.getKey()},
 			disableCaching: true,
@@ -50,10 +48,10 @@ ui.m2_item_price.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 			store: new Ext.data.Store({
 				proxy: new Ext.data.HttpProxy({
 					api: {
-						read: 'di/m2_item_price/list.js',
-						create: 'di/m2_item_price/set.js',
-						update: 'di/m2_item_price/mset.js',
-						destroy: 'di/m2_item_price/unset.js'
+						read: 'di/m2_currency_types/list.js',
+						create: 'di/m2_currency_types/set.js',
+						update: 'di/m2_currency_types/mset.js',
+						destroy: 'di/m2_currency_types/unset.js'
 					}
 				}),
 				reader: new Ext.data.JsonReader({
@@ -65,9 +63,12 @@ ui.m2_item_price.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 					}, [
 						{name: 'id', type: 'int'},
 						{name: 'order', type: 'int'},
-						'price_value',
+						'real_name',
+						'name',
 						'title',
-						'currency_title',
+						{name: 'size', type: 'int'},
+						{name: 'width', type: 'int'},
+						{name: 'height', type: 'int'}
 					]
 				),
 				writer: new Ext.data.JsonWriter({
@@ -75,29 +76,30 @@ ui.m2_item_price.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 					listful: true,
 					writeAllFields: false
 				}),
-				autoLoad: false,
 				remoteSort: true,
+				autoLoad: true,
 				sortInfo: {field: 'order', direction: 'ASC'}
 			})
 		});
 		var fm = Ext.form;
+		var size = function(value){
+			return value ? Ext.util.Format.fileSize(value) : '0'
+		};
 		Ext.apply(this, {
 			loadMask: true,
 			stripeRows: true,
 			autoScroll: true,
 			autoExpandColumn: 'expand',
 			enableDragDrop: true,
-			ddGroup: 'm2_item_price',
+			ddGroup: 'm2_currency_types',
 			selModel: new Ext.grid.RowSelectionModel({singleSelect: true}),
 			colModel: new Ext.grid.ColumnModel({
 				defaults: {sortable: true, width: 200},
 				columns: [
-					{header: this.clmnTitle, id: 'expand', dataIndex: 'title'},
-					{header: this.clmnPrice, dataIndex: 'price_value', editor: new fm.TextField({maxLength: 255, maxLengthText: 'Не больше 255 символов'})},
-					{header: this.clmnCurrency, id: 'expand', dataIndex: 'currency_title', editor: new fm.TextField({maxLength: 255, maxLengthText: 'Не больше 255 символов'})}
+					{header: this.clmnId, dataIndex: 'id', width:70},
+					{header: this.clmnTitle, id: 'expand', dataIndex: 'title', editor: new fm.TextField({maxLength: 255, maxLengthText: 'Не больше 255 символов'})}
 				]
 			}),
-			/*
 			bbar: new Ext.PagingToolbar({
 				pageSize: this.pagerSize,
 				store: this.store,
@@ -105,11 +107,10 @@ ui.m2_item_price.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 				displayMsg: this.pagerDisplayMsg,
 				emptyMsg: this.pagerEmptyMsg
 			}),
-			*/
 			listeners: {
 				render: function(){
 					new Ext.dd.DropTarget(this.getView().mainBody, {
-						ddGroup: 'm2_item_price',
+						ddGroup: 'm2_currency_types',
 						notifyDrop: function(ds, e, data){
 							var sm = ds.grid.getSelectionModel();
 							if (sm.hasSelection()){
@@ -133,7 +134,7 @@ ui.m2_item_price.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 
 		config = config || {};
 		Ext.apply(this, config);
-		ui.m2_item_price.grid.superclass.constructor.call(this, config);
+		ui.m2_currency_types.grid.superclass.constructor.call(this, config);
 		this.init(config);
 	},
 

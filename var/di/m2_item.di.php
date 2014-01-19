@@ -79,21 +79,15 @@ class di_m2_item extends data_interface
 	}
 	
 	/**
-	*	Добавить \ Сохранить файл
+	*	Добавить \ Сохранить 
 	*/
 	protected function sys_set()
 	{
-		$fid = $this->get_args('_sid');
+		$id = $this->get_args('_sid');
 
-		if ($fid > 0)
-		{
-			$this->_flush();
-			$this->_get();
-			$file = $this->get_results(0);
-		}
-		$file = array();
 		$args =  $this->get_args();
-		if (!($fid > 0))
+		$args['name'] = $this->prepare_uri();
+		if (!($id > 0))
 		{
 			$args['order'] = $this->get_new_order();
 		}
@@ -136,6 +130,38 @@ class di_m2_item extends data_interface
 		$this->extjs_grid_json(array('id', 'order', 'name', 'title',
 			array('di'=>$di,'name'=>'category_id')
 		));
+	}
+
+
+	protected function prepare_uri()
+	{
+		$config = array();
+		$name = $this->get_args('name');
+		$title = $this->get_args('title');
+		$id = $this->get_args('_sid');
+		$di = data_interface::get_instance('m2_utils');
+		$config = array(
+			'm2_item'=>array(
+					'field'=>'name',
+					'id'=>$id
+				),
+			'm2_category'=>array(
+					'field'=>'name'
+				),
+			);
+		if($name == '')
+		{
+			$name = $title;
+		}
+
+		try{
+			$uri = $di->prepare_uri($config,$name);
+		}
+		catch(exception $e)
+		{
+			dbg::write($e->getMessage());
+		}
+		return $uri;
 	}
 }
 ?>

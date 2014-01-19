@@ -7,7 +7,7 @@ ui.m2_item_price.form = Ext.extend(Ext.form.FormPanel, {
 	lblType: 'Тип',
 	lblValue: 'Значение',
 	lblContent:'Примечание',
-
+	lblCurrency:'Валюта',
 	saveText: 'Сохранение...',
 	blankText: 'Необходимо заполнить',
 	maxLengthText: 'Не больше 256 символов',
@@ -97,6 +97,22 @@ ui.m2_item_price.form = Ext.extend(Ext.form.FormPanel, {
 						}),
 						mode: 'local', triggerAction: 'all', selectOnFocus: true, editable: false
 				},
+				{fieldLabel: this.lblCurrency, hiddenName: 'currency', xtype: 'combo',
+						valueField: 'id', displayField: 'title', value: '3', emptyText: '', 
+						store: new Ext.data.JsonStore({url: 'di/m2_currency_types/type_list.json', root: 'records', fields: ['id', 'title'], autoLoad: true,
+							listeners: {
+								load: function(store,ops){
+									var f = this.getForm().findField('currency');
+									f.setValue(f.getValue());
+								}, 
+								beforeload:function(store,ops){
+								},
+								scope: this
+							}
+						}),
+						mode: 'local', triggerAction: 'all', selectOnFocus: true, editable: false
+				},
+
 				{fieldLabel:this.lblValue, name: 'price_value',width:150},
 				{fieldLabel:this.lblContent, name: 'content', xtype: 'textarea'},
 			],

@@ -160,7 +160,6 @@ class di_m2_item_indexer extends data_interface
 					}
 				}					
 		}
-		dbg::write($composites);
 		foreach($composites as $key=>$value)
 		{
 			$args[$key] = $value;
@@ -238,7 +237,7 @@ class di_m2_item_indexer extends data_interface
 		$args['_sitem_id'] = $id;
 		$this->_flush();
 		$this->push_args($args);
-		$this->insert_on_empty = true;
+		$this->insert_on_empty = false;
 		$this->_set();
 		$this->pop_args();
 	}

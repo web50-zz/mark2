@@ -132,7 +132,7 @@ class di_m2_item_text extends data_interface
 			$this->args['_sid'] = request::json2int($this->args['records']);
 		}
 		$this->_flush();
-		$files = $this->_get();
+		$files = $this->_get();// это надо почмуто чтобы работал коррекно onBeforeUnset
 		$this->_flush();
 		$data = $this->extjs_unset_json(false);
 		if($silent == true)

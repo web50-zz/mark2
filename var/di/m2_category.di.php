@@ -60,7 +60,8 @@ class di_m2_category extends data_interface
 	protected function sys_set()
 	{
 		$id = $this->get_args('_sid');
-	
+		$uri = $this->prepare_uri();
+		$this->set_args(array('name' => $uri), true);
 		if ($this->args['_sid'] > 0)
 		{
 			$uri = $this->get_args('uri');
@@ -444,5 +445,37 @@ class di_m2_category extends data_interface
 		$data['childs'] = $ns->get_childs($node, NULL);
 		return $data;;
 	}
+
+	protected function prepare_uri()
+	{
+		$config = array();
+		$name = $this->get_args('name');
+		$title = $this->get_args('title');
+		$id = $this->get_args('_sid');
+		$di = data_interface::get_instance('m2_utils');
+		$config = array(
+			'm2_item'=>array(
+					'field'=>'name',
+				),
+			'm2_category'=>array(
+					'field'=>'name',
+					'id'=>$id
+				),
+			);
+		if($name == '')
+		{
+			$name = $title;
+		}
+
+		try{
+			$uri = $di->prepare_uri($config,$name);
+		}
+		catch(exception $e)
+		{
+			dbg::write($e->getMessage());
+		}
+		return $uri;
+	}
+
 }
 ?>

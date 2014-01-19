@@ -120,7 +120,7 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 			app.on({
 				apploaded: function(){
 					var f = new ui.m2_chars.main();
-					new Ext.Window({title: btt.text, iconCls: btt.iconCls, modal: true, layout: 'fit', maximizable: true, width: 640, height: 480, items: f}).show(null, function(){f.setParams({'_spid': id}, true)});
+					new Ext.Window({title: btt.text, iconCls: btt.iconCls, modal: true, layout: 'fit', maximizable: true, width: 640, height: 480, items: f}).show(null, function(){f.setParams({'_spid': id,'_starget_type': 1}, true)});
 				},
 				apperror: showError,
 				scope: this
@@ -155,8 +155,8 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 								valueField: 'value', displayField: 'title', mode: 'local',
 								triggerAction: 'all', selectOnFocus: true, editable: false
 						},
-						{fieldLabel: this.fldTitle, name: 'title', maxLength: 255, maxLengthText: 'Не больше 255 символов'},
-						{fieldLabel: this.fldName, name: 'name', allowBlank: false, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
+						{fieldLabel: this.fldTitle, name: 'title',  allowBlank: false, maxLength: 255, maxLengthText: 'Не больше 255 символов'},
+						{fieldLabel: this.fldName, name: 'name', allowBlank: true, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
 						{fieldLabel: this.fldURI, name: 'uri', disabled: true}
 					]
 				}

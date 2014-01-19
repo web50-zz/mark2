@@ -144,6 +144,8 @@ class di_m2_chars extends data_interface
 			$this->args['_sid'] = request::json2int($this->args['records']);
 		}
 		$this->_flush();
+		$files = $this->_get();// это надо почмуто чтобы работал коррекно onBeforeUnset
+		$this->_flush();
 		$data = $this->extjs_unset_json(false);
 		if($silent == true)
 		{
@@ -181,7 +183,7 @@ class di_m2_chars extends data_interface
 			{
 				$this->set_args(array(
 					'_sm2_id' => $id,
-					'_starget_id' => 2,
+					'_starget_type' => 2,
 				));
 				$this->_flush();
 				$this->_get();
@@ -212,7 +214,7 @@ class di_m2_chars extends data_interface
 	{
 		// Получаем файлы, привязанные к удаляем(ой|ым) категориям
 		$fids = $this->_flush()
-			->push_args(array('_sm2_id' => $ids, '_starget_id' => 2))
+			->push_args(array('_sm2_id' => $ids, '_starget_type' => 1))
 			->set_what(array('id'))
 			->_get()
 			->pop_args()

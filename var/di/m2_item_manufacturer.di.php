@@ -123,8 +123,10 @@ class di_m2_item_manufacturer extends data_interface
 			$this->args['_sid'] = request::json2int($this->args['records']);
 		}
 		$this->_flush();
+		$this->_get();//это для индексера он бефоре унсет инач ене работает похоу баг
+		$this->_flush();
 		$data = $this->extjs_unset_json(false);
-		if($silent = true)
+		if($silent == true)
 		{
 			return $data;
 		}

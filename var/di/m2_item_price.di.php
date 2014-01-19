@@ -32,6 +32,7 @@ class di_m2_item_price extends data_interface
 		'item_id' => array('type' => 'integer', 'alias' => 'pid'),
 		'order' => array('type' => 'integer'),
 		'type' => array('type' => 'integer'),
+		'currency' => array('type' => 'integer'),
 		'price_value' => array('type' => 'string'),
 		'content' => array('type' => 'string'),
 	);
@@ -46,8 +47,10 @@ class di_m2_item_price extends data_interface
 		$this->_flush();
 		$this->set_order('order', 'ASC');
 		$di = $this->join_with_di('m2_price_types',array('type'=>'id'),array('title'=>'title'));
+		$di2 = $this->join_with_di('m2_currency_types',array('currency'=>'id'),array('title'=>'currency_title'));
 		$this->extjs_grid_json(array('id', 'order', 'price_value', 
-					array('di'=>$di,'name'=>'title')
+					array('di'=>$di,'name'=>'title'),
+					array('di'=>$di2,'name'=>'title'),
 		));
 	}
 	
@@ -123,6 +126,8 @@ class di_m2_item_price extends data_interface
 		{
 			$this->args['_sid'] = request::json2int($this->args['records']);
 		}
+		$this->_flush();
+		$this->_get();//это для индексера он бефоре унсет инач ене работает похоу баг
 		$this->_flush();
 		$data = $this->extjs_unset_json(false);
 		if($silent ==  true)

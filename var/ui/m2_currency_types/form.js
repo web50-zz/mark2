@@ -1,12 +1,15 @@
-ui.m2_manufacturers.form = Ext.extend(Ext.form.FormPanel, {
+ui.m2_currency_types.form = Ext.extend(Ext.form.FormPanel, {
 	formWidth: 400,
 	formHeight: 350,
 
 	loadText: 'Загрузка данных формы',
 
 	lblTitle: 'Название',
+	lblWidth: 'Ширина',
+	lblHeight: 'Высота',
+	lblPrefix: 'Префикс',
+	lblImage: 'Изображение',
 	lblAvailable: 'Доступен',
-	lblType: 'Тип',
 	lblId: "Id",
 	saveText: 'Сохранение...',
 	blankText: 'Необходимо заполнить',
@@ -23,7 +26,7 @@ ui.m2_manufacturers.form = Ext.extend(Ext.form.FormPanel, {
 	Load: function(data){
 		var f = this.getForm();
 		f.load({
-			url: 'di/m2_manufacturers/get.json',
+			url: 'di/m2_currency_types/get.json',
 			params: {_sid: data._sid},
 			waitMsg: this.loadText,
 			success: function(frm, act){
@@ -39,7 +42,7 @@ ui.m2_manufacturers.form = Ext.extend(Ext.form.FormPanel, {
 		var f = this.getForm();
 		if (f.isValid()){
 			f.submit({
-				url: 'di/m2_manufacturers/set.do',
+				url: 'di/m2_currency_types/set.do',
 				waitMsg: this.saveText,
 				success: function(form, action){
 					var d = Ext.util.JSON.decode(action.response.responseText);
@@ -85,22 +88,7 @@ ui.m2_manufacturers.form = Ext.extend(Ext.form.FormPanel, {
 			items: [
 				{name: '_sid', xtype: 'hidden'},
 				{fieldLabel: this.lblId, name: 'id', xtype: 'displayfield'},
-				{fieldLabel:this.lblTitle, name: 'title',allowBlank: false},
-				{fieldLabel: this.lblType, hiddenName: 'type', xtype: 'combo',
-						valueField: 'id', displayField: 'title', value: '', emptyText: '', 
-						store: new Ext.data.JsonStore({url: 'di/m2_manufacturer_types/type_list.json', root: 'records', fields: ['id', 'title'], autoLoad: true,
-							listeners: {
-								load: function(store,ops){
-									var f = this.getForm().findField('type');
-									f.setValue(f.getValue());
-								}, 
-								beforeload:function(store,ops){
-								},
-								scope: this
-							}
-						}),
-						mode: 'local', triggerAction: 'all', selectOnFocus: true, editable: false
-				},
+				{fieldLabel:this.lblTitle, name: 'title'},
 				{fieldLabel: this.lblAvailable, hiddenName: 'not_available', value: 0, xtype: 'combo', anchor: '90%',
 								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Доступен'],[1, 'Не доступен']]}),
 								valueField: 'value', displayField: 'title', mode: 'local',
@@ -114,7 +102,7 @@ ui.m2_manufacturers.form = Ext.extend(Ext.form.FormPanel, {
 			]
 		});
 		Ext.apply(this, config);
-		ui.m2_manufacturers.form.superclass.constructor.call(this, config);
+		ui.m2_currency_types.form.superclass.constructor.call(this, config);
 		this.on({
 			data_saved: function(data, id){
 				this.getForm().setValues([{id: '_sid', value: id}]);

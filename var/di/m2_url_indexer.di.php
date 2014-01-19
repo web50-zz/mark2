@@ -6,7 +6,7 @@
 */
 class di_m2_url_indexer extends data_interface
 {
-	public $title = 'www: Публикации - URL индексатор';
+	public $title = 'm2: Маркет 2 - URL индексатор';
 
 	/**
 	* @var	string	$cfg	Имя конфигурации БД
