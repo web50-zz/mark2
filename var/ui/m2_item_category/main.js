@@ -12,7 +12,8 @@ ui.m2_item_category.main = Ext.extend(ui.m2_item_category.grid, {
 	Load: function(data){
 		this.setParams({}, true);
 	},
-	Add: function(){
+	/*
+	Add_back: function(){
 		var app = new App({waitMsg: this.frmLoading});
 		var pid = this.getKey();
 		app.on({
@@ -31,6 +32,39 @@ ui.m2_item_category.main = Ext.extend(ui.m2_item_category.grid, {
 		});
 		app.Load('m2_item_category', 'form');
 	},
+	*/
+	Add: function(){
+			var app = new App();
+			var pid = this.getKey();
+			var sl = this;
+			app.on({
+				apploaded: function(){
+					var f = new ui.m2_category.category_selection();
+					var w = new Ext.Window({title: "Выбор категории", maximizable: true, modal: true, layout: 'fit', width: 640, height: 480, items: f});
+					f.on({
+						selected: function(data){
+							Ext.Ajax.request({
+								url: 'di/m2_item_category/set.do',
+								success: function(){
+									sl.store.reload();
+								},
+								failure: function(){
+
+								},
+								params: { item_id: pid, category_id: data.category_id, category_tite: data.category_title}
+							});
+							w.close();
+						},
+						scope: this
+					});
+					w.show();
+				},
+				apperror: showError,
+				scope: this
+			});
+			app.Load('m2_category', 'category_selection');
+	},
+
 	Edit: function(){
 		var row = this.getSelectionModel().getSelected();
 		var id = row.get('id');
@@ -83,7 +117,7 @@ ui.m2_item_category.main = Ext.extend(ui.m2_item_category.grid, {
 			rowcontextmenu: function(grid, rowIndex, e){
 				grid.getSelectionModel().selectRow(rowIndex);
 				var cmenu = new Ext.menu.Menu({items: [
-					{iconCls: 'note_edit', text: this.bttEdit, handler: this.Edit, scope: this},
+				//	{iconCls: 'note_edit', text: this.bttEdit, handler: this.Edit, scope: this},
 					{iconCls: 'note_delete', text: this.bttDelete, handler: this.Delete, scope: this},
 					'-'
 				]});
