@@ -5,6 +5,7 @@ CREATE TABLE `m2_item_price` (
   `type` varchar(32) NOT NULL,
   `content` mediumtext NOT NULL,
   `price_value` varchar(255) NOT NULL,
+  `currency` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ssgn_project_id` (`item_id`),
   KEY `order` (`order`)

@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `m2_item_text`
+-- Dumping data for table `m2_currency_types`
 --
 
-LOCK TABLES `m2_item_text` WRITE;
-/*!40000 ALTER TABLE `m2_item_text` DISABLE KEYS */;
-INSERT INTO `m2_item_text` VALUES (24,11,0,'','4','<p>\n	werwerwerwerwer</p>\n','erwerwer'),(17,12,0,'','2','<p>\n	цукцукцукцу</p>\n','цукцук');
-/*!40000 ALTER TABLE `m2_item_text` ENABLE KEYS */;
+LOCK TABLES `m2_currency_types` WRITE;
+/*!40000 ALTER TABLE `m2_currency_types` DISABLE KEYS */;
+INSERT INTO `m2_currency_types` VALUES (2,2,'Доллары',0),(3,1,'Рубли',0),(4,3,'Евро',0);
+/*!40000 ALTER TABLE `m2_currency_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-19 20:19:00
+-- Dump completed on 2014-01-19 20:19:01

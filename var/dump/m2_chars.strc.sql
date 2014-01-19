@@ -11,4 +11,4 @@ CREATE TABLE `m2_chars` (
   `type_value_str` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `ssgn_project_id` (`m2_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=221 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=255 DEFAULT CHARSET=utf8

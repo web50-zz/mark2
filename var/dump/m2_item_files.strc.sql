@@ -16,5 +16,6 @@ CREATE TABLE `m2_item_files` (
   `file_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `item_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `order` (`order`)
+  KEY `order` (`order`),
+  KEY `m2_item` (`item_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=343 DEFAULT CHARSET=utf8
