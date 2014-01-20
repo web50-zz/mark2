@@ -3,6 +3,9 @@ ui.m2_category.category_selection = Ext.extend(Ext.tree.TreePanel, {
 	menuSelect: 'Выбрать',
 	Selection: function(node, e){
 		var r = node;
+		if(r.attributes.type == 2){
+			return;
+		}
 		this.fireEvent('selected', {
 			category_id: r.id,
 			category_title: r.text
@@ -27,6 +30,9 @@ ui.m2_category.category_selection = Ext.extend(Ext.tree.TreePanel, {
 		ui.m2_category.category_selection.superclass.constructor.call(this, config);
 		this.on({
 			contextmenu: function(node, e){
+				if(node.attributes.type == 2){
+					return;
+				}
 				var cmenu = new Ext.menu.Menu({items: [
 					{iconCls: 'accept', text: this.menuSelect, handler: function(){this.Selection(node, e)}, scope: this}
 				]});

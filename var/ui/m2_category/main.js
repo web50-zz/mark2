@@ -182,7 +182,7 @@ ui.m2_category.main = Ext.extend(ui.m2_category.tree, {
 					items.push({iconCls: 'pencil', text: this.bttGEdit, handler: this.EditGroup.createDelegate(this, [id])});
 				}else if (type == 1){
 					items.push({iconCls: 'pencil', text: this.bttPEdit, handler: this.EditNode.createDelegate(this, [id])});
-//					items.push({iconCls: 'link_add', text: this.bttLAdd, handler: this.AddLink.createDelegate(this, [node])});
+					items.push({iconCls: 'link_add', text: this.bttLAdd, handler: this.AddLink.createDelegate(this, [node])});
 					items.push({iconCls: 'add', text: this.bttPAdd, handler: this.AddNode.createDelegate(this, [id])});
 				}else if (type == 2){
 					items.push({iconCls: 'pencil', text: this.bttPEdit, handler: this.EditNode.createDelegate(this, [node.attributes.link_id])});

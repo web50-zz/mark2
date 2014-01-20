@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `m2_item_files`
+-- Dumping data for table `m2_item_variation_files`
 --
 
-LOCK TABLES `m2_item_files` WRITE;
-/*!40000 ALTER TABLE `m2_item_files` DISABLE KEYS */;
-INSERT INTO `m2_item_files` VALUES (329,'2013-06-30 22:42:46',1,'2013-06-30 22:43:02',1,0,'','37mm_shells_m3.jpg','176c37eb219070151bcad6020957a758.jpg','','image/jpeg',24834,400,301,1,3),(330,'2013-06-30 22:43:46',1,'2013-06-30 22:43:46',1,1,'werwerwer','fc3c41d3348265e56464bbcfb15_prev.jpg','aa1fea065889e173d057231775c22132.jpg','ewr','image/jpeg',34565,590,368,1,3),(331,'2013-06-30 22:44:45',1,'2013-06-30 22:44:45',1,2,'','robots.txt','d0bc181d29d2a980299118070b05a541.txt','','text/plain',192,0,0,0,3),(332,'2013-06-30 22:46:24',1,'2013-07-11 00:55:51',1,3,'werwer','tumblr_mo86anvRps1rhgbn2o1_500.jpg','90cbcea40a16a1651c5d0b2cac498659.jpg','werwer','image/jpeg',50726,500,500,3,2);
-/*!40000 ALTER TABLE `m2_item_files` ENABLE KEYS */;
+LOCK TABLES `m2_item_variation_files` WRITE;
+/*!40000 ALTER TABLE `m2_item_variation_files` DISABLE KEYS */;
+INSERT INTO `m2_item_variation_files` VALUES (334,'2014-01-21 03:10:52',1,'2014-01-21 03:10:52',1,1,'','7091-193102-5279dae888a473f64e67ce3c10347cd3.jpg','614460e8fbbe93e91b73fc796ec2d182.jpg','','image/jpeg',30014,500,285,3,20),(333,'2014-01-21 02:48:18',1,'2014-01-21 02:48:18',1,0,'5645','006c443e86ad04f6ce8f9ade1da24e9b6f2e2132.jpg','a4ea17cb157bcb65ce167eb07a652ed0.jpg','6456456','image/jpeg',142433,640,640,3,19);
+/*!40000 ALTER TABLE `m2_item_variation_files` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

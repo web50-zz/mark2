@@ -28,6 +28,7 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 	bttTexts: 'Текстовые блоки',
 	bttChars: 'Характеристики',
 	bttCategory: 'Входит в категории',
+	bttVariation:' Варианты',
 
 	Load: function(data){
 		var f = this.getForm();
@@ -89,7 +90,8 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 				{iconCls: 'chart_organisation', text: this.bttCategory, handler: this.itemCategory, scope: this},
 				{iconCls: 'application_form', text: this.bttChars, handler: this.itemChars, scope: this},
 				{iconCls: 'application_view_tile', text: this.bttFiles, handler: this.filesList, scope: this},
-				{iconCls: 'page_white_gear', text: this.bttTexts, handler: this.itemTexts, scope: this}
+				{iconCls: 'page_white_gear', text: this.bttTexts, handler: this.itemTexts, scope: this},
+				{iconCls: 'application_form', text: this.bttVariation, handler: this.itemVariation, scope: this}
 			]
 		});
 		this.p = new ui.m2_item_price.main({height:150,title:'Цены'});
@@ -108,7 +110,7 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 						{name: '_sid', xtype: 'hidden'},
 						{fieldLabel: this.lblId, name: 'id', xtype: 'displayfield'},
 						{fieldLabel:this.lblArticle, name: 'article'},
-						{fieldLabel:this.lblTitle, name: 'title'},
+						{fieldLabel:this.lblTitle, name: 'title',allowBlank: false},
 						{fieldLabel:this.lblName, name: 'name'},
 						{fieldLabel: this.lblAvailable, hiddenName: 'not_available', value: 0, xtype: 'combo', anchor: '90%',
 										store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'В продаже'],[1, 'Не доступен']]}),
@@ -203,7 +205,7 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 		app.on({
 			apploaded: function(){
 				var f = new ui.m2_chars.main();
-				f.setParams({'_spid':vals._sid,'_starget_type':'2'});
+				f.setParams({'_spid':vals._sid,'_starget_type':'2'},true);
 				var w = new Ext.Window({iconCls: b.iconCls, title: b.text, maximizable: true, modal: true, layout: 'fit', width: 500, height: 400, items: f});
 				f.on({
 					cancelled: function(){w.destroy()},
@@ -239,6 +241,30 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 			scope: this
 		});
 		app.Load('m2_item_category', 'main');
+	},
+	itemVariation: function(b, e){
+		var fm = this.getForm();
+		var vals = fm.getValues();
+		if(!(vals._sid>0)){
+			showError(this.msgNotDefined);
+			return;
+		}
+		var app = new App({waitMsg: 'Загрузка формы'});
+		app.on({
+			apploaded: function(){
+				var f = new ui.m2_item_variation.main();
+				f.setParams({'_sitem_id':vals._sid},true);
+				var w = new Ext.Window({iconCls: b.iconCls, title: b.text, maximizable: true, modal: true, layout: 'fit', width: 500, height: 400, items: f});
+				f.on({
+					cancelled: function(){w.destroy()},
+					scope: this
+				});
+				w.show(null, function(){});
+			},
+			apperror: showError,
+			scope: this
+		});
+		app.Load('m2_item_variation', 'main');
 	},
 
 	/**
