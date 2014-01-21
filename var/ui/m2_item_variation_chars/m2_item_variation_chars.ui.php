@@ -1,18 +1,16 @@
 <?php
 /**
 *
-* @author	FedotB Pozdnyakov 9@u9.ru 20012014
+* @author	Fedot B Pozdnyakov 9@u9.ru 20012014
 * @package	SBIN Diesel
 */
-class ui_m2_item_variation extends user_interface
+class ui_m2_item_variation_chars extends user_interface
 {
-	public $title = 'm2: Маркет 2 - Варианты товара';
+	public $title = 'm2: Маркет 2 - вариации характеристики ';
 
 	protected $deps = array(
 		'main' => array(
-			'm2_item_variation.grid',
-			'm2_item_variation_files.main',
-			'm2_item_variation_chars.main',
+			'm2_item_variation_chars.grid',
 		),
 	);
 	
@@ -48,5 +46,12 @@ class ui_m2_item_variation extends user_interface
 		$tmpl = new tmpl($this->pwd() . 'form.js');
 		response::send($tmpl->parse($this), 'js');
 	}
+
+	public function sys_form_custom()
+	{
+		$tmpl = new tmpl($this->pwd() . 'form_custom.js');
+		response::send($tmpl->parse($this), 'js');
+	}
+
 }
 ?>

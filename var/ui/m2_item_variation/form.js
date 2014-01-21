@@ -90,7 +90,7 @@ ui.m2_item_variation.form = Ext.extend(Ext.form.FormPanel, {
 			]
 		});
 		this.p = new ui.m2_item_variation_files.main({height:200,title:'Файлы',autoLoad:false});
-		this.m = new ui.m2_chars.main({height:200,title:'Характеристики',autoLoad:false});
+		this.m = new ui.m2_item_variation_chars.main({height:200,title:'Характеристики',autoLoad:false});
 		Ext.apply(this, {
 			layout: 'fit',
 			tbar: tb,
@@ -132,13 +132,13 @@ ui.m2_item_variation.form = Ext.extend(Ext.form.FormPanel, {
 				var prev = this.getForm().findField('_sid').getValue();
 				if(!(prev>0)){
 					this.p.setParams({'_sitem_id':id},true);
-					this.m.setParams({'_spid':id,'_starget_type':'3'},true);
+					this.m.setParams({'_spid':id},true);
 				}
 				this.getForm().setValues([{id: '_sid', value: id}]);
 			},
 			data_loaded: function(data, id){
 				this.p.setParams({'_sitem_id':data.id},true);
-				this.m.setParams({'_spid':data.id,'_starget_type':'3'},true);
+				this.m.setParams({'_spid':data.id},true);
 			},
 			scope: this
 		})

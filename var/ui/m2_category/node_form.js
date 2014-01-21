@@ -119,13 +119,13 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 			var app = new App({waitMsg: this.frmLoading});
 			app.on({
 				apploaded: function(){
-					var f = new ui.m2_chars.main();
+					var f = new ui.m2_category_chars.main();
 					new Ext.Window({title: btt.text, iconCls: btt.iconCls, modal: true, layout: 'fit', maximizable: true, width: 640, height: 480, items: f}).show(null, function(){f.setParams({'_spid': id,'_starget_type': 1}, true)});
 				},
 				apperror: showError,
 				scope: this
 			});
-			app.Load('m2_chars', 'main');
+			app.Load('m2_category_chars', 'main');
 		}
 	},
 

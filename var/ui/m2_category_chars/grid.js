@@ -1,4 +1,4 @@
-ui.m2_chars.grid = Ext.extend(Ext.grid.EditorGridPanel, {
+ui.m2_category_chars.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 	clmnName: "Изображение",
 	clmnTitle: "Параметр",
 	clmnVal: "Значение",
@@ -28,7 +28,7 @@ ui.m2_chars.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 		var x = row.data;
 		var y = target.selections[0].data;
 		Ext.Ajax.request({
-			url: 'di/m2_chars/reorder.do',
+			url: 'di/m2_category_chars/reorder.do',
 			method: 'post',
 			params: {npos: y.order, opos: x.order, id: row.id, pid: this.getKey()},
 			disableCaching: true,
@@ -50,10 +50,10 @@ ui.m2_chars.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 			store: new Ext.data.Store({
 				proxy: new Ext.data.HttpProxy({
 					api: {
-						read: 'di/m2_chars/list.js',
-						create: 'di/m2_chars/set.js',
-						update: 'di/m2_chars/mset.js',
-						destroy: 'di/m2_chars/unset.js'
+						read: 'di/m2_category_chars/list.js',
+						create: 'di/m2_category_chars/set.js',
+						update: 'di/m2_category_chars/mset.js',
+						destroy: 'di/m2_category_chars/unset.js'
 					}
 				}),
 				reader: new Ext.data.JsonReader({
@@ -87,7 +87,7 @@ ui.m2_chars.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 			autoScroll: true,
 			autoExpandColumn: 'expand',
 			enableDragDrop: true,
-			ddGroup: 'm2_chars',
+			ddGroup: 'm2_category_chars',
 			selModel: new Ext.grid.RowSelectionModel({singleSelect: true}),
 			colModel: new Ext.grid.ColumnModel({
 				defaults: {sortable: false, width: 200},
@@ -106,7 +106,7 @@ ui.m2_chars.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 			listeners: {
 				render: function(){
 					new Ext.dd.DropTarget(this.getView().mainBody, {
-						ddGroup: 'm2_chars',
+						ddGroup: 'm2_category_chars',
 						notifyDrop: function(ds, e, data){
 							var sm = ds.grid.getSelectionModel();
 							if (sm.hasSelection()){
@@ -130,7 +130,7 @@ ui.m2_chars.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 
 		config = config || {};
 		Ext.apply(this, config);
-		ui.m2_chars.grid.superclass.constructor.call(this, config);
+		ui.m2_category_chars.grid.superclass.constructor.call(this, config);
 		this.init(config);
 	},
 

@@ -1,4 +1,4 @@
-ui.m2_chars.form = Ext.extend(Ext.form.FormPanel, {
+ui.m2_item_variation_chars.form = Ext.extend(Ext.form.FormPanel, {
 	formWidth: 500,
 	formHeight: 400,
 
@@ -24,7 +24,7 @@ ui.m2_chars.form = Ext.extend(Ext.form.FormPanel, {
 	Load: function(data){
 		var f = this.getForm();
 		f.load({
-			url: 'di/m2_chars/get.json',
+			url: 'di/m2_item_variation_chars/get.json',
 			params: {_sid: data._sid,is_custom:0},
 			waitMsg: this.loadText,
 			success: function(frm, act){
@@ -40,7 +40,7 @@ ui.m2_chars.form = Ext.extend(Ext.form.FormPanel, {
 		var f = this.getForm();
 		if (f.isValid()){
 			f.submit({
-				url: 'di/m2_chars/set.do',
+				url: 'di/m2_item_variation_chars/set.do',
 				waitMsg: this.saveText,
 				success: function(form, action){
 					var d = Ext.util.JSON.decode(action.response.responseText);
@@ -148,7 +148,7 @@ ui.m2_chars.form = Ext.extend(Ext.form.FormPanel, {
 			]
 		});
 		Ext.apply(this, config);
-		ui.m2_chars.form.superclass.constructor.call(this, config);
+		ui.m2_item_variation_chars.form.superclass.constructor.call(this, config);
 		this.on({
 			data_saved: function(data, id){
 				this.getForm().setValues([{id: '_sid', value: id}]);

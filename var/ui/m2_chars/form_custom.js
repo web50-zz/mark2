@@ -27,7 +27,7 @@ ui.m2_chars.form_custom = Ext.extend(Ext.form.FormPanel, {
 		data.is_custom = 1;
 		f.load({
 			url: 'di/m2_chars/get.json',
-			params: {_sid: data._sid,target_type:data.target_type,is_custom:1},
+			params: {_sid: data._sid,is_custom:1},
 			waitMsg: this.loadText,
 			success: function(frm, act){
 				var d = Ext.util.JSON.decode(act.response.responseText);
@@ -86,7 +86,6 @@ ui.m2_chars.form_custom = Ext.extend(Ext.form.FormPanel, {
 			items: [
 				{name: '_sid', xtype: 'hidden'},
 				{name: 'm2_id', xtype: 'hidden'},
-				{name: 'target_type', xtype: 'hidden'},
 				{name: 'is_custom', xtype: 'hidden'},
 				{fieldLabel: this.fldStrTitle, name: 'str_title', maxLength: 255, maxLengthText: 'Не больше 255 символов'},
 				{fieldLabel: this.fldVariableVal, name: 'variable_value', xtype:'textarea',maxLength: 255, maxLengthText: 'Не больше 255 символов'},

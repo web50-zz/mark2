@@ -4,7 +4,7 @@
 * @author	Fedot B Pozdnyakov 9@u9.ru 26062013	
 * @package	SBIN Diesel
 */
-class di_m2_chars extends data_interface
+class di_m2_category_chars extends data_interface
 {
 	public $title = 'm2: Маркет 2 -  характеристики';
 
@@ -21,7 +21,7 @@ class di_m2_chars extends data_interface
 	/**
 	* @var	string	$name	Имя таблицы
 	*/
-	protected $name = 'm2_chars';
+	protected $name = 'm2_category_chars';
 
 	
 	/**
@@ -49,13 +49,13 @@ class di_m2_chars extends data_interface
 	protected function sys_list()
 	{
 		$this->_flush();
-//		$this->set_order('id', 'DESC');
+		$this->set_order('order', 'DESC');
 		$di = $this->join_with_di('m2_chars_types',array('type_id'=>'id'),array('title'=>'title'));
 		$flds = array('id');
 		$flds[] = array('di'=>$di,'name'=>'title');
 		$flds[] = 'str_title';
-		$flds[] = 'is_custom';
 		$flds[] = 'order';
+		$flds[] = 'is_custom';
 		$flds[] = 'if('.$this->get_alias().'.char_type = 1,
 				type_value_str,
 				variable_value) as type_str';
@@ -207,13 +207,13 @@ class di_m2_chars extends data_interface
 	}
 
 	/**
-	*	Обработчик удаления типа характеристики
+	*	Обработчик удаления категори(и|й)
 	*/
-	public function unset_for_type($eObj, $ids, $args)
+	public function unset_for_category($eObj, $ids, $args)
 	{
 		// Получаем файлы, привязанные к удаляем(ой|ым) категориям
 		$fids = $this->_flush()
-			->push_args(array('_stype_id' => $ids))
+			->push_args(array('_sm2_id' => $ids))
 			->set_what(array('id'))
 			->_get()
 			->pop_args()
@@ -222,7 +222,7 @@ class di_m2_chars extends data_interface
 		if (!empty($fids))
 		{
 			// Удаляем файлы штатными средкствами
-			$this->push_args(array('_stype_id' => $fids));
+			$this->push_args(array('_sid' => $fids));
 			$this->sys_unset(true);
 			$this->pop_args();
 		}
@@ -231,8 +231,8 @@ class di_m2_chars extends data_interface
 	public function _listeners()
 	{
 		return array(
-			array('di' => 'm2_item', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
-			array('di' => 'm2_chars_types', 'event' => 'onUnset', 'handler' => 'unset_for_type'),
+			array('di' => 'm2_category', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
+		//	array('di' => 'm2_category', 'event' => 'onUnset', 'handler' => 'unset_for_category'),
 		);
 	}
 }

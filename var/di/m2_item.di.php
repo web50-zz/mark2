@@ -46,7 +46,7 @@ class di_m2_item extends data_interface
 	protected function sys_list()
 	{
 		$this->_flush();
-		$this->set_order('order', 'ASC');
+		//$this->set_order('order', 'ASC');
 		if($this->args['by_category'] == true)
 		{
 			$this->sys_search_by_category();

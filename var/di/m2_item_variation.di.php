@@ -82,7 +82,7 @@ class di_m2_item_variation extends data_interface
 	/**
 	*	Добавить \ Сохранить 
 	*/
-	protected function sys_set()
+	protected function sys_set($silent = false)
 	{
 		$id = $this->get_args('_sid');
 
@@ -96,6 +96,11 @@ class di_m2_item_variation extends data_interface
 		$this->_flush();
 		$this->insert_on_empty = true;
 		$result = $this->extjs_set_json(false);
+		if($silent == true)
+		{
+			return $result;
+		}
+
 		response::send($result, 'json');
 	}
 	
@@ -114,7 +119,7 @@ class di_m2_item_variation extends data_interface
 	*	Удалить файл[ы]
 	* @access protected
 	*/
-	protected function sys_unset()
+	protected function sys_unset($silent = false)
 	{
 		if ($this->args['records'] && !$this->args['_sid'])
 		{
@@ -122,8 +127,14 @@ class di_m2_item_variation extends data_interface
 		}
 		$this->_flush();
 		$data = $this->extjs_unset_json(false);
+		if($silent == true)
+		{
+			return $data;
+		}
 		response::send($data, 'json');
 	}
+
+
 	protected function sys_search_by_category()
 	{
 		$di = $this->join_with_di('m2_item_category',array('id'=>'item_id'),array('category_id','category_id'));
@@ -161,5 +172,65 @@ class di_m2_item_variation extends data_interface
 		}
 		return $uri;
 	}
+
+
+	public function unset_for_item($eObj, $ids, $args)
+	{
+		$this->push_args(array());
+		if (!is_array($ids) && $ids > 0)
+		{
+			$this->set_args(array(
+				'_sitem_id' => $ids,
+			));
+			$this->_flush();
+			$this->_get();
+			$res =  $this->get_results();
+			if(count($res)>0)
+			{
+				foreach($res as $key=>$value)
+				{
+					$this->set_args(array(
+						'_sid' => $value->id,
+					));
+					$this->sys_unset(true);
+				}
+			}
+		}
+		else if (is_array($ids))
+		{
+			foreach ($ids as $id)
+			{
+				$this->set_args(array(
+					'_sitem_id' => $id,
+				));
+				$this->_flush();
+				$this->_get();
+				$res =  $this->get_results();
+				if(count($res)>0)
+				{
+					foreach($res as $key=>$value)
+					{
+						$this->set_args(array(
+							'_sid' => $value->id,
+						));
+						$this->sys_unset(true);
+					}
+				}
+			}
+		}
+		else
+		{
+			// Some error, because unknown project ID
+		}
+		$this->pop_args();
+	}
+
+	public function _listeners()
+	{
+		return array(
+			array('di' => 'm2_item', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
+		);
+	}
+
 }
 ?>

@@ -109,7 +109,7 @@ class di_m2_item_indexer extends di_index_processor
 						'type_id'=>'',
 						'str_title'=>'',
 						'variable_value'=>'',
-						'target_type'=>'',
+						'order'=>'',
 						'type_value_str'=>'',
 						)
 					),

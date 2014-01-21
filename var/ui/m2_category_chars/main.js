@@ -1,4 +1,4 @@
-ui.m2_chars.main = Ext.extend(ui.m2_chars.grid, {
+ui.m2_category_chars.main = Ext.extend(ui.m2_category_chars.grid, {
 	bttAdd: "Добавить из справочника",
 	bttAddCustom: "Добавить и вольной форме",
 	bttEdit: "Редактировать",
@@ -15,41 +15,43 @@ ui.m2_chars.main = Ext.extend(ui.m2_chars.grid, {
 		var app = new App({waitMsg: this.frmLoading});
 		var pid = this.getKey();
 		var params = this.getStore().baseParams;
+		var target_type = params._starget_type;
 		app.on({
 			apploaded: function(){
-				var f = new ui.m2_chars.form();
+				var f = new ui.m2_category_chars.form();
 				var w = new Ext.Window({iconCls: this.iconCls, title: this.titleAdd, maximizable: true, modal: true, layout: 'fit', width: f.formWidth, height: f.formHeight, items: f});
 				f.on({
 					data_saved: function(){this.store.reload(); w.destroy();},
 					cancelled: function(){w.destroy()},
 					scope: this
 				});
-				w.show(null, function(){f.Load({m2_id: pid})});
+				w.show(null, function(){f.Load({m2_id: pid,target_type: target_type})});
 			},
 			apperror: showError,
 			scope: this
 		});
-		app.Load('m2_chars', 'form');
+		app.Load('m2_category_chars', 'form');
 	},
 	AddCustom: function(){
 		var app = new App({waitMsg: this.frmLoading});
 		var pid = this.getKey();
 		var params = this.getStore().baseParams;
+		var target_type = params._starget_type;
 		app.on({
 			apploaded: function(){
-				var f = new ui.m2_chars.form_custom();
+				var f = new ui.m2_category_chars.form_custom();
 				var w = new Ext.Window({iconCls: this.iconCls, title: this.titleAdd, maximizable: true, modal: true, layout: 'fit', width: f.formWidth, height: f.formHeight, items: f});
 				f.on({
 					data_saved: function(){this.store.reload(); w.destroy();},
 					cancelled: function(){w.destroy()},
 					scope: this
 				});
-				w.show(null, function(){f.Load({m2_id: pid})});
+				w.show(null, function(){f.Load({m2_id: pid,target_type: target_type})});
 			},
 			apperror: showError,
 			scope: this
 		});
-		app.Load('m2_chars', 'form_custom');
+		app.Load('m2_category_chars', 'form_custom');
 	},
 	Edit: function(){
 		var row = this.getSelectionModel().getSelected();
@@ -57,7 +59,7 @@ ui.m2_chars.main = Ext.extend(ui.m2_chars.grid, {
 		var app = new App({waitMsg: this.frmLoading});
 		app.on({
 			apploaded: function(){
-				var f = new ui.m2_chars.form();
+				var f = new ui.m2_category_chars.form();
 				var w = new Ext.Window({iconCls: this.iconCls, title: this.titleEdit, maximizable: true, modal: true, layout: 'fit', width: f.formWidth, height: f.formHeight, items: f});
 				f.on({
 					data_saved: function(){this.store.reload(); w.destroy();},
@@ -69,7 +71,7 @@ ui.m2_chars.main = Ext.extend(ui.m2_chars.grid, {
 			apperror: showError,
 			scope: this
 		});
-		app.Load('m2_chars', 'form');
+		app.Load('m2_category_chars', 'form');
 	},
 	EditCustom: function(){
 		var row = this.getSelectionModel().getSelected();
@@ -77,7 +79,7 @@ ui.m2_chars.main = Ext.extend(ui.m2_chars.grid, {
 		var app = new App({waitMsg: this.frmLoading});
 		app.on({
 			apploaded: function(){
-				var f = new ui.m2_chars.form_custom();
+				var f = new ui.m2_category_chars.form_custom();
 				var w = new Ext.Window({iconCls: this.iconCls, title: this.titleEdit, maximizable: true, modal: true, layout: 'fit', width: f.formWidth, height: f.formHeight, items: f});
 				f.on({
 					data_saved: function(){this.store.reload(); w.destroy();},
@@ -89,7 +91,7 @@ ui.m2_chars.main = Ext.extend(ui.m2_chars.grid, {
 			apperror: showError,
 			scope: this
 		});
-		app.Load('m2_chars', 'form_custom');
+		app.Load('m2_category_chars', 'form_custom');
 	},
 
 	multiSave: function(){
@@ -115,12 +117,12 @@ ui.m2_chars.main = Ext.extend(ui.m2_chars.grid, {
 			tbar: [
 				{iconCls: 'note_add', text: this.bttAdd, handler: this.Add, scope: this},
 				{iconCls: 'note_add', text: this.bttAddCustom, handler: this.AddCustom, scope: this},
-				'->', {iconCls: 'help', handler: function(){showHelp('m2_chars')}}
+				'->', {iconCls: 'help', handler: function(){showHelp('m2_category_chars')}}
 			]
 		});
 		config = config || {};
 		Ext.apply(this, config);
-		ui.m2_chars.main.superclass.constructor.call(this, config);
+		ui.m2_category_chars.main.superclass.constructor.call(this, config);
 		this.on({
 			rowcontextmenu: function(grid, rowIndex, e){
 				grid.getSelectionModel().selectRow(rowIndex);

@@ -4,7 +4,7 @@
 * @author	Fedot B Pozdnyakov 9@u9.ru 26062013	
 * @package	SBIN Diesel
 */
-class di_m2_chars extends data_interface
+class di_m2_item_variation_chars extends data_interface
 {
 	public $title = 'm2: Маркет 2 -  характеристики';
 
@@ -21,7 +21,7 @@ class di_m2_chars extends data_interface
 	/**
 	* @var	string	$name	Имя таблицы
 	*/
-	protected $name = 'm2_chars';
+	protected $name = 'm2_item_variation_chars';
 
 	
 	/**
@@ -37,7 +37,7 @@ class di_m2_chars extends data_interface
 		'str_title' => array('type' => 'string'),// название характеристики  в строковом виде 
 		'char_type' => array('type' => 'string'),// 1 если характеристика из справочника и подразумевает выбор из фиксировванных значений. в остельных случаях 0
 		'is_custom' => array('type' => 'integer'),//  1  если это не из справочника
-		'order' => array('type' => 'integer'),
+		'order' => array('type' => 'integer'),//  1  если это не из справочника
 	);
 	
 	public function __construct () {
@@ -89,7 +89,7 @@ class di_m2_chars extends data_interface
 	/**
 	*	Добавить \ Сохранить 
 	*/
-	protected function sys_set()
+	protected function sys_set($silent = false)
 	{
 		$fid = $this->get_args('_sid');
 		if($this->args['type_id'] >0)
@@ -120,6 +120,10 @@ class di_m2_chars extends data_interface
 		$this->_flush();
 		$this->insert_on_empty = true;
 		$result = $this->extjs_set_json(false);
+		if($silent == true)
+		{
+			return $result;
+		}
 		response::send($result, 'json');
 	}
 	
@@ -207,9 +211,9 @@ class di_m2_chars extends data_interface
 	}
 
 	/**
-	*	Обработчик удаления типа характеристики
+	*	Обработчик удаления категори(и|й)
 	*/
-	public function unset_for_type($eObj, $ids, $args)
+	public function unset_for_category($eObj, $ids, $args)
 	{
 		// Получаем файлы, привязанные к удаляем(ой|ым) категориям
 		$fids = $this->_flush()
@@ -231,7 +235,7 @@ class di_m2_chars extends data_interface
 	public function _listeners()
 	{
 		return array(
-			array('di' => 'm2_item', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
+			array('di' => 'm2_item_variation', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
 			array('di' => 'm2_chars_types', 'event' => 'onUnset', 'handler' => 'unset_for_type'),
 		);
 	}

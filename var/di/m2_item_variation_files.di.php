@@ -443,7 +443,7 @@ class di_m2_item_variation_files extends data_interface
 	public function _listeners()
 	{
 		return array(
-			array('di' => 'm2_item', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
+			array('di' => 'm2_item_variation', 'event' => 'onUnset', 'handler' => 'unset_for_item'),
 		);
 	}
 
