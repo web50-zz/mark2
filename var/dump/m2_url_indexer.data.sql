@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_url_indexer` WRITE;
 /*!40000 ALTER TABLE `m2_url_indexer` DISABLE KEYS */;
-INSERT INTO `m2_url_indexer` VALUES (68,12,85,'/kronshteyn_shtanga/Universal X-Grip IV/'),(67,13,85,'/kronshteyn_shtanga/cronshtein/'),(66,0,85,'/kronshteyn_shtanga/'),(69,14,80,'/Mounts/Auto/cronshtein_3.69/'),(59,11,86,'/Dergatel/X-Grip/universal_x-grip_ii/'),(60,12,86,'/Dergatel/X-Grip/Universal X-Grip IV/'),(70,0,83,'/Mounts/'),(62,0,89,'/Dergatel/werwer/'),(63,13,89,'/Dergatel/werwer/cronshtein/'),(64,14,0,'/cronshtein_3.69/'),(57,0,86,'/Dergatel/X-Grip/'),(58,10,86,'/Dergatel/X-Grip/universal_x-grip/'),(56,0,84,'/Dergatel/'),(71,0,80,'/Mounts/Auto/'),(72,15,80,'/Mounts/Auto/prisoska_v_sbore/'),(73,0,81,'/Mounts/moto/'),(74,16,81,'/Mounts/moto/u-homut_05-125/'),(75,0,82,'/Mounts/Boat/'),(95,11,0,'/universal_x-grip_ii/'),(94,15,105,'/werwer0/prisoska_v_sbore/'),(90,16,0,'/u-homut_05-125/'),(93,0,105,'/werwer0/'),(91,15,0,'/prisoska_v_sbore/'),(98,10,0,'/universal_x-grip/'),(99,0,106,'/kronshteyn_shtanga/cukcukcukcukc/'),(106,0,109,''),(111,16,86,'/Dergatel/X-Grip/u-homut_05-125/');
+INSERT INTO `m2_url_indexer` VALUES (68,12,85,'/kronshteyn_shtanga/universal_x-grip_iv/'),(67,13,85,'/kronshteyn_shtanga/cronshtein/'),(66,0,85,'/kronshteyn_shtanga/'),(69,14,80,'/Mounts/Auto/cronshtein_3.69/'),(59,11,86,'/Dergatel/X-Grip/universal_x-grip_ii/'),(60,12,86,'/Dergatel/X-Grip/universal_x-grip_iv/'),(70,0,83,'/Mounts/'),(62,0,89,'/Dergatel/werwer/'),(63,13,89,'/Dergatel/werwer/cronshtein/'),(64,14,0,'/cronshtein_3.69/'),(57,0,86,'/Dergatel/X-Grip/'),(58,10,86,'/Dergatel/X-Grip/universal_x-grip/'),(56,0,84,'/Dergatel/'),(71,0,80,'/Mounts/Auto/'),(72,15,80,'/Mounts/Auto/prisoska_v_sbore/'),(73,0,81,'/Mounts/moto/'),(74,16,81,'/Mounts/moto/u-homut_05-125/'),(75,0,82,'/Mounts/Boat/'),(95,11,0,'/universal_x-grip_ii/'),(94,15,105,'/werwer0/prisoska_v_sbore/'),(90,16,0,'/u-homut_05-125/'),(93,0,105,'/werwer0/'),(91,15,0,'/prisoska_v_sbore/'),(98,10,0,'/universal_x-grip/'),(99,0,106,'/kronshteyn_shtanga/cukcukcukcukc/'),(106,0,109,''),(111,16,86,'/Dergatel/X-Grip/u-homut_05-125/'),(113,12,0,'/universal_x-grip_iv/');
 /*!40000 ALTER TABLE `m2_url_indexer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-21  3:31:48
+-- Dump completed on 2014-01-22  0:43:07

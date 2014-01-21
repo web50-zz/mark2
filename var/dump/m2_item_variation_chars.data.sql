@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `m2_category`
+-- Dumping data for table `m2_item_variation_chars`
 --
 
-LOCK TABLES `m2_category` WRITE;
-/*!40000 ALTER TABLE `m2_category` DISABLE KEYS */;
-INSERT INTO `m2_category` VALUES (1,'root','','',1,0,1,'','','',1,24,1,0),(80,'Авто','Auto','/Mounts/Auto/',1,0,1,'','','',3,4,3,0),(85,'Кронштейн (штанга)','kronshteyn_shtanga','/kronshteyn_shtanga/',1,0,1,'','','',16,19,2,0),(86,'X-Grip','X-Grip','/Dergatel/X-Grip/',1,0,1,'','','',11,12,3,0),(89,'test','werwer','/Dergatel/werwer/',1,0,1,'','','',13,14,3,0),(105,'wewer','werwer0','/werwer0/',1,0,1,'','','',20,21,2,0),(106,'цукцукцукцукц','cukcukcukcukc','/kronshteyn_shtanga/cukcukcukcukc/',1,0,1,'','','',17,18,3,0),(109,'wewer','','',2,105,1,'','','',22,23,2,0),(81,'Мото-Вело','moto','/Mounts/moto/',1,0,1,'','','',5,6,3,0),(82,'лодка - катер','Boat','/Mounts/Boat/',1,0,1,'','','',7,8,3,0),(83,'Крепеж (основа)','Mounts','/Mounts/',1,0,1,'','','',2,9,2,0),(84,'Держатель','Dergatel','/Dergatel/',1,0,1,'','','',10,15,2,0);
-/*!40000 ALTER TABLE `m2_category` ENABLE KEYS */;
+LOCK TABLES `m2_item_variation_chars` WRITE;
+/*!40000 ALTER TABLE `m2_item_variation_chars` DISABLE KEYS */;
+INSERT INTO `m2_item_variation_chars` VALUES (262,19,0,0,0,'erwerwerw','werw',1,0,'',0),(261,19,0,0,94,'tertrtertertert','ecwerververver5656',0,0,'',1),(263,16,0,97,95,'','Размер одежды',0,1,'XL',0),(264,20,0,0,94,'werwer','ecwerververver5656',0,0,'',0),(265,20,0,0,7,'234234234','Монтаж в почву с плохой впитываемостью',0,0,'',2),(266,20,0,0,0,'34234234','2342',1,0,'',1);
+/*!40000 ALTER TABLE `m2_item_variation_chars` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

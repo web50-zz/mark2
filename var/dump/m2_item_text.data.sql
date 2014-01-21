@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_item_text` WRITE;
 /*!40000 ALTER TABLE `m2_item_text` DISABLE KEYS */;
-INSERT INTO `m2_item_text` VALUES (24,11,0,'','4','<p>\n	werwerwerwerwer</p>\n','erwerwer'),(17,12,0,'','2','<p>\n	цукцукцукцу</p>\n','цукцук');
+INSERT INTO `m2_item_text` VALUES (24,11,0,'','4','<p>\n	werwerwerwerwer</p>\n','erwerwer'),(17,12,1,'','2','<p>\n	цукцукцукцу</p>\n','цукцук'),(25,12,0,'','3','<p>\n	werwerwer</p>\n','werwer');
 /*!40000 ALTER TABLE `m2_item_text` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-21  3:31:48
+-- Dump completed on 2014-01-22  0:43:07

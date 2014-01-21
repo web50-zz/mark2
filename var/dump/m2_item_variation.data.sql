@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_item_variation` WRITE;
 /*!40000 ALTER TABLE `m2_item_variation` DISABLE KEYS */;
-INSERT INTO `m2_item_variation` VALUES (16,16,10,'serenkiy','Серенький','2342',34333,0,'24242'),(18,0,11,'weqweqweqwe','weqweqweqwe','0',0,0,'qweq'),(19,16,12,'zheltyy_s_sinim','Желтый с синим','4567',453,0,'erte'),(20,15,13,'342342','342342','423423',2342,0,'23423');
+INSERT INTO `m2_item_variation` VALUES (16,16,10,'serenkiy','Серенький','2342',34333,0,'24242'),(18,0,11,'weqweqweqwe','weqweqweqwe','0',0,0,'qweq'),(19,16,12,'zheltyy_s_sinim','Желтый с синим','4567',453,0,'erte'),(20,15,14,'342342','342342','423423',2342,0,'23423'),(21,15,13,'werwer','werwer','erwerwer',0,0,'werw');
 /*!40000 ALTER TABLE `m2_item_variation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-21  3:31:48
+-- Dump completed on 2014-01-22  0:43:07

@@ -15,4 +15,4 @@ CREATE TABLE `m2_item_indexer` (
   `last_changed` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `m2` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8
