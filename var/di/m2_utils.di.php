@@ -69,12 +69,31 @@ class di_m2_utils extends data_interface
 			$di_name = $key;
 			$id = $value['id'];
 			$di = data_interface::get_instance($di_name);
-			$di->_flush();
 			$args = array('_s'.$value['field'] => $name);
+			if($value['type'] == 'three_child_uniq' && $id>0)
+			{
+				$ns = new nested_sets($di);
+				$parent =  $ns->get_parent($id);
+				$childs = $ns->get_childs($parent['id']);
+				foreach($childs as $key2=>$value2)
+				{
+					if($value2['name'] == $name && $value2['id'] != $id)
+					{
+						$ret = false;
+						break;
+					}
+				}
+				if($ret == false)
+				{
+					break;
+				}
+				continue;
+			}
 			if ($id > 0)
 			{
 				$args['_nid'] = $id;
 			}
+			$di->_flush();
 			$di->push_args($args);
 			$di->what = array('COUNT(*)' => 'check');
 			$di->_get();

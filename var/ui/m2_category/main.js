@@ -1,6 +1,7 @@
 ui.m2_category.main = Ext.extend(ui.m2_category.tree, {
 	bttPAdd: "Добавить подраздел",
-	bttLAdd: "Создать ссылку",
+//	bttLAdd: "Создать ссылку",
+	bttLAdd2: "Добавить ссылку на другой раздел",
 	bttGAdd: "Добавить категорию",
 	bttPEdit: "Изменить",
 	bttGEdit: "Изменить",
@@ -33,6 +34,7 @@ ui.m2_category.main = Ext.extend(ui.m2_category.tree, {
 	AddLink: function(node){
 		var pNode = node.parentNode;
 		var pid = pNode.id;
+		console.log(node);
 		Ext.Ajax.request({
 			url: 'di/m2_category/link.do',
 			params: {pid: pid, lid: node.id},
@@ -45,6 +47,40 @@ ui.m2_category.main = Ext.extend(ui.m2_category.tree, {
 			},
 			scope: this
 		});
+	},
+	AddLink2: function(node){
+		var app = new App();
+		var pid = node.id;
+		app.on({
+			apploaded: function(){
+				var f = new ui.m2_category.category_selection();
+				var w = new Ext.Window({title: "Выбор категории", maximizable: true, modal: true, layout: 'fit', width: 640, height: 480, items: f});
+				f.on({
+					selected: function(data){
+					Ext.Ajax.request({
+						url: 'di/m2_category/link.do',
+						params: {pid: pid, lid: data.category_id},
+						callback: function(options, success, response){
+							var d = Ext.util.JSON.decode(response.responseText);
+							if (d.success){
+								var node = new Ext.tree.AsyncTreeNode({id: d.data.id, text: data.category_title, iconCls: 'link', type: 2, link_id: data.category_id, expanded: true});
+								this.getNodeById(pid).appendChild(node);
+							}else{
+								showError('Во время линкования возникли ошибки.');
+								}
+						},
+						scope: this
+					});
+					w.close();
+					},
+					scope: this
+				});
+				w.show();
+			},
+			apperror: showError,
+			scope: this
+		});
+		app.Load('m2_category', 'category_selection');
 	},
 	EditNode: function(id){
 		var app = new App({waitMsg: this.frmLoading});
@@ -182,8 +218,9 @@ ui.m2_category.main = Ext.extend(ui.m2_category.tree, {
 					items.push({iconCls: 'pencil', text: this.bttGEdit, handler: this.EditGroup.createDelegate(this, [id])});
 				}else if (type == 1){
 					items.push({iconCls: 'pencil', text: this.bttPEdit, handler: this.EditNode.createDelegate(this, [id])});
-					items.push({iconCls: 'link_add', text: this.bttLAdd, handler: this.AddLink.createDelegate(this, [node])});
 					items.push({iconCls: 'add', text: this.bttPAdd, handler: this.AddNode.createDelegate(this, [id])});
+				//	items.push({iconCls: 'link_add', text: this.bttLAdd, handler: this.AddLink.createDelegate(this, [node])}); // old style
+					items.push({iconCls: 'link_add', text: this.bttLAdd2, handler: this.AddLink2.createDelegate(this, [node])});
 				}else if (type == 2){
 					items.push({iconCls: 'pencil', text: this.bttPEdit, handler: this.EditNode.createDelegate(this, [node.attributes.link_id])});
 				}

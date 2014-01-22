@@ -42,8 +42,6 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 
 	Save: function(){
 		var f = this.getForm();
-		console.log(f);
-		console.log(f.getValues());
 		if (f.isValid()){
 			f.submit({
 				url: 'di/m2_category/set.do',

@@ -135,6 +135,17 @@ class di_m2_category extends data_interface
 				))->insert_on_empty = false;
 				$result = $this->extjs_set_json(false);
 				$this->pop_args();
+
+				$this->args['_sid'] = $this->get_lastChangedId(0);
+				$this->args['name'] = $node->name;
+				$this->args['title'] = $node->title;
+				$uri = $this->prepare_uri();
+				$this->set_args(array('name' => $uri), true);
+				$this->calc_uri();
+				
+				$this->_flush();
+				$this->insert_on_empty = false;
+				$result = $this->extjs_set_json(false);
 			}
 			else
 			{
@@ -171,6 +182,8 @@ class di_m2_category extends data_interface
 			{
 				$this->push_args($ns->get_node($id));		// Запоминаем параметры ноды
 				$this->set_args(array('_sid' => $id), true);	// Задаём поисковый ключ
+				$uri = $this->prepare_uri();
+				$this->set_args(array('name' => $uri), true);
 				$this->calc_uri();				// Расчитываем URI
 
 				$this->_flush();				// Сбрасываем DI
@@ -217,7 +230,15 @@ class di_m2_category extends data_interface
 				$uri[] = $parent['name'];
 			}
 		}
-		$uri[] = $this->args['name'];
+		if($this->args['name'] != '')
+		{
+			$uri[] = $this->args['name'];
+		}
+		else
+		{
+			$uri[] = 'p' . $this->args['_sid']; 
+			$this->args['name'] = 'p'.$this->args['_sid'];//  default name generator 
+		}
 		
 		$this->set_args(array('uri' => '/'.join('/', $uri).'/'), true);
 		return TRUE;
@@ -459,7 +480,9 @@ class di_m2_category extends data_interface
 				),
 			'm2_category'=>array(
 					'field'=>'name',
-					'id'=>$id
+					'id'=>$id,
+					'type'=>'three_child_uniq',
+					'parent'=>$this->args['pid'],
 				),
 			);
 		if($name == '')
