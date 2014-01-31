@@ -1,6 +1,6 @@
 ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
-	formWidth: 1000,
-	formHeight: 620,
+	formWidth: 600,
+	formHeight: 420,
 
 	fldTitle: 'Наименование',
 	fldName: 'Лат. Имя стр.',
@@ -9,6 +9,7 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 	fldComment: 'Полное описание',
 	fldShort_description: 'Описание',
 	lblType2: 'Тип вывода узла',
+	lblVisible:'Выводить в меню',
 	loadText: 'Загрузка данных формы',
 	saveText: 'Сохранение...',
 
@@ -150,6 +151,11 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 						{name: 'type', xtype: 'hidden', value: '1'},
 						{fieldLabel: this.lblType2, hiddenName: 'output_type', value: 0, xtype: 'combo', anchor: '90%',
 								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'По умолчанию']]}),
+								valueField: 'value', displayField: 'title', mode: 'local',
+								triggerAction: 'all', selectOnFocus: true, editable: false
+						},
+						{fieldLabel: this.lblVisible, hiddenName: 'visible', value: 1, xtype: 'combo', anchor: '90%',
+								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Нет'],[1, 'Да']]}),
 								valueField: 'value', displayField: 'title', mode: 'local',
 								triggerAction: 'all', selectOnFocus: true, editable: false
 						},
