@@ -459,11 +459,11 @@ class di_m2_category extends data_interface
 		}
 	}
 
-	public function get_level_down($node)
+	public function get_level_down($node, $level = NULL)
 	{
 		$data = array();
 		$ns = new nested_sets($this);
-		$data['childs'] = $ns->get_childs($node, NULL);
+		$data['childs'] = $ns->get_childs($node, $level);
 		return $data;;
 	}
 
@@ -499,6 +499,7 @@ class di_m2_category extends data_interface
 		}
 		return $uri;
 	}
+
 
 }
 ?>
