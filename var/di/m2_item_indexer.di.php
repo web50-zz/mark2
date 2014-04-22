@@ -89,6 +89,8 @@ class di_m2_item_indexer extends di_index_processor
 					'fields'=>array(
 						'type'=>'',
 						'price_value'=>'',
+						'content'=>'',
+						'currency'=>'',
 						)
 					),
 					array(
