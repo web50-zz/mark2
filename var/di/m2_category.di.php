@@ -49,6 +49,10 @@ class di_m2_category extends data_interface
 	
 	public function get_trunc_menu($id)
 	{
+		if(!($id>0))
+		{
+			return array();
+		}
 		$ns = new nested_sets($this);
 		return $ns->get_parents($id, true);
 	}
