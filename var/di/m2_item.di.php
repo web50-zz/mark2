@@ -81,7 +81,7 @@ class di_m2_item extends data_interface
 	/**
 	*	Добавить \ Сохранить 
 	*/
-	protected function sys_set()
+	public function sys_set($silent = false)
 	{
 		$id = $this->get_args('_sid');
 
@@ -95,6 +95,10 @@ class di_m2_item extends data_interface
 		$this->_flush();
 		$this->insert_on_empty = true;
 		$result = $this->extjs_set_json(false);
+		if($silent = true)
+		{
+			return $result;
+		}
 		response::send($result, 'json');
 	}
 	
@@ -113,7 +117,7 @@ class di_m2_item extends data_interface
 	*	Удалить файл[ы]
 	* @access protected
 	*/
-	protected function sys_unset()
+	public function sys_unset($silent = false)
 	{
 		if ($this->args['records'] && !$this->args['_sid'])
 		{
@@ -121,8 +125,13 @@ class di_m2_item extends data_interface
 		}
 		$this->_flush();
 		$data = $this->extjs_unset_json(false);
+		if($silent == true)
+		{
+			return $data;
+		}
 		response::send($data, 'json');
 	}
+
 	protected function sys_search_by_category()
 	{
 		$di = $this->join_with_di('m2_item_category',array('id'=>'item_id'),array('category_id','category_id'));

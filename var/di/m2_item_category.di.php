@@ -63,13 +63,17 @@ class di_m2_item_category extends data_interface
 	/**
 	*	Добавить \ Сохранить файл
 	*/
-	protected function sys_set()
+	public function sys_set($silent = false)
 	{
 		$args =  $this->get_args();
 		$this->set_args($args);
 		$this->_flush();
 		$this->insert_on_empty = true;
 		$result = $this->extjs_set_json(false);
+		if($silent == true)
+		{
+			return $result;
+		}
 		response::send($result, 'json');
 	}
 	

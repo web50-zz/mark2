@@ -146,7 +146,7 @@ class di_m2_item_files extends data_interface
 	*	Добавить \ Сохранить файл
 	*/
 
-	protected function sys_set()
+	public function sys_set()
 	{
 		$fid = $this->get_args('_sid',0);
 		$silent = $this->get_args('silent',false);
