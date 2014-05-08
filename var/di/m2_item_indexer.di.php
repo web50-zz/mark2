@@ -109,6 +109,7 @@ class di_m2_item_indexer extends di_index_processor
 					'di_key'=>'m2_id',
 					'fields'=>array(
 						'type_id'=>'',
+						'type_value'=>'',
 						'str_title'=>'',
 						'variable_value'=>'',
 						'order'=>'',
