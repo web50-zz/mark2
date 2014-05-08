@@ -95,7 +95,7 @@ class di_m2_item extends data_interface
 		$this->_flush();
 		$this->insert_on_empty = true;
 		$result = $this->extjs_set_json(false);
-		if($silent = true)
+		if($silent == true)
 		{
 			return $result;
 		}
