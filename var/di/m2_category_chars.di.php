@@ -155,6 +155,18 @@ class di_m2_category_chars extends data_interface
 		response::send($data, 'json');
 	}
 
+	public function get_value_for_property($item_id = 0, $property_id = 0)
+	{
+		$this->push_args(array(
+			'_sm2_id'=>$item_id,
+			'_stype_id'=>$property_id,
+		));
+		$this->_flush();
+		$res = $this->extjs_grid_json(false,false);
+		$this->pop_args();
+		return $res['records'][0]['variable_value'];
+	}
+
 	public function unset_for_item($eObj, $ids, $args)
 	{
 		$this->push_args(array());
@@ -228,6 +240,7 @@ class di_m2_category_chars extends data_interface
 		}
 	}
 
+	
 	public function _listeners()
 	{
 		return array(
