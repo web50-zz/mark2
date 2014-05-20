@@ -20,6 +20,9 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 	errInputText: 'Корректно заполните все необходимые поля',
 	errConnectionText: "Ошибка связи с сервером",
 
+	getForm: function(){
+		return this.getComponent('category-form').getForm();
+	},
 
 	Load: function(data){
 		var f = this.getForm();
@@ -131,32 +134,36 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 	constructor: function(config){
 		config = config || {};
 		Ext.apply(this, {
-			frame: true, 
-			labelWidth: 100, 
-			defaults: {xtype: 'textfield', width: 200, anchor: '100%'},
+			xtype: 'panel',
+			border: false,
+			layout: 'fit',
 			tbar: [
 				{text: 'Файлы', iconCls: 'application_view_tile', handler: this.openImages, scope: this},
 				{text: 'Тексты', iconCls: 'page_white_text' , handler: this.openTabs, scope: this},
 				{text: 'Характеристики', iconCls: 'chart_organisation', handler: this.openChars, scope: this}
 			],
 			items: [
-				{name: '_sid', xtype: 'hidden'},
-				{name: 'pid', xtype: 'hidden'},
-				{name: 'type', xtype: 'hidden', value: '1'},
-				{xtype: 'displayfield',fieldLabel: '',anchor: '90%'},
-				{fieldLabel: this.lblType2, hiddenName: 'output_type', value: 0, xtype: 'combo', anchor: '90%',
-						store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'По умолчанию']]}),
-						valueField: 'value', displayField: 'title', mode: 'local',
-						triggerAction: 'all', selectOnFocus: true, editable: false
-				},
-				{fieldLabel: this.lblVisible, hiddenName: 'visible', value: 1, xtype: 'combo', anchor: '90%',
-						store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Нет'],[1, 'Да']]}),
-						valueField: 'value', displayField: 'title', mode: 'local',
-						triggerAction: 'all', selectOnFocus: true, editable: false
-				},
-				{fieldLabel: this.fldTitle, name: 'title',  allowBlank: false, maxLength: 255, maxLengthText: 'Не больше 255 символов'},
-				{fieldLabel: this.fldName, name: 'name', allowBlank: true, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
-				{fieldLabel: this.fldURI, name: 'uri', disabled: true}
+				{xtype: 'form', id: 'category-form', layout: 'form', frame: true, border: false, autoScroll: true,
+					labelWidth: 150, defaults: {xtype: 'textfield', width: 200, anchor: '97%'},
+					items: [
+						{name: '_sid', xtype: 'hidden'},
+						{name: 'pid', xtype: 'hidden'},
+						{name: 'type', xtype: 'hidden', value: '1'},
+						{fieldLabel: this.lblType2, hiddenName: 'output_type', value: 0, xtype: 'combo', anchor: '90%',
+								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'По умолчанию']]}),
+								valueField: 'value', displayField: 'title', mode: 'local',
+								triggerAction: 'all', selectOnFocus: true, editable: false
+						},
+						{fieldLabel: this.lblVisible, hiddenName: 'visible', value: 1, xtype: 'combo', anchor: '90%',
+								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Нет'],[1, 'Да']]}),
+								valueField: 'value', displayField: 'title', mode: 'local',
+								triggerAction: 'all', selectOnFocus: true, editable: false
+						},
+						{fieldLabel: this.fldTitle, name: 'title',  allowBlank: false, maxLength: 255, maxLengthText: 'Не больше 255 символов'},
+						{fieldLabel: this.fldName, name: 'name', allowBlank: true, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
+						{fieldLabel: this.fldURI, name: 'uri', disabled: true}
+					]
+				}
 			],
 			buttonAlign: 'right',
 			buttons: [
