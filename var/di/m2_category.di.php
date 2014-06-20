@@ -391,6 +391,7 @@ class di_m2_category extends data_interface
 		$flds = array(
 			'id',
 			'brief',
+			'title',
 			'name',
 			'left',
 			'right',
