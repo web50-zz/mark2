@@ -6,7 +6,7 @@
 * to  use make $EMULATE= false;
 */
 
-//$EMULATE = true;
+$EMULATE = true;
 $source_wp_path = '/server/web/documents/avik.u9.ru/images/data/catalog/ru';
 $STOP_URI_INTERPRETER = true;
 
@@ -15,7 +15,6 @@ define('DI_CALL_PREFIX', ADM_PREFIX);
 echo("starts.....\r\n");
 $cat = get_cat_map();
 $posts = get_items();
-
 foreach($posts as $key=>$value)
 {
 	$j++;
@@ -175,6 +174,27 @@ function get_items()
 		'db1'
 	);
 	$results = $old->_get($sql)->get_results();
+	$missed =  array();
+	foreach($results as $key=>$value)
+	{
+		echo($value->articul." \r\n");
+		$di = data_interface::get_instance('m2_item');
+		$di->_flush();
+		$di->push_args(array('_sarticle'=>$value->articul));
+		$res = $di->extjs_grid_json(false,false);
+		$di->pop_args();
+
+		if($res['total'] == 0)
+		{
+//			echo("missed \r\n");
+			$missed[] = $value;
+		}
+		else{
+//			echo("found {$res['total']} \r\n");
+		}
+	}
+//	dbg::show($missed);
+	return $missed;
 	return $results;
 }
 

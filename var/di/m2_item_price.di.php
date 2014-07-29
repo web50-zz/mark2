@@ -124,7 +124,7 @@ class di_m2_item_price extends data_interface
 	*	Удалить файл[ы]
 	* @access protected
 	*/
-	protected function sys_unset($silent = false)
+	public function sys_unset($silent = false)
 	{
 		if ($this->args['records'] && !$this->args['_sid'])
 		{
