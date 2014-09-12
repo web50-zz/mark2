@@ -1,6 +1,7 @@
 ui.m2_item.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 	clmnTitle: "Название",
 	clmnId:"Id",
+	clmnArticul:'Артикул',
 	pagerSize: 50,
 	pagerEmptyMsg: 'Нет записей',
 	pagerDisplayMsg: 'Записи с {0} по {1}. Всего: {2}',
@@ -65,6 +66,7 @@ ui.m2_item.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 						{name: 'order', type: 'int'},
 						'real_name',
 						'name',
+						'article',
 						'title',
 						{name: 'size', type: 'int'},
 						{name: 'width', type: 'int'},
@@ -97,6 +99,7 @@ ui.m2_item.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 				defaults: {sortable: true, width: 200},
 				columns: [
 					{header: this.clmnId, dataIndex: 'id', width:70},
+					{header: this.clmnArticul, dataIndex: 'article',width: 70},
 					{header: this.clmnTitle, id: 'expand', dataIndex: 'title', editor: new fm.TextField({maxLength: 255, maxLengthText: 'Не больше 255 символов'})}
 				]
 			}),

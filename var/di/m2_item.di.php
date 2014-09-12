@@ -51,7 +51,7 @@ class di_m2_item extends data_interface
 		{
 			$this->sys_search_by_category();
 		}
-		$this->extjs_grid_json(array('id', 'order', 'name', 'title'));
+		$this->extjs_grid_json(array('id', 'order', 'name', 'title','article'));
 	}
 	
 	protected function sys_get()
