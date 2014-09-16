@@ -391,6 +391,7 @@ class di_m2_category extends data_interface
 		$flds = array(
 			'id',
 			'brief',
+			'title',
 			'name',
 			'left',
 			'right',
@@ -463,6 +464,15 @@ class di_m2_category extends data_interface
 		}
 	}
 
+	public function get_descendants($node)
+	{
+		$ns = new nested_sets($this);
+		if ($node > 0)
+		{
+			$childs = $ns->get_childs($node);
+		}
+		return $childs;
+	}
 	public function get_level_down($node, $level = NULL)
 	{
 		$data = array();
