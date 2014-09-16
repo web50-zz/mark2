@@ -14,5 +14,6 @@ CREATE TABLE `m2_item_indexer` (
   `category_list` text NOT NULL,
   `last_changed` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `m2` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8
+  KEY `m2` (`item_id`),
+  FULLTEXT KEY `category_list` (`category_list`)
+) ENGINE=MyISAM AUTO_INCREMENT=1219 DEFAULT CHARSET=utf8

@@ -9,4 +9,4 @@ CREATE TABLE `m2_file_types` (
   `is_image` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `order` (`order`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8

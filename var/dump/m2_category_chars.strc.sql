@@ -12,4 +12,4 @@ CREATE TABLE `m2_category_chars` (
   `order` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `ssgn_project_id` (`m2_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=273 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=287 DEFAULT CHARSET=utf8
