@@ -406,7 +406,6 @@ class di_m2_category extends data_interface
 			array('di'=>$dp,'name'=>'real_name'),
 			array('di'=>$dp2,'name'=>'real_name')
 		);
-		$this->connector->debug = true;
 		$this->data =  $this->extjs_grid_json($flds,false);
 		$this->get_childs(0);
 		$this->correct_links();
