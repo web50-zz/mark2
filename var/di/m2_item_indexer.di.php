@@ -66,9 +66,13 @@ class di_m2_item_indexer extends di_index_processor
 					'index_field_name'=>'files_list',
 					'di_name'=>'m2_item_files',
 					'di_key'=>'item_id',
+					'order_field'=>'id',
+					'order_type'=>'asc',
 					'fields'=>array(
 						'real_name'=>'',
+						'id'=>'',
 						'file_type'=>'',
+						'order'=>'',
 						'type'=>''
 						)
 					),
