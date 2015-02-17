@@ -19,7 +19,7 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 
 	bttSave: 'Сохранить',
 	bttCancel: 'Отмена',
-
+	fldMetaTitle:'META Title',
 	errSaveText: 'Ошибка во время сохранения',
 	errInputText: 'Корректно заполните все необходимые поля',
 	errConnectionText: "Ошибка связи с сервером",
@@ -117,6 +117,7 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 										valueField: 'value', displayField: 'title', mode: 'local',
 										triggerAction: 'all', selectOnFocus: true, editable: false
 						},
+						{fieldLabel: this.fldMetaTitle, name: 'meta_title',xtype: 'textarea'},
 						this.m,
 						this.p
 					]

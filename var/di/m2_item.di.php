@@ -36,6 +36,7 @@ class di_m2_item extends data_interface
 		'price' => array('type' => 'string'),
 		'price2' => array('type' => 'string'),
 		'article' => array('type' => 'string'),
+		'meta_title' => array('type' => 'string'),
 	);
 	
 	public function __construct () {

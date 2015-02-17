@@ -41,6 +41,7 @@ class di_m2_item_indexer extends di_index_processor
 		'manufacturers_list'=>array('type'=>'string'),
 		'chars_list'=>array('type'=>'string'),
 		'order' => array('type'=>'integer'),
+		'meta_title'=>array('type'=>'string'),
 
 	);
 
@@ -55,6 +56,7 @@ class di_m2_item_indexer extends di_index_processor
 					'title'=>'',
 					'name'=>'',
 					'not_available'=>'',
+					'meta_title'=>'',
 				)
 
 			),

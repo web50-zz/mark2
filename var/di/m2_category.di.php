@@ -39,7 +39,8 @@ class di_m2_category extends data_interface
 			'short_description' => array('type' => 'text'),
 			'left' => array('type' => 'integer', 'protected' => 1),
 			'right' => array('type' => 'integer', 'protected' => 1),
-			'level' => array('type' => 'integer', 'readonly' => 1)
+			'level' => array('type' => 'integer', 'readonly' => 1),
+			'meta_title' => array('type' => 'text'),
 		);
 	
 	public function __construct () {
@@ -406,7 +407,6 @@ class di_m2_category extends data_interface
 			array('di'=>$dp,'name'=>'real_name'),
 			array('di'=>$dp2,'name'=>'real_name')
 		);
-		$this->connector->debug = true;
 		$this->data =  $this->extjs_grid_json($flds,false);
 		$this->get_childs(0);
 		$this->correct_links();

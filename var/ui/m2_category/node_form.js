@@ -8,6 +8,7 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 	fldBrief: 'Краткое описание',
 	fldComment: 'Полное описание',
 	fldShort_description: 'Описание',
+	fldMetaTitle:'META Title',
 	lblType2: 'Тип вывода узла',
 	lblVisible:'Выводить в меню',
 	loadText: 'Загрузка данных формы',
@@ -156,7 +157,8 @@ ui.m2_category.node_form = Ext.extend(Ext.form.FormPanel, {
 				},
 				{fieldLabel: this.fldTitle, name: 'title',  allowBlank: false, maxLength: 255, maxLengthText: 'Не больше 255 символов'},
 				{fieldLabel: this.fldName, name: 'name', allowBlank: true, maxLength: 32, maxLengthText: 'Не больше 32 символов'},
-				{fieldLabel: this.fldURI, name: 'uri', disabled: true}
+				{fieldLabel: this.fldURI, name: 'uri', disabled: true},
+				{fieldLabel: this.fldMetaTitle, name: 'meta_title',xtype: 'textarea'}
 			],
 			buttonAlign: 'right',
 			buttons: [
