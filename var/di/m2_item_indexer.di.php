@@ -106,7 +106,17 @@ class di_m2_item_indexer extends di_index_processor
 					'di_key'=>'item_id',
 					'fields'=>array(
 						'manufacturer_id'=>'',
+						),
+					'joins'=>array(
+						'm2_manufacturers'=>array(
+								'source_key'=>'manufacturer_id',
+								'remote_key'=>'id',
+								'fields'=>array(
+									'title'=>'title'
+								)
+							)
 						)
+
 					),
 					array(
 					'type'=>'records_by_key',
