@@ -7,7 +7,6 @@
 */
 
 //$EMULATE = true;
-$source_wp_path = '/server/web/documents/avik.u9.ru/images/data/catalog/ru';
 $STOP_URI_INTERPRETER = true;
 
 include('../../../base.php');
