@@ -2,10 +2,10 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 	bttAdd: "Добавить",
 	bttEdit: "Редактировать",
 	bttDelete: "Удалить",
-
+	bttXls:"Получить в формате эксель",
 	addTitle: "Добавление",
 	editTitle: "Редактирование",
-
+	bttImportXls:"Импорт XLS",
 	cnfrmTitle: "Подтверждение",
 	cnfrmMsg: "Вы действительно хотите удалить?",
 
@@ -49,6 +49,30 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 		});
 		app.Load('m2_item', 'form');
 	},
+	xls: function(){
+		document.location = 'di/m2_export_xls/list.js';
+	},
+	importXls: function(){
+		var app = new App({waitMsg: this.frmLoading});
+		var pid = this.getKey();
+		app.on({
+			apploaded: function(){
+				var f = new ui.m2_import.item_form();
+				var w = new Ext.Window({iconCls: this.iconCls, title: this.titleAdd, maximizable: true, modal: true, layout: 'fit', width: f.formWidth, height: 100, items: f});
+				f.on({
+					data_saved: function(){},
+					cancelled: function(){w.destroy()},
+					scope: this
+				});
+				w.show(null, function(){});
+			},
+			apperror: showError,
+			scope: this
+		});
+		app.Load('m2_import', 'item_form');
+
+//		document.location = 'di/m2_export_xls/import_xls.html';
+	},
 	multiSave: function(){
 		this.store.save();
 	},
@@ -71,6 +95,8 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 		Ext.apply(this, {
 			tbar: [
 				{iconCls: 'note_add', text: this.bttAdd, handler: this.Add, scope: this},
+				{iconCls: 'note_add', text: this.bttXls, handler: this.xls, scope: this},
+				{iconCls: 'note_add', text: this.bttImportXls, handler: this.importXls, scope: this},
 				'->', {iconCls: 'help', handler: function(){showHelp('m2_item')}}
 			]
 		});

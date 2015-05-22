@@ -146,17 +146,18 @@ class di_m2_item_files extends data_interface
 	*	Добавить \ Сохранить файл
 	*/
 
-	public function sys_set()
+	public function sys_set($silent = false)
 	{
 		$fid = $this->get_args('_sid',0);
-		$silent = $this->get_args('silent',false);
 		$from_source = $this->get_args('source',false);
+		$regen = $this->get_args('regen',false);
 		if ($fid > 0)
 		{
 			$this->_flush();
 			$this->_get();
 			$file = $this->get_results(0);
 			$old_file_name = $file->real_name;
+			$file_ish = get_object_vars($file);
 		}
 		else
 		{
@@ -190,7 +191,10 @@ class di_m2_item_files extends data_interface
 				$file = file_system::upload_file('file', $this->get_path_to_storage());
 			}
 		};
-		
+		if($regen == true)
+		{
+			$file = $file_ish;
+		}
 		if ($file !== false)
 		{
 			if (!($fid > 0))
@@ -248,7 +252,7 @@ class di_m2_item_files extends data_interface
 		if($silent == true)
 		{
 			$this->args['result'] = $result;
-			return;
+			return $result;
 		}
 		response::send(response::to_json($result), 'html');
 	}
