@@ -47,6 +47,7 @@ class di_m2_category_tabs extends data_interface
 		'id' => array('type' => 'integer', 'serial' => TRUE, 'readonly' => TRUE),
 		'm2_category_id' => array('type' => 'integer', 'alias' => 'pid'),
 		'order' => array('type' => 'integer'),
+		'type' => array('type' => 'integer'),
 		'name' => array('type' => 'string'),
 		'title' => array('type' => 'string'),
 		'content' => array('type' => 'string'),
