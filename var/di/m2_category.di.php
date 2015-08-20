@@ -399,6 +399,7 @@ class di_m2_category extends data_interface
 			'level',
 			'uri',
 			'link_id',
+			'visible',
 			'type',
 			array('di'=>$d2,'name'=>'uri'),
 			array('di'=>$d2,'name'=>'name'),
