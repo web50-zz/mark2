@@ -23,7 +23,7 @@ class di_m2_export_xls extends data_interface
 	*/
 	protected $name = '';
 
-	
+	public	$import_di = false;
 	public $path_to_storage = 'mark2/m2_import/';
 	/**
 	* @var	array	$fields	Конфигурация таблицы
@@ -33,6 +33,11 @@ class di_m2_export_xls extends data_interface
 	
 	public function __construct () {
 		// Call Base Constructor
+		$import_di = registry::get('m2_import_di');
+		if($import_di)
+		{
+			$this->import_di = $import_di;
+		}
 		parent::__construct(__CLASS__);
 	}
 	/**
@@ -43,7 +48,7 @@ class di_m2_export_xls extends data_interface
 		return FILE_STORAGE_PATH.$this->path_to_storage;
 	}
 
-	protected function sys_list()
+	public function sys_list()
 	{
 		$di1 = data_interface::get_instance('phpexcel');
 		$objPHPExcel = new PHPExcel();
@@ -115,7 +120,7 @@ class di_m2_export_xls extends data_interface
 		$objPHPExcel->setActiveSheetIndex(0);
 		$callStartTime = microtime(true);
 		header('Content-Type: application/xlsx');
-		header('Content-Disposition: attachment;filename="test.xlsx"');
+		header('Content-Disposition: attachment;filename="price.xlsx"');
 		header('Cache-Control: max-age=0');
 		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 		$objWriter->save('php://output');
@@ -131,7 +136,15 @@ class di_m2_export_xls extends data_interface
 		$file = file_system::upload_file('file', $this->get_path_to_storage());
 		if ($file !== false)
 		{
-			$this->import_xls($this->get_path_to_storage().$file['real_name']);
+			if($this->import_di != false)
+			{
+				$di =  data_interface::get_instance($this->import_di);
+				$di->import_xls($this->get_path_to_storage().$file['real_name']);
+			}
+			else
+			{
+				$this->import_xls($this->get_path_to_storage().$file['real_name']);
+			}
 			$result = array('success' => true);
 		}
 		else
@@ -153,7 +166,8 @@ class di_m2_export_xls extends data_interface
 //		$file = INSTANCES_PATH.'mark2/etc/test.xlsx';
 		$cat = $this->prepare_categories();
 		$man = $this->prepare_manufacturers();
-		$res = $this->read_into_array($file);
+//		$res = $this->read_into_array($file);
+		$res = $this->get_items2($file);
 		if(!(count($res)>0))
 		{
 			return;
@@ -288,5 +302,41 @@ class di_m2_export_xls extends data_interface
 			}
 		return $result;
 	}
+
+	function get_items2($file)
+	{
+			$di1 = data_interface::get_instance('phpexcel');
+			$inputFileType = PHPExcel_IOFactory::identify($file);
+			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+			$objPHPExcel = $objReader->load($file);
+			$objWorksheet = $objPHPExcel->setActiveSheetIndex(0);
+			$result = array();
+			foreach($objWorksheet -> toArray(null,true,true) as $row_n => $row){
+					$r =  gettype($row[4]);
+					if($row[4] == '0.330')
+					{
+						$row[4] = '0.33';
+					}
+					else if($row[4] == '0.473')
+					{
+						$row[4] = '0.473';
+					}
+					else if($row[4] == '0.350')
+					{
+						$row[4] = '0.35';
+					}
+					else if($row[4] == '0.59999999999999998')
+					{
+						$row[4] = '0.6';
+					}
+					else
+					{
+						$row[4] = $row[4] + 0;
+					}
+					$result[] = $row;
+			}
+		return $result;
+	}
+
 }
 ?>

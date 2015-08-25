@@ -51,5 +51,10 @@ class ui_m2_import extends user_interface
 		$tmpl = new tmpl($this->pwd() . 'types.js');
 		response::send($tmpl->parse($this), 'js');
 	}
+	public function pub_price()
+	{
+		$di = data_interface::get_instance('m2_export_xls');
+		$di->sys_list();
+	}
 }
 ?>
