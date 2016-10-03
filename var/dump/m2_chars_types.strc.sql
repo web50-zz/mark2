@@ -1,10 +1,10 @@
 CREATE TABLE `m2_chars_types` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` nt(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL COMMENT 'Наименование',
   `name` varchar(32) NOT NULL COMMENT 'Имя для URI',
   `uri` varchar(255) NOT NULL COMMENT 'Полный URI проекта',
   `type` tinyint(1) unsigned NOT NULL COMMENT 'Тип 0 - категория, 1 - проект',
-  `link_id` smallint(5) unsigned NOT NULL,
+  `link_id` int(11) unsigned NOT NULL,
   `visible` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `brief` text NOT NULL COMMENT 'краткое описание',
   `description` text NOT NULL COMMENT 'подробное описание',

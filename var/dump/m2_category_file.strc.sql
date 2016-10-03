@@ -1,7 +1,7 @@
 CREATE TABLE `m2_category_file` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `m2_category_id` smallint(5) unsigned NOT NULL,
-  `order` smallint(5) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `m2_category_id` int(11) unsigned NOT NULL,
+  `order` int(11) unsigned NOT NULL,
   `name` varchar(128) NOT NULL,
   `real_name` varchar(64) NOT NULL,
   `type` varchar(32) NOT NULL,
