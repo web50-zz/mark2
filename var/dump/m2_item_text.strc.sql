@@ -1,6 +1,6 @@
 CREATE TABLE `m2_item_text` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `item_id` smallint(5) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `item_id` int(11) unsigned NOT NULL,
   `order` smallint(5) unsigned NOT NULL,
   `name` varchar(128) NOT NULL,
   `type` varchar(32) NOT NULL,
