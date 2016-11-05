@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.63, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: mrk2_u9_ru
+-- Host: localhost    Database: termt_u9_ru
 -- ------------------------------------------------------
--- Server version	5.1.63-0+squeeze1
+-- Server version	5.5.41-0+wheezy1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_url_indexer` WRITE;
 /*!40000 ALTER TABLE `m2_url_indexer` DISABLE KEYS */;
-INSERT INTO `m2_url_indexer` VALUES (68,12,85,'/kronshteyn_shtanga/universal_x-grip_iv/'),(67,13,85,'/kronshteyn_shtanga/cronshtein/'),(66,0,85,'/kronshteyn_shtanga/'),(69,14,80,'/Mounts/Auto/cronshtein_3.69/'),(59,11,86,'/Dergatel/X-Grip/universal_x-grip_ii/'),(60,12,86,'/Dergatel/X-Grip/universal_x-grip_iv/'),(70,0,83,'/Mounts/'),(62,0,89,'/Dergatel/werwer/'),(63,13,89,'/Dergatel/werwer/cronshtein/'),(64,14,0,'/cronshtein_3.69/'),(57,0,86,'/Dergatel/X-Grip/'),(58,10,86,'/Dergatel/X-Grip/universal_x-grip/'),(56,0,84,'/Dergatel/'),(71,0,80,'/Mounts/Auto/'),(72,15,80,'/Mounts/Auto/prisoska_v_sbore/'),(73,0,81,'/Mounts/moto/'),(74,16,81,'/Mounts/moto/u-homut_05-125/'),(75,0,82,'/Mounts/Boat/'),(95,11,0,'/universal_x-grip_ii/'),(94,15,105,'/werwer0/prisoska_v_sbore/'),(90,16,0,'/u-homut_05-125/'),(93,0,105,'/werwer0/'),(91,15,0,'/prisoska_v_sbore/'),(98,10,0,'/universal_x-grip/'),(99,0,106,'/kronshteyn_shtanga/cukcukcukcukc/'),(106,0,109,''),(111,16,86,'/Dergatel/X-Grip/u-homut_05-125/'),(113,12,0,'/universal_x-grip_iv/');
+INSERT INTO `m2_url_indexer` VALUES (2915,0,346,'/tovary_1/tovary_10/tovary_29/'),(2914,0,345,'/tovary_1/tovary_10/tovary_28/'),(2913,0,344,'/tovary_1/tovary_9/tovary_27/'),(2912,0,343,'/tovary_1/tovary_9/tovary_26/'),(2911,0,342,'/tovary_1/tovary_8/tovary_25/'),(2910,0,341,'/tovary_1/tovary_8/tovary_23/'),(2909,0,340,'/tovary_1/tovary_8/tovary_22/'),(2908,0,339,'/tovary_1/tovary_8/tovary_21/'),(2907,0,338,'/tovary_20/'),(2906,0,337,'/tovary_6/tovary_19/'),(2905,0,336,'/tovary_5/tovary_18/'),(2904,0,335,'/tovary_4/tovary_17/'),(2903,0,334,'/tovary_4/tovary_16/'),(2902,0,333,'/tovary_3/tovary_15/'),(2901,0,332,'/tovary_3/tovary_14/'),(2900,0,331,'/tovary_2/tovary_13/'),(2899,0,330,'/tovary_2/tovary_12/'),(2898,0,329,'/tovary_2/tovary_11/'),(2897,0,328,'/tovary_1/tovary_10/'),(2896,0,319,'/tovary_1/'),(2887,1286,0,'/tovar1/'),(2888,0,320,'/tovary_2/'),(2889,0,321,'/tovary_3/'),(2890,0,322,'/tovary_4/'),(2891,0,323,'/tovary_5/'),(2892,0,324,'/tovary_6/'),(2893,0,325,'/tovary_1/tovary_7/'),(2894,0,326,'/tovary_1/tovary_8/'),(2895,0,327,'/tovary_1/tovary_9/'),(2916,0,347,'/tovary_2/tovary_12/tovary_30/'),(2917,0,348,'/tovary_2/tovary_12/tovary_31/'),(2918,0,349,'/tovary_3/tovary_15/tovary_32/'),(2919,0,350,'/tovary_3/tovary_15/tovary_33/'),(2920,0,351,'/tovary_3/tovary_15/tovary_330/'),(2921,1287,0,'/tovar_2/'),(2922,1288,0,'/tovar_3/'),(2923,1289,0,'/tovar_4/'),(2924,1290,0,'/tovar_5/'),(2925,1291,0,'/tovar_6/'),(2926,1292,0,'/tovar_7/'),(2927,1286,339,'/tovary_1/tovary_8/tovary_21/tovar1/'),(2928,1286,329,'/tovary_2/tovary_11/tovar1/'),(2929,1286,349,'/tovary_3/tovary_15/tovary_32/tovar1/'),(2930,1287,339,'/tovary_1/tovary_8/tovary_21/tovar_2/'),(2931,1288,339,'/tovary_1/tovary_8/tovary_21/tovar_3/'),(2932,1289,339,'/tovary_1/tovary_8/tovary_21/tovar_4/'),(2933,1290,339,'/tovary_1/tovary_8/tovary_21/tovar_5/'),(2934,1291,339,'/tovary_1/tovary_8/tovary_21/tovar_6/'),(2935,1292,339,'/tovary_1/tovary_8/tovary_21/tovar_7/');
 /*!40000 ALTER TABLE `m2_url_indexer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-22  0:43:07
+-- Dump completed on 2016-11-05 23:50:55

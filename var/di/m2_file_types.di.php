@@ -35,6 +35,8 @@ class di_m2_file_types extends data_interface
 		'prefix' => array('type' => 'string'),
 		'width' => array('type' => 'string'),
 		'height' => array('type' => 'string'),
+		'dop_params' => array('type' => 'string'),
+		'preview_type' => array('type' => 'integer'),
 		'is_image' => array('type' => 'integer'),
 	);
 	

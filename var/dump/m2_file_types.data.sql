@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.63, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: mrk2_u9_ru
+-- Host: localhost    Database: termt_u9_ru
 -- ------------------------------------------------------
--- Server version	5.1.63-0+squeeze1
+-- Server version	5.5.41-0+wheezy1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_file_types` WRITE;
 /*!40000 ALTER TABLE `m2_file_types` DISABLE KEYS */;
-INSERT INTO `m2_file_types` VALUES (2,2,'manual','User Manual','','',0,0),(3,1,'thomb','Томб в галерею товара','70','70',0,1),(4,3,'tmb2','Дополнительный тестовыйтомб','100','100',0,1);
+INSERT INTO `m2_file_types` VALUES (2,2,'manual','User Manual','','',0,0,0,NULL),(3,1,'thomb','Томб в галерею товара','250','250',0,1,0,'{\"previews\":[{\"width\":\"55\",\"height\":\"55\",\"adaptive\":\"false\",\"prefix\":\"mini\"}]}'),(4,3,'tmb2','Дополнительный тестовыйтомб','100','100',0,1,0,NULL);
 /*!40000 ALTER TABLE `m2_file_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-22  0:43:08
+-- Dump completed on 2016-11-05 23:50:55

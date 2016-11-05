@@ -5,4 +5,4 @@ CREATE TABLE `m2_item_category` (
   UNIQUE KEY `id` (`id`),
   KEY `NewIndex1` (`category_id`),
   KEY `NewIndex2` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1404 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=1413 DEFAULT CHARSET=utf8

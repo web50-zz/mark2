@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.63, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: mrk2_u9_ru
+-- Host: localhost    Database: termt_u9_ru
 -- ------------------------------------------------------
--- Server version	5.1.63-0+squeeze1
+-- Server version	5.5.41-0+wheezy1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_item_price` WRITE;
 /*!40000 ALTER TABLE `m2_item_price` DISABLE KEYS */;
-INSERT INTO `m2_item_price` VALUES (20,12,8,'5','','800',0),(19,12,8,'7','','1000',0),(3,0,2,'','<p>\n	werwerwerwer</p>\n','werwerwer',0),(4,0,3,'','<p>\n	werwerwer</p>\n','werwer',0),(5,0,4,'','<p>\n	werwerwerwer</p>\n','werwer',0),(6,0,5,'','<p>\n	werwerwer</p>\n','werwerwerwerwe',0),(7,3,6,'2','\n','45',0),(8,3,7,'5','\n','800',0),(9,2,6,'2','\n','12450',0),(10,10,6,'7','','1000',0),(11,10,6,'5','','800',0),(12,10,6,'6','','900',0),(13,0,6,'7','','1000',0),(14,10,7,'5','','800',0),(15,11,7,'7','','1000',0),(16,11,7,'5','','800',0),(17,11,7,'6','','900',0),(18,0,7,'5','','800',0),(21,12,8,'6','','900',0),(22,13,8,'5','','800',0),(23,13,8,'6','','900',0),(24,13,8,'7','','1000',0),(25,14,8,'5','','800',0),(26,14,8,'6','','900',0),(27,14,8,'7','','1000',0),(31,16,8,'5','','800',3),(32,16,8,'6','','900',3),(33,16,8,'7','','1000',3),(34,0,8,'6','23423','34234',0),(35,22,9,'5','weqweqw','qweq',0),(36,22,9,'6','eqweqwe','qweqw',0);
+INSERT INTO `m2_item_price` VALUES (3400,1288,0,'7','','5000',3),(3401,1289,0,'7','','18500',3),(3402,1290,0,'7','9350','',3),(3403,1291,0,'7','','1870',3),(3404,1292,0,'7','','16320',3),(3398,1286,9,'7','','70000',3),(3399,1287,9,'7','','35000',3);
 /*!40000 ALTER TABLE `m2_item_price` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-22  0:43:08
+-- Dump completed on 2016-11-05 23:50:55

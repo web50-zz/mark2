@@ -10,6 +10,8 @@ ui.m2_file_types.form = Ext.extend(Ext.form.FormPanel, {
 	lblPrefix: 'Префикс',
 	lblImage: 'Изображение',
 	lblAvailable: 'Доступен',
+	lblPreviewType: 'Тип основного превью',
+	lblDopParams: 'Настройки',
 	lblId: "Id",
 	saveText: 'Сохранение...',
 	blankText: 'Необходимо заполнить',
@@ -102,7 +104,13 @@ ui.m2_file_types.form = Ext.extend(Ext.form.FormPanel, {
 				},
 
 				{fieldLabel:this.lblWidth, name: 'width'},
-				{fieldLabel:this.lblHeight, name: 'height'}
+				{fieldLabel:this.lblHeight, name: 'height'},
+				{fieldLabel: this.lblPreviewType, hiddenName: 'preview_type', value: 0, xtype: 'combo', anchor: '90%',
+								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Пропорционально'],[1, 'Адаптивно']]}),
+								valueField: 'value', displayField: 'title', mode: 'local',
+								triggerAction: 'all', selectOnFocus: true, editable: false
+				},
+				{fieldLabel:this.lblDopParams, name: 'dop_params'}
 			],
 			buttonAlign: 'right',
 			buttons: [

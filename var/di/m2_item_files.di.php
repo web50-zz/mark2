@@ -224,7 +224,14 @@ class di_m2_item_files extends data_interface
 						if(!($prefix)){
 							$prefix = 'thumb-';
 						}
-
+						if($type_data->preview_type == 0)
+						{
+							$preview_type = false;
+						}
+						else
+						{
+							$preview_type = true;
+						}
 						list($file['width'], $file['height']) = getimagesize($this->get_path_to_storage() . $file['real_name']);
 
 						// Удаляем старые превьюшки, если это замена существующего файла
@@ -232,8 +239,27 @@ class di_m2_item_files extends data_interface
 						{
 							file_system::remove_file("$prefix{$old_file_name}", $this->get_path_to_storage());
 						}
-
-						$this->create_preview($file, $prefix, $width, $height, true, null);
+						$this->create_preview($file, $prefix, $width, $height, $preview_type, null);
+						if($type_data->dop_params != '')
+						{
+							$params = json_decode($type_data->dop_params);
+							if(count($params->previews)>0)
+							{
+								foreach($params->previews as $key => $value)
+								{
+									$prefix = $value->prefix;
+									$width = $value->width;
+									$height = $value->height;
+									$adaptive = $value->preview_type;
+									if($width >0 && $height > 0 && $prefix != '')
+									{
+										$prefix = $prefix.'-';
+										file_system::remove_file("$prefix{$old_file_name}", $this->get_path_to_storage());
+										$this->create_preview($file, $prefix, $width, $height, $adaptive, null);
+									}
+								}
+							}
+						}
 						// $mask = BASE_PATH.'themes/lndp/img/news_small_mask.png';
 						// not works this time	$this->mask_preview($thumb_name,$mask);
 					}
@@ -356,6 +382,25 @@ class di_m2_item_files extends data_interface
 							$prefix = 'thumb-';
 						}
 						file_system::remove_file("$prefix{$file->real_name}", $this->get_path_to_storage());
+						if($type_data->dop_params != '')
+						{
+							$params = json_decode($type_data->dop_params);
+							if(count($params->previews)>0)
+							{
+								foreach($params->previews as $key => $value)
+								{
+									$prefix = $value->prefix.'-';
+									$width = $value->width;
+									$height = $value->height;
+									$adaptive = $value->preview_type;
+									if($width >0 && $height > 0 && $prefix != '')
+									{
+										file_system::remove_file("$prefix{$file->real_name}", $this->get_path_to_storage());
+									}
+								}
+							}
+						}
+
 					}
 				}
 			}

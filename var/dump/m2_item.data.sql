@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.63, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: mrk2_u9_ru
+-- Host: localhost    Database: termt_u9_ru
 -- ------------------------------------------------------
--- Server version	5.1.63-0+squeeze1
+-- Server version	5.5.41-0+wheezy1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_item` WRITE;
 /*!40000 ALTER TABLE `m2_item` DISABLE KEYS */;
-INSERT INTO `m2_item` VALUES (13,7,'cronshtein','кронштейн 2.38','0','0',0,'RAM-B-201U-A'),(14,9,'cronshtein_3.69','Кронштейн 3.69','0','0',0,'RAM-B-201U'),(10,4,'universal_x-grip','Universal X-Grip','0','0',0,'RAM-HOL-UN7BU'),(11,5,'universal_x-grip_ii','Universal X-Grip II','0','0',0,' RAM-HOL-UN8BU'),(12,6,'universal_x-grip_iv','Universal X-Grip IV','0','0',0,'RAM-HOL-UN10BU'),(15,10,'prisoska_v_sbore','присоска в сборе','0','0',0,'RAM-B-224-1U'),(16,8,'u-homut_05-125','U-хомут 0.5-1.25','0','0',0,'RAM-B-231ZU');
+INSERT INTO `m2_item` VALUES (1286,0,'tovar1','Товар1','0','0',0,'123',''),(1287,1,'tovar_2','Товар 2','0','0',0,'12345',''),(1288,2,'tovar_3','Товар 3','0','0',0,'3',''),(1289,3,'tovar_4','Товар 4','0','0',0,'4',''),(1290,4,'tovar_5','Товар 5','0','0',0,'5',''),(1291,5,'tovar_6','Товар 6','0','0',0,'6',''),(1292,6,'tovar_7','Товар 7','0','0',0,'7','');
 /*!40000 ALTER TABLE `m2_item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-22  0:43:08
+-- Dump completed on 2016-11-05 23:50:56
