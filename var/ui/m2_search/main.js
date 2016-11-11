@@ -28,7 +28,6 @@ ui.m2_search.main = Ext.extend(Ext.Panel, {
 			collapsible: true,
 			listeners: {
 				applied: function(data){
-					console.log(data);
 					var  ttl = data._stitle;
 					data._stitle =  '%'+ttl+'%',
 					grid.setParams(data, true);

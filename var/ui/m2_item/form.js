@@ -29,6 +29,7 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 	bttChars: 'Характеристики',
 	bttCategory: 'Входит в категории',
 	bttVariation:' Варианты',
+	bttLinks:'Связанные товары',
 
 	Load: function(data){
 		var f = this.getForm();
@@ -91,6 +92,7 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 				{iconCls: 'application_form', text: this.bttChars, handler: this.itemChars, scope: this},
 				{iconCls: 'application_view_tile', text: this.bttFiles, handler: this.filesList, scope: this},
 				{iconCls: 'page_white_gear', text: this.bttTexts, handler: this.itemTexts, scope: this},
+				{iconCls: 'page_white_gear', text: this.bttLinks, handler: this.itemLinks, scope: this},
 				{iconCls: 'application_form', text: this.bttVariation, handler: this.itemVariation, scope: this}
 			]
 		});
@@ -243,6 +245,31 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 		});
 		app.Load('m2_item_category', 'main');
 	},
+	itemLinks: function(b, e){
+		var fm = this.getForm();
+		var vals = fm.getValues();
+		if(!(vals._sid>0)){
+			showError(this.msgNotDefined);
+			return;
+		}
+		var app = new App({waitMsg: 'Загрузка формы'});
+		app.on({
+			apploaded: function(){
+				var f = new ui.m2_item_links.main();
+				f.setParams({'_sitem_id':vals._sid});
+				var w = new Ext.Window({iconCls: b.iconCls, title: b.text, maximizable: true, modal: true, layout: 'fit', width: 500, height: 400, items: f});
+				f.on({
+					cancelled: function(){w.destroy()},
+					scope: this
+				});
+				w.show(null, function(){});
+			},
+			apperror: showError,
+			scope: this
+		});
+		app.Load('m2_item_links', 'main');
+	},
+
 	itemVariation: function(b, e){
 		var fm = this.getForm();
 		var vals = fm.getValues();

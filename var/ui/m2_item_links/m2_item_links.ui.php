@@ -1,21 +1,16 @@
 <?php
 /**
 *
-* @author	FedotB Pozdnyakov 9@u9.ru 30062013
+* @author	FedotB Pozdnyakov 9@u9.ru 11112016
 * @package	SBIN Diesel
 */
-class ui_m2_item extends user_interface
+class ui_m2_item_links extends user_interface
 {
-	public $title = 'm2: Маркте 2 - Каталог';
+	public $title = 'm2: Маркте 2 - элемент связка с другими ';
 
 	protected $deps = array(
 		'main' => array(
-			'm2_item.grid',
-			'm2_item_price.main',
-			'm2_item_manufacturer.main',
-		),
-		'item_selection' => array(
-			'm2_item.grid',
+			'm2_item_links.grid',
 		),
 	);
 	
@@ -51,16 +46,5 @@ class ui_m2_item extends user_interface
 		$tmpl = new tmpl($this->pwd() . 'form.js');
 		response::send($tmpl->parse($this), 'js');
 	}
-
-	/* 
-	*	Селектор предмета
-	*/
-
-	public function sys_item_selection()
-	{
-		$tmpl = new tmpl($this->pwd() . 'item_selection.js');
-		response::send($tmpl->parse($this), 'js');
-	}
-
 }
 ?>
