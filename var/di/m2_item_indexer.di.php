@@ -35,6 +35,7 @@ class di_m2_item_indexer extends di_index_processor
 		'name' => array('type' => 'string'),
 		'not_available' => array('type' => 'integer'),
 		'category_list'=> array('type'=>'string'),
+		'linked_items_list'=> array('type'=>'string'),
 		'files_list'=>array('type'=>'string'),
 		'text_list'=>array('type'=>'string'),
 		'prices_list'=>array('type'=>'string'),
@@ -98,6 +99,20 @@ class di_m2_item_indexer extends di_index_processor
 						'price_value'=>'',
 						'content'=>'',
 						'currency'=>'',
+						)
+					),
+					array(
+					'type'=>'records_by_key',
+					'index_field_name'=>'linked_items_list',
+					'di_name'=>'m2_item_links',
+					'di_key'=>'item_id',
+					'order_field'=>'order',
+					'order_type'=>'asc',
+					'fields'=>array(
+						'type'=>'',
+						'linked_item_id'=>'',
+						'order'=>'',
+						'title'=>'',
 						)
 					),
 					array(
