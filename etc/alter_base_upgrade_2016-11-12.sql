@@ -10,7 +10,7 @@ CREATE TABLE `m2_item_link_types` (
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `m2_item_link_types` WRITE;
-INSERT INTO `m2_item_link_types` VALUES (1,0,'','С этим товаром покупают','','',0,0,0,''),(2,1,'','С этим товаром просматривают','0','0',0,0,0,'');
+INSERT INTO `m2_item_link_types` VALUES (1,0,'С этим товаром покупают',0,''),(2,1,'С этим товаром просматривают',0,'');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `m2_item_links`;
