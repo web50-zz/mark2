@@ -268,6 +268,13 @@ class di_m2_category_tabs extends data_interface
 		}
 	}
 
+	public function get_text_for($id)
+	{
+		$this->_flush();
+		$this->set_args(array('_sm2_category_id'=>$id));
+		return  $this->_get()->get_results();
+	}
+
 	public function _listeners()
 	{
 		return array(
