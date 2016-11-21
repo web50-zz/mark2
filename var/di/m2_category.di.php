@@ -416,9 +416,53 @@ class di_m2_category extends data_interface
 			$this->search_parent($this->data['records'],$parent);
 			return $this->result;
 		}
+		$d  = array_shift(debug_backtrace());
+		var_dump($d['file'].'  '.$d['line']);
 		return $this->data['records'][0];
 	}
 
+	public function get_all_simple()
+	{
+		$parent = 1;
+		$this->_flush();
+		if($this->args['parent']>0){
+			$parent = $this->args['parent'];
+		}
+		$this->set_args(array(
+				'sort'=>'left',
+				'dir'=>'ASC',
+				'_svisible'=>'1',
+				));
+		$d2 = $this->join_with_di('m2_category',array('link_id'=>'id'),array('uri'=>'l_uri','name'=>'l_name','brief'=>'l_brief'));
+		$flds = array(
+			'id',
+			'title',
+			'name',
+			'left',
+			'right',
+			'level',
+			'uri',
+			'link_id',
+			'visible',
+			'type',
+			array('di'=>$d2,'name'=>'uri'),
+			array('di'=>$d2,'name'=>'name'),
+			array('di'=>$d2,'name'=>'brief'),
+		);
+		$this->data =  $this->extjs_grid_json($flds,false);
+		$this->get_childs(0);
+		$this->correct_links();
+		$this->get_childs(0);
+		if($parent != 1){
+			$this->search_parent($this->data['records'],$parent);
+			return $this->result;
+		}
+		$d  = array_shift(debug_backtrace());
+		var_dump($d['file'].'  '.$d['line']);
+		return $this->data['records'][0];
+
+
+	}
 	public function get_childs($index)
 	{
 		$this->cnt++;
