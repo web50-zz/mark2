@@ -416,8 +416,6 @@ class di_m2_category extends data_interface
 			$this->search_parent($this->data['records'],$parent);
 			return $this->result;
 		}
-		$d  = array_shift(debug_backtrace());
-		var_dump($d['file'].'  '.$d['line']);
 		return $this->data['records'][0];
 	}
 
@@ -457,8 +455,6 @@ class di_m2_category extends data_interface
 			$this->search_parent($this->data['records'],$parent);
 			return $this->result;
 		}
-		$d  = array_shift(debug_backtrace());
-		var_dump($d['file'].'  '.$d['line']);
 		return $this->data['records'][0];
 
 
