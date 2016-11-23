@@ -161,7 +161,8 @@ class di_m2_item_indexer extends di_index_processor
 								'source_key'=>'category_id',
 								'remote_key'=>'id',
 								'fields'=>array(
-									'title'=>'title'
+									'title'=>'title',
+									'uri'=>'uri'
 								)
 							)
 						)
