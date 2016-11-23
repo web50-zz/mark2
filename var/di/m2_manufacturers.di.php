@@ -153,6 +153,21 @@ class di_m2_manufacturers extends data_interface
 		}
 		return $uri;
 	}
+	public function search_by_name($name = '')
+	{
+		if($name == '')
+		{
+			return false;
+		}
+		$this->_flush();
+		$this->set_args(array('_sname'=>$name));
+		$res = $this->_get()->get_results(0);
+		if($res->id >0)
+		{
+			return $res;
+		}
+		return false;
+	}
 
 }
 ?>
