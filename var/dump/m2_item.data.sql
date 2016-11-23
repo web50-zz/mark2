@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_item` WRITE;
 /*!40000 ALTER TABLE `m2_item` DISABLE KEYS */;
-INSERT INTO `m2_item` VALUES (1286,0,'tovar1','Товар1','0','0',0,'123',''),(1287,1,'tovar_2','Товар 2','0','0',0,'12345',''),(1288,2,'tovar_3','Товар 3','0','0',0,'3',''),(1289,3,'tovar_4','Товар 4','0','0',0,'4',''),(1290,4,'tovar_5','Товар 5','0','0',0,'5',''),(1291,5,'tovar_6','Товар 6','0','0',0,'6',''),(1292,6,'tovar_7','Товар 7','0','0',0,'7','');
+INSERT INTO `m2_item` VALUES (1286,1,'tovar1','Товар1','0','0',0,'123',''),(1287,2,'tovar_2','Товар 2','0','0',0,'12345',''),(1288,3,'tovar_3','Товар 3','0','0',0,'3',''),(1289,4,'tovar_4','Товар 4','0','0',0,'4',''),(1290,5,'tovar_5','Товар 5','0','0',0,'5',''),(1291,6,'tovar_6','Товар 6','0','0',0,'6',''),(1292,0,'tovar_7','Товар 7','0','0',0,'7','');
 /*!40000 ALTER TABLE `m2_item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-05 23:50:56
+-- Dump completed on 2016-11-23 21:30:54

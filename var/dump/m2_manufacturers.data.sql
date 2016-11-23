@@ -21,7 +21,7 @@
 
 LOCK TABLES `m2_manufacturers` WRITE;
 /*!40000 ALTER TABLE `m2_manufacturers` DISABLE KEYS */;
-INSERT INTO `m2_manufacturers` VALUES (2,2,'IBM',0,3,''),(3,1,'Motorola',0,3,''),(4,3,'Lenovo',1,3,'lenovo'),(5,4,'Test',0,3,'test');
+INSERT INTO `m2_manufacturers` VALUES (2,2,'IBM',0,3,'ibm'),(3,1,'Motorola',0,3,'motorola'),(4,3,'Lenovo',1,3,'lenovo'),(5,4,'Test',0,3,'test'),(8,5,'Моторола',0,3,'motorola0');
 /*!40000 ALTER TABLE `m2_manufacturers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-05 23:50:55
+-- Dump completed on 2016-11-23 21:30:53

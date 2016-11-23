@@ -7,4 +7,4 @@ CREATE TABLE `m2_manufacturers` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `order` (`order`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8

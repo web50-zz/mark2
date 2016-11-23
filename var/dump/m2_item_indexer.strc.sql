@@ -12,6 +12,7 @@ CREATE TABLE `m2_item_indexer` (
   `manufacturers_list` text NOT NULL,
   `chars_list` longtext NOT NULL,
   `category_list` text NOT NULL,
+  `linked_items_list` text,
   `last_changed` datetime NOT NULL,
   `meta_title` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),

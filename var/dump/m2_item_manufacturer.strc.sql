@@ -6,4 +6,4 @@ CREATE TABLE `m2_item_manufacturer` (
   PRIMARY KEY (`id`),
   KEY `ssgn_project_id` (`item_id`),
   KEY `order` (`order`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8
