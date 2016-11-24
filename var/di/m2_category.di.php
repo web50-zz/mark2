@@ -62,7 +62,7 @@ class di_m2_category extends data_interface
 	*	Добавить альбом
 	* @access protected
 	*/
-	protected function sys_set()
+	public function sys_set($silent = false)
 	{
 		$id = $this->get_args('_sid');
 		$uri = $this->prepare_uri();
@@ -109,7 +109,10 @@ class di_m2_category extends data_interface
 				);
 			}
 		}
-		
+		if($silent)
+		{
+			return $result;
+		}
 		response::send($result, 'json');
 	}
 

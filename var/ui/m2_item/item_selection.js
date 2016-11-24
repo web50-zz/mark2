@@ -69,7 +69,7 @@ ui.m2_item.item_selection = Ext.extend(ui.m2_item.grid, {
 				e.stopEvent();  
 				cmenu.showAt(e.getXY());
 			},
-			dblrowclick: this.Selection,
+			dblclick: this.Selection,
 			scope: this
 		});
 	},

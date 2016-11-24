@@ -100,7 +100,7 @@ ui.m2_item.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 				columns: [
 					{header: this.clmnId, dataIndex: 'id', width:70},
 					{header: this.clmnArticul, dataIndex: 'article',width: 70},
-					{header: this.clmnTitle, id: 'expand', dataIndex: 'title', editor: new fm.TextField({maxLength: 255, maxLengthText: 'Не больше 255 символов'})}
+					{header: this.clmnTitle, id: 'expand', dataIndex: 'title'}
 				]
 			}),
 			bbar: new Ext.PagingToolbar({
