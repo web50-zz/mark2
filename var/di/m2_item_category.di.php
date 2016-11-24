@@ -29,7 +29,8 @@ class di_m2_item_category extends data_interface
 	public $fields = array(
 		'id' => array('type' => 'integer', 'serial' => TRUE, 'readonly' => TRUE),
 		'category_id' => array('type' => 'integer'),
-		'item_id' => array('type' => 'integer')
+		'item_id' => array('type' => 'integer'),
+		'category_order' => array('type' => 'integer'),
 	);
 	
 	public function __construct () {
@@ -40,9 +41,10 @@ class di_m2_item_category extends data_interface
 	protected function sys_list()
 	{
 		$this->_flush();
-		$this->set_order('id', 'ASC');
+		$this->set_order('category_order', 'ASC');
 		$ct = $this->join_with_di('m2_category', array('category_id' => 'id'), array('title' => 'category_title'));
-		$this->extjs_grid_json(array('id', 
+		$this->extjs_grid_json(array('id',
+					'category_order',
 					'category_id', 
 					'item_id',
 					array('di' => $ct, 'name' => 'title'),
@@ -65,7 +67,12 @@ class di_m2_item_category extends data_interface
 	*/
 	public function sys_set($silent = false)
 	{
+		$id = $this->get_args('_sid',0);
 		$args =  $this->get_args();
+		if(!($id > 0))
+		{
+			$args['category_order'] = $this->get_new_order();
+		}
 		$this->set_args($args);
 		$this->_flush();
 		$this->insert_on_empty = true;
@@ -76,7 +83,35 @@ class di_m2_item_category extends data_interface
 		}
 		response::send($result, 'json');
 	}
-	
+	/**
+	*	Реорганизация порядка вывода категорий внтури товара
+	*/
+
+	protected function sys_reorder()
+	{
+		list($npos, $opos) = array_values($this->get_args(array('npos', 'opos')));
+		$values = $this->get_args(array('opos', 'npos', 'id', 'cid'));
+
+		if ($opos < $npos)
+			$query = "UPDATE `{$this->name}` SET `category_order` = IF(`id` = :id, :npos, `category_order` - 1) WHERE `category_order` >= :opos AND `category_order` <= :npos AND `item_id` = :cid";
+		else
+			$query = "UPDATE `{$this->name}` SET `category_order` = IF(`id` = :id, :npos, `category_order` + 1) WHERE `category_order` >= :npos AND `category_order` <= :opos AND `item_id` = :cid";
+
+		$this->_flush();
+		$this->connector->exec($query, $values);
+		$this->fire_event('onSet', array(null, array('item_id' => $values['cid'])));
+		response::send(array('success' => true), 'json');
+	}
+
+	/**
+	*
+	*/
+	private function get_new_order()
+	{
+		$this->_flush();
+		$this->_get("SELECT MAX(`category_order`) + 1 AS `category_order` FROM `{$this->name}`");
+		return $this->get_results(0, 'category_order');
+	}
 
 	/**
 	*	Удалить файл[ы]

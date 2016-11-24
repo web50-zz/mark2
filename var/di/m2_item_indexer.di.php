@@ -154,8 +154,11 @@ class di_m2_item_indexer extends di_index_processor
 					'index_field_name'=>'category_list',
 					'di_name'=>'m2_item_category',
 					'di_key'=>'item_id',
+					'order_field'=>'category_order',
+					'order_type'=>'asc',
 					'fields'=>array(
 						'category_id'=>'',
+						'category_order'=>'',
 						),
 					'joins'=>array(
 						'm2_category'=>array(

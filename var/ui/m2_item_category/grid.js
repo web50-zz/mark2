@@ -29,7 +29,7 @@ ui.m2_item_category.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 		Ext.Ajax.request({
 			url: 'di/m2_item_category/reorder.do',
 			method: 'post',
-			params: {npos: y.order, opos: x.order, id: row.id, pid: this.getKey()},
+			params: {npos: y.category_order, opos: x.category_order, id: row.id, cid: this.getKey()},
 			disableCaching: true,
 			callback: function(options, success, response){
 				if (success){
@@ -63,7 +63,7 @@ ui.m2_item_category.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 						messageProperty: 'errors'
 					}, [
 						{name: 'id', type: 'int'},
-						{name: 'order', type: 'int'},
+						{name: 'category_order', type: 'int'},
 						'category_title'
 					]
 				),
@@ -74,7 +74,7 @@ ui.m2_item_category.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 				}),
 				autoLoad: true,
 				remoteSort: true,
-				sortInfo: {field: 'id', direction: 'ASC'}
+				sortInfo: {field: 'category_order', direction: 'ASC'}
 			})
 		});
 		var fm = Ext.form;
@@ -89,7 +89,7 @@ ui.m2_item_category.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 			colModel: new Ext.grid.ColumnModel({
 				defaults: {sortable: true, width: 200},
 				columns: [
-					{header: this.clmnTitle, id: 'expand', dataIndex: 'category_title', editor: new fm.TextField({maxLength: 255, maxLengthText: 'Не больше 255 символов'})}
+					{header: this.clmnTitle, id: 'expand', dataIndex: 'category_title'}
 				]
 			}),
 			bbar: new Ext.PagingToolbar({
