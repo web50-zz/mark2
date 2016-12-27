@@ -51,7 +51,7 @@ class di_m2_manufacturers extends data_interface
 	protected function sys_list()
 	{
 		$this->_flush();
-		$this->set_order('order', 'ASC');
+	//	$this->set_order('order', 'ASC');
 		$di = $this->join_with_di('m2_manufacturer_types',array('type'=>'id'),array('title'=>'manufacturer_title'));
 		$this->extjs_grid_json(array('id', 'order', 'title',
 			array('di'=>$di,'name'=>'title'),
@@ -85,7 +85,7 @@ class di_m2_manufacturers extends data_interface
 	/**
 	*	Добавить \ Сохранить файл
 	*/
-	protected function sys_set()
+	public function sys_set($silent = false)
 	{
 		$id = $this->get_args('_sid');
 		$args =  $this->get_args();
@@ -98,7 +98,10 @@ class di_m2_manufacturers extends data_interface
 		$this->_flush();
 		$this->insert_on_empty = true;
 		$result = $this->extjs_set_json(false);
-		response::send($result, 'json');
+		if($silent == true)
+		{
+			return $result;
+		}
 	}
 	
 
