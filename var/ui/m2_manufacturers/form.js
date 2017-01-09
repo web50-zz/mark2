@@ -14,7 +14,7 @@ ui.m2_manufacturers.form = Ext.extend(Ext.form.FormPanel, {
 
 	bttSave: 'Сохранить',
 	bttCancel: 'Отмена',
-
+	bttFiles: 'Файлы',
 	errSaveText: 'Ошибка во время сохранения',
 	errInputText: 'Корректно заполните все необходимые поля',
 	errConnectionText: "Ошибка связи с сервером",
@@ -74,39 +74,49 @@ ui.m2_manufacturers.form = Ext.extend(Ext.form.FormPanel, {
 	 */
 	constructor: function(config){
 		config = config || {};
+		var tb = new Ext.Toolbar({
+			enableOverflow: true,
+			items: [
+				{iconCls: 'application_view_tile', text: this.bttFiles, handler: this.filesList, scope: this}
+			]
+		});
 
 		Ext.apply(this, {
-			layout: 'form',
-			frame: true, 
-			labelWidth: 100,
-			labelAlign: 'right',
-			autoScroll: true,
-			defaults: {xtype: 'textfield', width: 80, anchor: '98%'},
-			items: [
-				{name: '_sid', xtype: 'hidden'},
-				{fieldLabel: this.lblId, name: 'id', xtype: 'displayfield'},
-				{fieldLabel:this.lblTitle, name: 'title',allowBlank: false},
-				{fieldLabel: this.lblType, hiddenName: 'type', xtype: 'combo',
-						valueField: 'id', displayField: 'title', value: '', emptyText: '', 
-						store: new Ext.data.JsonStore({url: 'di/m2_manufacturer_types/type_list.json', root: 'records', fields: ['id', 'title'], autoLoad: true,
-							listeners: {
-								load: function(store,ops){
-									var f = this.getForm().findField('type');
-									f.setValue(f.getValue());
-								}, 
-								beforeload:function(store,ops){
-								},
-								scope: this
-							}
-						}),
-						mode: 'local', triggerAction: 'all', selectOnFocus: true, editable: false
-				},
-				{fieldLabel: this.lblAvailable, hiddenName: 'not_available', value: 0, xtype: 'combo', anchor: '90%',
-								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Доступен'],[1, 'Не доступен']]}),
-								valueField: 'value', displayField: 'title', mode: 'local',
-								triggerAction: 'all', selectOnFocus: true, editable: false
-				}
-			],
+			layout: 'fit',
+			tbar: tb,
+			items: [{
+				layout: 'form',
+				frame: true, 
+				labelWidth: 100,
+				labelAlign: 'right',
+				autoScroll: true,
+				defaults: {xtype: 'textfield', width: 80, anchor: '98%'},
+				items: [
+					{name: '_sid', xtype: 'hidden'},
+					{fieldLabel: this.lblId, name: 'id', xtype: 'displayfield'},
+					{fieldLabel:this.lblTitle, name: 'title',allowBlank: false},
+					{fieldLabel: this.lblType, hiddenName: 'type', xtype: 'combo',
+							valueField: 'id', displayField: 'title', value: '', emptyText: '', 
+							store: new Ext.data.JsonStore({url: 'di/m2_manufacturer_types/type_list.json', root: 'records', fields: ['id', 'title'], autoLoad: true,
+								listeners: {
+									load: function(store,ops){
+										var f = this.getForm().findField('type');
+										f.setValue(f.getValue());
+									}, 
+									beforeload:function(store,ops){
+									},
+									scope: this
+								}
+							}),
+							mode: 'local', triggerAction: 'all', selectOnFocus: true, editable: false
+					},
+					{fieldLabel: this.lblAvailable, hiddenName: 'not_available', value: 0, xtype: 'combo', anchor: '90%',
+									store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [[0, 'Доступен'],[1, 'Не доступен']]}),
+									valueField: 'value', displayField: 'title', mode: 'local',
+									triggerAction: 'all', selectOnFocus: true, editable: false
+					}
+				]
+			}],
 			buttonAlign: 'right',
 			buttons: [
 				{iconCls: 'disk', text: this.bttSave, handler: this.Save, scope: this},
@@ -123,6 +133,30 @@ ui.m2_manufacturers.form = Ext.extend(Ext.form.FormPanel, {
 			},
 			scope: this
 		})
+	},
+	filesList: function(b, e){
+		var fm = this.getForm();
+		var vals = fm.getValues();
+		if(!(vals._sid>0)){
+			showError(this.msgNotDefined);
+			return;
+		}
+		var app = new App({waitMsg: 'Загрузка формы'});
+		app.on({
+			apploaded: function(){
+				var f = new ui.m2_manufacturer_files.main();
+				f.setParams({'_sitem_id':vals._sid});
+				var w = new Ext.Window({iconCls: b.iconCls, title: b.text, maximizable: true, modal: true, layout: 'fit', width: 500, height: 400, items: f});
+				f.on({
+					cancelled: function(){w.destroy()},
+					scope: this
+				});
+				w.show(null, function(){});
+			},
+			apperror: showError,
+			scope: this
+		});
+		app.Load('m2_manufacturer_files', 'main');
 	},
 
 	/**
