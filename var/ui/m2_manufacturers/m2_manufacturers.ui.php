@@ -12,6 +12,10 @@ class ui_m2_manufacturers extends user_interface
 		'main' => array(
 			'm2_manufacturers.grid',
 		),
+		
+		'choice' => array(
+			'm2_manufacturers.grid2',
+		),
 	);
 	
 	public function __construct ()
@@ -46,5 +50,18 @@ class ui_m2_manufacturers extends user_interface
 		$tmpl = new tmpl($this->pwd() . 'form.js');
 		response::send($tmpl->parse($this), 'js');
 	}
+
+	protected function sys_choice()
+	{
+		$tmpl = new tmpl($this->pwd() . 'choice.js');
+		response::send($tmpl->parse($this), 'js');
+	}
+	
+	protected function sys_grid2()
+	{
+		$tmpl = new tmpl($this->pwd() . 'grid2.js');
+		response::send($tmpl->parse($this), 'js');
+	}
+
 }
 ?>
