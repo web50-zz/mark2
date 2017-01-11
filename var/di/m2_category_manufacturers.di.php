@@ -126,8 +126,10 @@ class di_m2_category_manufacturers extends data_interface
 	public function get_manufacturers_for_category($category)
 	{
 		$this->_flush();
-		$this->set_args(array('_scategory_id'=>$category));
-		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id = $category";
+		$ui = user_interface::get_instance('mf2_catalogue_nav');
+		$scope = $ui->catalogue_scope;
+		$ids = implode(',',array_keys($scope));
+		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
 		return $this->_get($sql)->get_results();
 	}
 }

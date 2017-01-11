@@ -13,5 +13,5 @@ echo("starts.....\r\n");
 $di = data_interface::get_instance('m2_category_manufacturers');
 $di->recache();
 //$res = $di->get_manufacturers_for_category(380);
-var_dump($res);
+//var_dump($res);
 ?>
