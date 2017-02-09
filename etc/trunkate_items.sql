@@ -1,0 +1,11 @@
+truncate table m2_item;
+truncate table m2_item_indexer;
+truncate table m2_item_files;
+truncate table m2_item_price;
+truncate table m2_item_manufacturer;
+truncate table m2_item_category;
+truncate table m2_item_variation;
+truncate table m2_item_variation_chars;
+truncate table m2_item_variation_files;
+truncate table m2_item_text;
+delete from m2_url_indexer where item_id > 0;

@@ -1,5 +1,5 @@
 CREATE TABLE `m2_chars_types` (
-  `id` nt(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL COMMENT 'Наименование',
   `name` varchar(32) NOT NULL COMMENT 'Имя для URI',
   `uri` varchar(255) NOT NULL COMMENT 'Полный URI проекта',
