@@ -29,7 +29,9 @@ ui.m2_search.main = Ext.extend(Ext.Panel, {
 			listeners: {
 				applied: function(data){
 					var  ttl = data._stitle;
+					var art = data._sarticle;
 					data._stitle =  '%'+ttl+'%',
+					data._sarticle =  '%'+art+'%',
 					grid.setParams(data, true);
 				}
 			}
