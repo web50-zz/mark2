@@ -14,6 +14,7 @@ CREATE TABLE `m2_category` (
   `level` smallint(5) unsigned NOT NULL,
   `output_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `meta_title` varchar(255) NOT NULL,
+  `reserved_field` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `node` (`left`,`right`,`level`)
