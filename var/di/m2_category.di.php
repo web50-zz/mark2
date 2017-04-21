@@ -41,6 +41,7 @@ class di_m2_category extends data_interface
 			'right' => array('type' => 'integer', 'protected' => 1),
 			'level' => array('type' => 'integer', 'readonly' => 1),
 			'meta_title' => array('type' => 'text'),
+			'reserved_field' => array('type' => 'text'),// под разные нужды например служебные
 		);
 	
 	public function __construct () {
