@@ -30,7 +30,7 @@ class di_m2_chars_in_category extends data_interface
 	public $fields = array(
 		'id' => array('type' => 'integer', 'serial' => TRUE, 'readonly' => TRUE),
 		'category_id' => array('type' => 'integer'),
-		'manufacturer_id' => array('type' => 'integer'),
+		'content' => array('type' => 'string'),
 	);
 	
 	public function __construct () {
@@ -148,5 +148,37 @@ class di_m2_chars_in_category extends data_interface
 		return $result;
 	}
 
+	public function get_chars_for($scope = array(),$type_id = 0)
+	{
+		if(!count($scope)>0)
+		{
+			return array();
+		}
+		$sql = 'select * from '.$this->get_alias().' where category_id in('.implode(',',array_keys($scope)).")";
+		$this->_flush();
+		$res = $this->_get($sql)->get_results();
+		$data = array();
+		foreach($res as $key=>$value)
+		{
+			$ar = json_decode($value->content);
+			if(count($ar)>0)
+			{
+				foreach($ar as $key2=>$value2)
+				{
+					if($key2 == $type_id)
+					{
+						if(count($value2)>0)
+						{
+							foreach($value2 as $key3=>$value3)
+							{
+								$data[$key3] = 1;
+							}
+						}
+					}
+				}
+			}
+		}
+		return $data;
+	}
 }
 ?>
