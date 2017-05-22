@@ -95,8 +95,10 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 		Ext.apply(this, {
 			tbar: [
 				{iconCls: 'note_add', text: this.bttAdd, handler: this.Add, scope: this},
+				/*
 				{iconCls: 'note_add', text: this.bttXls, handler: this.xls, scope: this},
 				{iconCls: 'note_add', text: this.bttImportXls, handler: this.importXls, scope: this},
+				*/
 				'->', {iconCls: 'help', handler: function(){showHelp('m2_item')}}
 			]
 		});
