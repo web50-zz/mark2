@@ -102,6 +102,7 @@ class di_m2_manufacturers extends data_interface
 		{
 			return $result;
 		}
+		response::send($result, 'json');
 	}
 	
 
