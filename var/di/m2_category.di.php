@@ -559,6 +559,22 @@ class di_m2_category extends data_interface
 		return $uri;
 	}
 
+	protected function sys_index_manufacturers()
+	{
+		$di = data_interface::get_instance('m2_category_manufacturers');
+		$di->recache();
+		$i = 1;
+		if ($i > 0)
+		{
+			$result = array('success' => true,'msg'=>'Переиндексировано');
+		}
+		else
+		{
+			$result = array('success' => false);
+		}
+
+		response::send($result, 'json');
+	}
 
 }
 ?>

@@ -37,7 +37,13 @@ ui.m2_search.main_filter= Ext.extend(Ext.form.FormPanel, {
 				]},
 				*/
 				{fieldLabel: this.lblTitle, name: '_stitle'},
-				{fieldLabel: this.lblArticle, name: '_sarticle'}
+				{fieldLabel: this.lblArticle, name: '_sarticle'},
+				{fieldLabel: 'В продаже', hiddenName: 'not_available', value: 'n', xtype: 'combo', width: '170',anchor: '80%',
+								store: new Ext.data.SimpleStore({ fields: ['value', 'title'], data: [['n','Все'],[0, 'В продаже'],[1, 'Не доступен']]}),
+								valueField: 'value', displayField: 'title', mode: 'local',
+								triggerAction: 'all', selectOnFocus: true, editable: false
+				}
+
 			],
 			buttonAlign: 'center',
 			buttons: [

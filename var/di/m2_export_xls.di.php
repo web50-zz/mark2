@@ -23,6 +23,7 @@ class di_m2_export_xls extends data_interface
 	*/
 	protected $name = '';
 
+	protected $cfg_path = 'mark2/etc/xls_exportconfig.php';
 	public	$import_di = false;
 	public $path_to_storage = 'mark2/m2_import/';
 	/**
@@ -38,6 +39,11 @@ class di_m2_export_xls extends data_interface
 		{
 			$this->import_di = $import_di;
 		}
+		if(file_exists(INSTANCES_PATH.$this->cfg_path))
+		{
+			require_once(INSTANCES_PATH.$this->cfg_path);
+			$this->export_conf = $mark2_export_conf;
+		}
 		parent::__construct(__CLASS__);
 	}
 	/**
@@ -50,6 +56,12 @@ class di_m2_export_xls extends data_interface
 
 	public function sys_list()
 	{
+		if(array_key_exists('di',$this->export_conf))
+		{
+			$di = data_interface::get_instance($this->export_conf['di']);
+			$di->sys_list();
+			die();
+		}
 		$di1 = data_interface::get_instance('phpexcel');
 		$objPHPExcel = new PHPExcel();
 		// Set document properties
@@ -128,6 +140,12 @@ class di_m2_export_xls extends data_interface
 
 	public function sys_import_xls()
 	{
+		if(array_key_exists('di',$this->export_conf))
+		{
+			$di = data_interface::get_instance($this->export_conf['di']);
+			$di->sys_import_xls();
+			die();
+		}
 
 		if(!is_dir($this->get_path_to_storage()))
 		{
@@ -157,10 +175,8 @@ class di_m2_export_xls extends data_interface
 			return;
 		}
 		response::send(response::to_json($result), 'html');
-
-
-
 	}
+
 	public 	function import_xls($file = '')
 	{
 //		$file = INSTANCES_PATH.'mark2/etc/test.xlsx';

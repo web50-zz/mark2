@@ -1,6 +1,9 @@
 ui.m2_item.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 	clmnTitle: "Название",
 	clmnId:"Id",
+	clmnPrice:"Цена",
+	clmnDiscount:"Скидка %",
+	clmnAvailable:"В продаже",
 	clmnArticul:'Артикул',
 	pagerSize: 50,
 	pagerEmptyMsg: 'Нет записей',
@@ -63,14 +66,12 @@ ui.m2_item.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 						messageProperty: 'errors'
 					}, [
 						{name: 'id', type: 'int'},
-						{name: 'order', type: 'int'},
 						'real_name',
-						'name',
 						'article',
 						'title',
-						{name: 'size', type: 'int'},
-						{name: 'width', type: 'int'},
-						{name: 'height', type: 'int'}
+						'cprice',
+						'discount',
+						{name: 'not_available', type: 'int'}
 					]
 				),
 				writer: new Ext.data.JsonWriter({
@@ -100,7 +101,10 @@ ui.m2_item.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 				columns: [
 					{header: this.clmnId, dataIndex: 'id', width:70},
 					{header: this.clmnArticul, dataIndex: 'article',width: 70},
-					{header: this.clmnTitle, id: 'expand', dataIndex: 'title'}
+					{header: this.clmnTitle, id: 'title', dataIndex: 'title'},
+					{header: this.clmnPrice, id: 'cprice', dataIndex: 'cprice',width:70},
+					{header: this.clmnDiscount, id: 'discount', dataIndex: 'discount',width:70},
+					{header: this.clmnAvailable, id: 'expand', dataIndex: 'not_available', renderer: function(v){return (v > 0) ? 'Не доступен' : 'В продаже'}, align: 'left'}
 				]
 			}),
 			bbar: new Ext.PagingToolbar({

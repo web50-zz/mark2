@@ -30,6 +30,13 @@ ui.m2_search.main = Ext.extend(Ext.Panel, {
 				applied: function(data){
 					var  ttl = data._stitle;
 					var art = data._sarticle;
+					var na = data.not_available;
+					if(na == 0){
+						data._snot_available = '0';
+					}
+					if(na == 1){
+						data._snot_available = '1';
+					}
 					data._stitle =  '%'+ttl+'%',
 					data._sarticle =  '%'+art+'%',
 					grid.setParams(data, true);
