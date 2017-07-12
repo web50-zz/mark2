@@ -91,7 +91,7 @@ class di_m2_category_manufacturers extends data_interface
 	{
 		$di = data_interface::get_instance('m2_item_indexer');
 		$di->_flush();
-		$di->where = "manufacturers_list != '[]' && category_list != '[]'";
+		$di->where = "manufacturers_list != '[]' && category_list != '[]' and not_available = 0";
 		$res = $di->_get()->get_results();
 		$index = array();
 		foreach($res as $key=>$value)
@@ -132,5 +132,14 @@ class di_m2_category_manufacturers extends data_interface
 		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
 		return $this->_get($sql)->get_results();
 	}
+
+	public function get_manufacturers_for_category_list($ids = array())
+	{
+		$this->_flush();
+		$ids = implode(',',$ids);
+		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
+		return $this->_get($sql)->get_results();
+	}
+
 }
 ?>
