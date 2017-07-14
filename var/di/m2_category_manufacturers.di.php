@@ -123,7 +123,7 @@ class di_m2_category_manufacturers extends data_interface
 		$this->connector->exec($sql);
 	}
 
-	public function get_manufacturers_for_category($category)
+	public function get_manufacturers_for_category()
 	{
 		$this->_flush();
 		$ui = user_interface::get_instance('mf2_catalogue_nav');

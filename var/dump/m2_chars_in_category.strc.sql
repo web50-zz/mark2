@@ -5,7 +5,8 @@ DROP TABLE IF EXISTS `m2_chars_in_category`;
 CREATE TABLE `m2_chars_in_category` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `category_id` int(11) DEFAULT '0',
-  `content` text,
+  `index1` longtext,
+  `index2` longtext,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 

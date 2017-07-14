@@ -576,5 +576,22 @@ class di_m2_category extends data_interface
 		response::send($result, 'json');
 	}
 
+	protected function sys_index_chars()
+	{
+		$di = data_interface::get_instance('m2_chars_in_category');
+		$di->recache();
+		$i = 1;
+		if ($i > 0)
+		{
+			$result = array('success' => true,'msg'=>'Переиндексировано');
+		}
+		else
+		{
+			$result = array('success' => false);
+		}
+
+		response::send($result, 'json');
+	}
+
 }
 ?>

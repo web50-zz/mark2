@@ -4,6 +4,7 @@ ui.m2_category.main = Ext.extend(ui.m2_category.tree, {
 	bttLAdd2: "Добавить ссылку на другой раздел",
 	bttGAdd: "Добавить категорию",
 	bttIman: "Проиндексировать производителей по категориям",
+	bttIchar: "Проиндексировать характеристики по категориям",
 	bttPEdit: "Изменить",
 	bttGEdit: "Изменить",
 	bttDelete: "Удалить",
@@ -190,6 +191,24 @@ ui.m2_category.main = Ext.extend(ui.m2_category.tree, {
 				});
 		}, this);
 	},
+	Index_chars: function(id, title){
+		Ext.Msg.confirm(this.cnfrmTitle, 'Проиндексировать характеристики по категориям ?', function(btn){
+			if (btn == "yes") Ext.Ajax.request({
+					url: 'di/m2_category/index_chars.do',
+					params: {_sid: id},
+					callback: function(options, success, response){
+						var d = Ext.util.JSON.decode(response.responseText);
+						if (d.success){
+							Ext.Msg.alert('',d.msg);
+							this.fireEvent('chars_reindexed', id);
+						}else{
+							showError('Во время индексации возникли ошибки.');
+						}
+					},
+					scope: this
+				});
+		}, this);
+	},
 
 	constructor: function(config){
 		config = config || {};
@@ -198,6 +217,7 @@ ui.m2_category.main = Ext.extend(ui.m2_category.tree, {
 			tbar: [
 				{id: 'add', iconCls: 'add', text: this.bttGAdd, handler: this.AddNode.createDelegate(this, [1])},
 				{id: 'iman', iconCls: 'pencil', text: this.bttIman, handler: this.Index_manufacturers.createDelegate(this, [1])},
+				{id: 'ichar', iconCls: 'pencil', text: this.bttIchar, handler: this.Index_chars.createDelegate(this, [1])},
 				'->', {iconCls: 'help', handler: function(){showHelp('m2_category')}}
 			]
 		});

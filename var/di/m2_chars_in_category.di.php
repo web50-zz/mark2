@@ -30,7 +30,8 @@ class di_m2_chars_in_category extends data_interface
 	public $fields = array(
 		'id' => array('type' => 'integer', 'serial' => TRUE, 'readonly' => TRUE),
 		'category_id' => array('type' => 'integer'),
-		'content' => array('type' => 'string'),
+		'index1' => array('type' => 'string'),
+		'index2' => array('type' => 'string'),
 	);
 	
 	public function __construct () {
@@ -91,7 +92,7 @@ class di_m2_chars_in_category extends data_interface
 	{
 		$di = data_interface::get_instance('m2_item_indexer');
 		$di->_flush();
-		$di->where = "chars_list != '[]' && category_list != '[]'";
+		$di->where = "chars_list != '[]' && category_list != '[]' and not_available = 0 ";
 		$res = $di->_get()->get_results();
 		$index = array();
 		foreach($res as $key1=>$value1)
@@ -106,6 +107,7 @@ class di_m2_chars_in_category extends data_interface
 				}
 				foreach($chars as $key2=>$value2)
 				{
+					$tmp = array();
 					if($value2->type_value_str != '')
 					{
 						$val = $value2->type_value_str;
@@ -126,10 +128,23 @@ class di_m2_chars_in_category extends data_interface
 				}
 			}
 		}
+		$index2 = array();
+		foreach($index as $k1=>$v1)
+		{	
+			$index2[$k1]= array();
+			foreach($v1 as $k2=>$v2)
+			{
+				foreach($v2 as $k3=>$v3)
+				{
+					$index2[$k1][] = array('category_id'=>$k1,'type_id'=>$k2,'val'=>$k3);
+				}
+			}
+		}
 		foreach($index as $key=>$value)
 		{
 				$str = $this->json_enc($value);
-				$vals[] = "('',$key,'$str')";
+				$str2 = $this->json_enc($index2[$key]);
+				$vals[] = "('',$key,'$str','$str2')";
 		}
 		$sql = "truncate $this->name";
 		$this->connector->exec($sql);
@@ -160,7 +175,7 @@ class di_m2_chars_in_category extends data_interface
 		$data = array();
 		foreach($res as $key=>$value)
 		{
-			$ar = json_decode($value->content);
+			$ar = json_decode($value->index1);
 			if(count($ar)>0)
 			{
 				foreach($ar as $key2=>$value2)
