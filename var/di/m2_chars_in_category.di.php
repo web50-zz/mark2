@@ -195,5 +195,17 @@ class di_m2_chars_in_category extends data_interface
 		}
 		return $data;
 	}
+
+	// Выдает список категорий для заданного id свойства товара которые входят в искомую категорию. То есть тупо найти категории в которых свойсто 123 имеется.
+	public function get_cats_for_char($type_id = 0)
+	{
+		if($type_id == 0)
+		{
+			return array();
+		}
+		$sql = 'select * from '.$this->get_alias().' i left join m2_category c on i.category_id = c.id where index2 like \'%"type_id":'.$type_id.',%\'';
+		$res = $this->_get($sql)->get_results();
+		return $res;
+	}
 }
 ?>
