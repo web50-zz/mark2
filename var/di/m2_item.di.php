@@ -61,10 +61,8 @@ class di_m2_item extends data_interface
 		{
 			$this->sys_search_by_category();
 		}
-		dbg::write($this->args);
 		$di2 = $this->join_with_di('m2_chars',array('id'=>'m2_id','128'=>'type_id'),array('variable_value'=>'discount'));
 		$di3 = $this->join_with_di('m2_item_price',array('id'=>'item_id','9'=>'type'),array('price_value'=>'cprice'));
-		$this->connector->debug = true;
 		$this->extjs_grid_json(array(
 			'id', 
 			'order', 
