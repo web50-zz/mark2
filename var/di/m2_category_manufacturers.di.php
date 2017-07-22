@@ -137,7 +137,7 @@ class di_m2_category_manufacturers extends data_interface
 	{
 		$this->_flush();
 		$ids = implode(',',$ids);
-		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
+		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) order by m.title ASC ";
 		return $this->_get($sql)->get_results();
 	}
 
