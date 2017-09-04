@@ -36,6 +36,7 @@ class di_m2_chars extends data_interface
 		'variable_value' => array('type' => 'string'),// Произвольное значение
 		'str_title' => array('type' => 'string'),// название характеристики  в строковом виде 
 		'char_type' => array('type' => 'string'),// 1 если характеристика из справочника и подразумевает выбор из фиксировванных значений. в остельных случаях 0
+		'brief' => array('type' => 'string'),// просто поле из характеристки как есть
 		'is_custom' => array('type' => 'integer'),//  1  если это не из справочника
 		'order' => array('type' => 'integer'),
 	);
@@ -96,13 +97,23 @@ class di_m2_chars extends data_interface
 		{
 			$di = data_interface::get_instance('m2_chars_types');
 			$di->_flush();
-			$di->set_args(array('_sid'=>$this->args['type_id']));
-			$res = $di->extjs_grid_json(false,false);
-			if($res['total'] == 1)
+			$res = $di->set_args(array('_sid'=>$this->args['type_id']))->_get()->get_results();
+			if(count($res) == 1)
 			{
-				$this->args['str_title'] = $res['records'][0]['title'];
+				$this->args['str_title'] = $res[0]->title;
 			}
 		}
+		if($this->args['type_value'] >0)
+		{
+			$di = data_interface::get_instance('m2_chars_types');
+			$di->_flush();
+			$res = $di->set_args(array('_sid'=>$this->args['type_value']))->_get()->get_results();
+			if(count($res) == 1)
+			{
+				$this->args['brief'] = $res[0]->brief;
+			}
+		}
+
 		if ($fid > 0)
 		{
 			$this->_flush();

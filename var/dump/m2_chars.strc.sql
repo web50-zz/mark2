@@ -10,6 +10,7 @@ CREATE TABLE `m2_chars` (
   `is_custom` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `char_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `type_value_str` varchar(255) NOT NULL DEFAULT '',
+  `brief` text NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `ssgn_project_id` (`m2_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1443 DEFAULT CHARSET=utf8
