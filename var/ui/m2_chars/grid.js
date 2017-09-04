@@ -77,7 +77,7 @@ ui.m2_chars.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 				}),
 				autoLoad: false,
 				remoteSort: true,
-				sortInfo: {field: 'order', direction: 'DESC'}
+				sortInfo: {field: 'order', direction: 'ASC'}
 			})
 		});
 		var fm = Ext.form;

@@ -140,6 +140,8 @@ class di_m2_item_indexer extends di_index_processor
 					'index_field_name'=>'chars_list',
 					'di_name'=>'m2_chars',
 					'di_key'=>'m2_id',
+					'order_field'=>'order',
+					'order_type'=>'asc',
 					'fields'=>array(
 						'type_id'=>'',
 						'type_value'=>'',
