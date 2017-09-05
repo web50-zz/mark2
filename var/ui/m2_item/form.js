@@ -160,7 +160,7 @@ ui.m2_item.form = Ext.extend(Ext.form.FormPanel, {
 			apploaded: function(){
 				var f = new ui.m2_item_files.main();
 				f.setParams({'_sitem_id':vals._sid});
-				var w = new Ext.Window({iconCls: b.iconCls, title: b.text, maximizable: true, modal: true, layout: 'fit', width: 500, height: 400, items: f});
+				var w = new Ext.Window({iconCls: b.iconCls, title: b.text, maximizable: true, modal: true, layout: 'fit', width: 700, height: 500, items: f});
 				f.on({
 					cancelled: function(){w.destroy()},
 					scope: this

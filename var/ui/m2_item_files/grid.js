@@ -83,7 +83,7 @@ ui.m2_item_files.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 				columns: [
 					{header: 'ID', dataIndex: 'id', hidden: true},
 					{header: this.clmnName, dataIndex: 'title', width: 120, xtype: 'templatecolumn', tpl: image},
-					{header: this.clmnFt,  dataIndex: 'file_type_str'},
+					{header: this.clmnFt,  dataIndex: 'file_type_str',width: 200},
 					{header: this.clmnTitle,  dataIndex: 'title', width:120, id: 'expand'}
 				]
 			})
