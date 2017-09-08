@@ -127,10 +127,14 @@ class di_m2_category_manufacturers extends data_interface
 	{
 		$this->_flush();
 		$ui = user_interface::get_instance('mf2_catalogue_nav');
-		$scope = $ui->catalogue_scope;
-		$ids = implode(',',array_keys($scope));
-		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
-		return $this->_get($sql)->get_results();
+		$scope = $ui->get_scope();
+		if(count($scope)>0)
+		{
+			$ids = implode(',',array_keys($scope));
+			$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
+			$data = $this->_get($sql)->get_results();
+		}
+		return $data;
 	}
 
 	public function get_manufacturers_for_category_list($ids = array())

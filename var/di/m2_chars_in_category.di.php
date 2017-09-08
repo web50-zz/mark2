@@ -95,6 +95,7 @@ class di_m2_chars_in_category extends data_interface
 		$di->where = "chars_list != '[]' && category_list != '[]' and not_available = 0 ";
 		$res = $di->_get()->get_results();
 		$index = array();
+		$type_values = array();
 		foreach($res as $key1=>$value1)
 		{
 			$cats = json_decode($value1->category_list);
@@ -116,6 +117,7 @@ class di_m2_chars_in_category extends data_interface
 					{
 						$val = $value2->variable_value;
 					}
+					$type_values[$value2->type_id][$val] = $value2->type_value;
 					if(!array_key_exists($value2->type_id,$index[$value->category_id]))
 					{
 						$index[$value->category_id][$value2->type_id] = array();
@@ -136,7 +138,7 @@ class di_m2_chars_in_category extends data_interface
 			{
 				foreach($v2 as $k3=>$v3)
 				{
-					$index2[$k1][] = array('category_id'=>$k1,'type_id'=>$k2,'val'=>$k3);
+					$index2[$k1][] = array('category_id'=>$k1,'type_id'=>$k2,'val'=>$k3,'type_value'=>$type_values[$k2][$k3]);
 				}
 			}
 		}
@@ -169,26 +171,25 @@ class di_m2_chars_in_category extends data_interface
 		{
 			return array();
 		}
-		$sql = 'select * from '.$this->get_alias().' where category_id in('.implode(',',array_keys($scope)).")";
-		$this->_flush();
-		$res = $this->_get($sql)->get_results();
-		$data = array();
-		foreach($res as $key=>$value)
+		$scope_key = implode(',',array_keys($scope));
+		if(!$this->data_for_scope[$scope_key])
 		{
-			$ar = json_decode($value->index1);
+			$sql = 'select * from '.$this->get_alias().' where category_id in('.implode(',',array_keys($scope)).")";
+			$this->_flush();
+			$res = $this->_get($sql)->get_results();
+			$this->data_for_scope[$scope_key] = $res;
+		}
+		$data = array();
+		foreach($this->data_for_scope[$scope_key] as $key=>$value)
+		{
+			$ar = json_decode($value->index2);
 			if(count($ar)>0)
 			{
 				foreach($ar as $key2=>$value2)
 				{
-					if($key2 == $type_id)
+					if($value2->type_id  == $type_id)
 					{
-						if(count($value2)>0)
-						{
-							foreach($value2 as $key3=>$value3)
-							{
-								$data[$key3] = 1;
-							}
-						}
+						$data[$value2->val] = $value2->type_value;
 					}
 				}
 			}
