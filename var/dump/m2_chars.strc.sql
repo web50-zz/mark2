@@ -2,7 +2,7 @@ CREATE TABLE `m2_chars` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `m2_id` int(11) unsigned NOT NULL DEFAULT '0',
   `parent_id` int(11) unsigned NOT NULL,
-  `type_value` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `type_value` int(11) unsigned NOT NULL DEFAULT '0',
   `type_id` int(10) unsigned NOT NULL DEFAULT '0',
   `order` int(10) unsigned NOT NULL DEFAULT '0',
   `variable_value` varchar(255) NOT NULL DEFAULT '',
