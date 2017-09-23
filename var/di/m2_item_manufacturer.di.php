@@ -92,7 +92,7 @@ class di_m2_item_manufacturer extends data_interface
 		$args =  $this->get_args();
 		if (!($fid > 0))
 		{
-			$args['order'] = $this->get_new_order((int)$this->get_args('m2_category_id'));
+			$args['order'] = $this->get_new_order((int)$this->get_args('item_id'));
 		}
 		$this->set_args($args);
 		$this->_flush();
