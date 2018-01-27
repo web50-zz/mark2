@@ -132,8 +132,8 @@ ui.m2_manufacturer_in_groups.subscribers = Ext.extend(ui.m2_manufacturer_in_grou
 	{
 		var srchType = new Ext.form.ComboBox({fieldLabel: 'Поиск', width: 150,
 			store: new Ext.data.SimpleStore({fields: ['value', 'title'], data: [
-				['email', 'Email']
-			]}), value: 'email', valueField: 'value', displayField: 'title', triggerAction: 'all', mode: 'local', editable: false
+				['title', 'Название']
+			]}), value: 'title', valueField: 'value', displayField: 'title', triggerAction: 'all', mode: 'local', editable: false
 		});
 		var srchField = new Ext.form.TextField({
 			width: 200,
