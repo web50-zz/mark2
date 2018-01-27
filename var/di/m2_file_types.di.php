@@ -39,7 +39,13 @@ class di_m2_file_types extends data_interface
 		'preview_type' => array('type' => 'integer'),
 		'is_image' => array('type' => 'integer'),
 	);
-	
+/**
+для поля dop_params актуален json типа
+{"previews":[{"width":"55","height":"55","adaptive":"false","prefix":"mini"}]}	
+можно задать несколько блоков. На данный момент эти параметры учитываются в m2_item_files
+**/
+
+
 	public function __construct () {
 		// Call Base Constructor
 		parent::__construct(__CLASS__);
