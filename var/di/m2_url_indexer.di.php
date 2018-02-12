@@ -48,6 +48,7 @@ class di_m2_url_indexer extends data_interface
 		$this->_flush();
 		$this->push_args(array('_surl' => $uri));
 		$this->what = $columns;
+		$this->set_order('id','desc');
 		$this->_get();
 		$this->pop_args();
 		return (array)$this->get_results(0);
