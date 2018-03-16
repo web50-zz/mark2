@@ -24,8 +24,15 @@ class di_m2_export_xls extends data_interface
 	protected $name = '';
 
 	protected $cfg_path = 'mark2/etc/xls_exportconfig.php';
+	/** Пример содержимого конфига (просто указывается  di содержащий процедуру sys_list для экспорта sys_import_xls для импорта). DI который будет использоваться вместо текущего.
+	$mark2_export_conf = array(
+			'di'=>'peps_export',
+	);
+	**/
+
 	public	$import_di = false;
 	public $path_to_storage = 'mark2/m2_import/';
+	public $export_conf = array();
 	/**
 	* @var	array	$fields	Конфигурация таблицы
 	*/
