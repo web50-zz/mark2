@@ -90,7 +90,6 @@ class di_m2_category_price extends data_interface
 
 	public function recache()
 	{
-		dbg::write('eee');
 		$di = data_interface::get_instance('m2_item_indexer');
 		$di->_flush();
 		$sql = "select prices_list, category_list from m2_item_indexer where prices_list != '[]' && category_list != '[]' and not_available = 0";
@@ -134,11 +133,14 @@ class di_m2_category_price extends data_interface
 		$this->connector->exec($sql);
 	}
 
-	public function get_price_for_category()
+	public function get_price_for_category($scope = array())
 	{
 		$this->_flush();
-		$ui = user_interface::get_instance('mf2_catalogue_nav');
-		$scope = $ui->get_scope();
+		if(!(count($scope) > 0))
+		{
+			$ui = user_interface::get_instance('mf2_catalogue_nav');
+			$scope = $ui->get_scope();
+		}
 		if(count($scope)>0)
 		{
 			$ids = implode(',',array_keys($scope));
