@@ -114,6 +114,10 @@ class di_m2_item extends data_interface
 		{
 			$args['order'] = $this->get_new_order();
 		}
+		else if(array_key_exists('order',$args) && $args['order'] == '0')
+		{
+			$args['order'] = $this->get_new_order();
+		}
 		$this->set_args($args);
 		$this->_flush();
 		$this->insert_on_empty = true;

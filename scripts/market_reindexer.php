@@ -22,6 +22,7 @@ foreach($posts as $key=>$value)
 	$post_args = array(
 		'_sid'=>$value->id,
 		'title'=>$value->title,
+		'order'=>$value->order,
 	);
 	if(!($EMULATE == true))
 	{
