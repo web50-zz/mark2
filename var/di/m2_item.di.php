@@ -199,5 +199,36 @@ class di_m2_item extends data_interface
 		}
 		return $uri;
 	}
+// это для поиска предметов в группе товаров  винтерфкейсе m2_item_in_groups
+
+	protected function sys_choice()
+	{
+		response::send($this->choice(), 'json');
+	}
+	
+	public function choice()
+	{
+		$lid = $this->get_args('lid', 0);
+		$this->_flush(true);
+		$tbl = $this->get_name();
+		$sbr = $this->join_with_di('m2_item_in_groups', array('id' => 'item_id', $lid => 'group_id'), array('id' => 'cid'));
+
+		list($query, $field) = array_values($this->get_args(array('query', 'field'), false));
+		if ($query && !$field)
+		{
+			$this->where = "(`{$tbl}`.`title` LIKE '%{$query}%'";
+		}
+		else
+		{
+			$this->set_args(array("_s{$field}" => "%{$query}%"), true);
+		}
+
+		return $this->extjs_grid_json(array(
+			'id',
+			'title' => 'title',
+		), false);
+	}
+
+
 }
 ?>

@@ -1,12 +1,12 @@
 <?php
 /**
 *
-* @author	9*	<9@u9.ru> 10.01.2017
+* @author	9*	<9@u9.ru> 08.10.2018
 * @package	SBIN Diesel
 */
-class di_m2_manufacturer_group extends data_interface
+class di_m2_item_group extends data_interface
 {
-	public $title = 'm2: Группы производителей';
+	public $title = 'm2: Группы товаров';
 
 	/**
 	* @var	string	$cfg	Имя конфигурации БД
@@ -21,7 +21,7 @@ class di_m2_manufacturer_group extends data_interface
 	/**
 	* @var	string	$name	Имя таблицы
 	*/
-	protected $name = 'm2_manufacturer_group';
+	protected $name = 'm2_item_group';
 	
 	/**
 	* @var	array	$fields	Конфигурация таблицы
