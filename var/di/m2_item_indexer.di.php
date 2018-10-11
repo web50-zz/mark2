@@ -22,7 +22,7 @@ class di_m2_item_indexer extends di_index_processor
 	* @var	string	$name	Имя таблицы
 	*/
 	public $name = 'm2_item_indexer';
-	
+
 	/**
 	* @var	array	$fields	Конфигурация таблицы
 	*/
@@ -182,6 +182,134 @@ class di_m2_item_indexer extends di_index_processor
 	public function __construct () {
 		// Call Base Constructor
 		parent::__construct(__CLASS__);
+	}
+
+	protected function sys_batch_reindex(){
+		$this->batch_reindex();
+		$i = 1;
+		if ($i > 0)
+		{
+			$result = array('success' => true,'msg'=>'Переиндексировано');
+		}
+		else
+		{
+			$result = array('success' => false);
+		}
+
+		response::send($result, 'json');
+
+	}
+	public function batch_reindex(){
+		$time_start = microtime(true); 
+		$items = $this->prepare_data();
+		$flds = array_keys($this->settings['index_target']['fields_to_index']);
+		$out_vals = '';
+		foreach($this->keys_index['m2_item'] as $k=>$v)
+		{
+			$tmp = array();
+			$tmp['id'] = '';
+			foreach($flds as $k1=>$v1)
+			{
+				$t = (array)$v;
+				if($v1 == 'id')
+				{
+					$tmp['item_id'] = $t[$v1];
+				}
+				else
+				{
+					$tmp[$v1] = str_replace('"','\"',str_replace("'","\'",$t[$v1]));
+				}
+			}
+			foreach($this->settings['composite_fields'] as $k2=>$v2)
+			{
+				$t2 = $this->keys_index[$v2['di_name']][$tmp['item_id']];
+				if(count($t2) > 0)
+				{
+					$tmp[$v2['index_field_name']] = $this->json_enc($t2);		
+				}
+				else
+				{
+					$tmp[$v2['index_field_name']] = '[]';		
+				}
+			}
+				$out_vals[] = '("'.implode('","',array_values($tmp)).'",now())';
+				if($k == 1)
+				{
+					$out_flds = $tmp;
+					$out_flds['last_changed'] = 1;
+				}
+		}
+		$flds = '(`'.implode('`,`',array_keys($out_flds)).'`)';
+		$sql = 'insert into m2_item_indexer '.$flds.' values '.implode(",\r\n",$out_vals);
+		$this->connector->exec('truncate table m2_item_indexer');
+		$this->connector->exec($sql);
+		$time_end = microtime(true);
+		$execution_time = ($time_end - $time_start)/60;
+//		var_dump($execution_time);
+	}
+
+	public function prepare_data()
+	{
+		$flds = array_keys($this->settings['index_target']['fields_to_index']);
+		$main_table = $this->settings['index_target']['di_name'];
+		$sql = 'select `'.implode('`,`',$flds).'` from '.$main_table.';';
+		$res = $this->_get($sql)->get_results();
+		$this->keys_index = array();
+		$this->keys_index[$main_table] = $res;
+		foreach($this->settings['composite_fields'] as $k=>$v)
+		{
+			$joins = array();
+			$fields = array();
+			$fields1 = array();
+			$JOINS = '';
+			$ORDER  = '';
+			$fields1 = array_keys($v['fields']);
+			$fields1[] = $v['di_key'];
+			$this->keys_index[$v['di_name']] = array();
+			foreach($fields1 as $k4=>$v4)
+			{
+				$fields[] = 't.`'.$v4.'`';
+			}
+
+			$table = $v['di_name'];
+			if(array_key_exists('joins',$v))
+			{
+				foreach($v['joins'] as $k1=>$v1)
+				{
+					$joins[] = $k1 .' a on t.'.$v1['source_key'].' = a.`'.$v1['remote_key'].'`';
+					foreach($v1['fields'] as $k2=>$v2)
+					{
+						$fields[] = 'a.'.$v2;
+					}
+				}
+			}
+			if(count($joins) >0)
+			{
+				$JOINS = 'LEFT JOIN '.implode(',',$joins);
+			}
+			if(array_key_exists('order_field',$v))
+			{
+				$ORDER = ' order by `'.$v['order_field'] .'` '.$v['order_type'];
+			}
+			$sql = 'SELECT '.implode(",",$fields).' FROM '.$table.' t '.$JOINS.' '.$ORDER.';';
+			$tmp = $this->_get($sql)->get_results();
+			foreach($tmp as $k5=>$k6)
+			{
+				$t = (array)$k6;
+				$item_id = $t[$v['di_key']];
+				if($item_id > 0)
+				{
+					if(!array_key_exists($item_id,$this->keys_index[$v['di_name']]))
+					{
+						$this->keys_index[$v['di_name']][$item_id] = array();
+					}
+					unset($k6->item_id);
+					unset($k6->m2_id);
+					$this->keys_index[$v['di_name']][$item_id][] = $k6;
+				}
+			}
+		}
+//		var_dump('data_mined');
 	}
 
 }

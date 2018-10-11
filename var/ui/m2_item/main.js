@@ -2,6 +2,7 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 	bttAdd: "Добавить",
 	bttEdit: "Редактировать",
 	bttDelete: "Удалить",
+	bttReindex: "Реиндексировать",
 	bttXls:"Получить в формате эксель",
 	addTitle: "Добавление",
 	editTitle: "Редактирование",
@@ -73,6 +74,45 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 
 //		document.location = 'di/m2_export_xls/import_xls.html';
 	},
+	batchReindex: function(id, title){
+		Ext.Msg.confirm(this.cnfrmTitle, 'Вы хотите переиндексировать каталог?', function(btn){
+			if (btn == "yes") {
+			 Ext.MessageBox.show({
+				title: 'Статус',
+				progressText: 'В процессе ...',
+				width:300,
+				progress:true,
+				closable:false,
+				wait: true,
+				waitConfig : 
+				        {
+						duration : 20000,
+						increment : 15,
+						text : 'В процессе .... ',
+						scope : this,
+						fn : function(){
+							Ext.MessageBox.hide();
+						}
+					}
+		             });
+			Ext.Ajax.request({
+					url: 'di/m2_item_indexer/batch_reindex.do',
+					params: {_sid: id},
+					callback: function(options, success, response){
+						var d = Ext.util.JSON.decode(response.responseText);
+						if (d.success){
+							Ext.Msg.alert('',d.msg);
+							this.fireEvent('batch_reindexed', id);
+						}else{
+							showError('Во время индексации возникли ошибки.');
+						}
+					},
+					scope: this
+				});
+		}
+		}, this);
+	},
+
 	multiSave: function(){
 		this.store.save();
 	},
@@ -97,6 +137,7 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 				{iconCls: 'note_add', text: this.bttAdd, handler: this.Add, scope: this},
 				{iconCls: 'note_add', text: this.bttXls, handler: this.xls, scope: this},
 				{iconCls: 'note_add', text: this.bttImportXls, handler: this.importXls, scope: this},
+				{iconCls: 'note_add', text: this.bttReindex, handler: this.batchReindex, scope: this},
 				'->', {iconCls: 'help', handler: function(){showHelp('m2_item')}}
 			]
 		});
