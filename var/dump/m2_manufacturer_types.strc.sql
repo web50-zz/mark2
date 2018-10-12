@@ -5,4 +5,4 @@ CREATE TABLE `m2_manufacturer_types` (
   `not_available` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `order` (`order`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+) ENGINE=MyISAMDEFAULT CHARSET=utf8

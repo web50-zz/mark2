@@ -13,4 +13,4 @@ CREATE TABLE `m2_category_file` (
   PRIMARY KEY (`id`),
   KEY `ssgn_project_id` (`m2_category_id`),
   KEY `order` (`order`)
-) ENGINE=MyISAM AUTO_INCREMENT=177 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

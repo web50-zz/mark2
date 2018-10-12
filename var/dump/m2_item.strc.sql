@@ -10,4 +10,4 @@ CREATE TABLE `m2_item` (
   `meta_title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `order` (`order`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+) ENGINE=MyISAMDEFAULT CHARSET=utf8

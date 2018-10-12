@@ -11,4 +11,4 @@ CREATE TABLE `m2_file_types` (
   `dop_params` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `order` (`order`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8
+) ENGINE=MyISAMDEFAULT CHARSET=utf8

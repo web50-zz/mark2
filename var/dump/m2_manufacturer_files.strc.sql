@@ -1,5 +1,3 @@
-
-DROP TABLE IF EXISTS `m2_manufacturer_files`;
 CREATE TABLE `m2_manufacturer_files` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created_datetime` datetime NOT NULL,
@@ -20,6 +18,4 @@ CREATE TABLE `m2_manufacturer_files` (
   PRIMARY KEY (`id`),
   KEY `order` (`order`),
   KEY `m2_item` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
-
-
+) ENGINE=MyISAMDEFAULT CHARSET=utf8

@@ -1,12 +1,8 @@
-
-DROP TABLE IF EXISTS `m2_chars_in_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m2_chars_in_category` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `category_id` int(11) DEFAULT '0',
   `index1` longtext,
   `index2` longtext,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`)
+) ENGINE=InnoDBDEFAULT CHARSET=utf8

@@ -4,5 +4,7 @@ CREATE TABLE `m2_url_indexer` (
   `category_id` int(10) NOT NULL,
   `url` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `item_id` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2945 DEFAULT CHARSET=utf8
+  KEY `item_id` (`item_id`),
+  KEY `category_id` (`category_id`),
+  KEY `url` (`url`)
+) ENGINE=MyISAMDEFAULT CHARSET=utf8

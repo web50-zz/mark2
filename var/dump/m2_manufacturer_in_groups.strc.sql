@@ -9,4 +9,4 @@ CREATE TABLE `m2_manufacturer_in_groups` (
   PRIMARY KEY (`id`),
   KEY `mailer_list_id` (`group_id`),
   KEY `contact_id` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAMDEFAULT CHARSET=utf8

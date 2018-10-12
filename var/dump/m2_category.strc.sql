@@ -18,4 +18,4 @@ CREATE TABLE `m2_category` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `node` (`left`,`right`,`level`)
-) ENGINE=MyISAM AUTO_INCREMENT=356 DEFAULT CHARSET=utf8
+) ENGINE=MyISAMDEFAULT CHARSET=utf8
