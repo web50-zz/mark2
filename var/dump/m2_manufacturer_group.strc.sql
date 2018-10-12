@@ -7,4 +7,4 @@ CREATE TABLE `m2_manufacturer_group` (
   `title` varchar(255) NOT NULL,
   `comment` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

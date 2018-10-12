@@ -19,4 +19,4 @@ CREATE TABLE `m2_chars_types` (
   KEY `node` (`left`,`right`,`level`),
   KEY `left` (`left`),
   KEY `right` (`right`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

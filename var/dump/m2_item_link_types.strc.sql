@@ -6,4 +6,4 @@ CREATE TABLE `m2_item_link_types` (
   `dop_params` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `order` (`order`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

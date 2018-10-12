@@ -7,4 +7,4 @@ CREATE TABLE `m2_url_indexer` (
   KEY `item_id` (`item_id`),
   KEY `category_id` (`category_id`),
   KEY `url` (`url`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

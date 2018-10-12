@@ -17,4 +17,4 @@ CREATE TABLE `m2_chars` (
   KEY `type_id` (`type_id`),
   KEY `type_value` (`type_value`),
   KEY `variable_value` (`variable_value`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

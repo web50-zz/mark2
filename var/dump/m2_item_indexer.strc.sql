@@ -19,4 +19,4 @@ CREATE TABLE `m2_item_indexer` (
   KEY `m2` (`item_id`),
   FULLTEXT KEY `category_list` (`category_list`),
   FULLTEXT KEY `manufacturers` (`manufacturers_list`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

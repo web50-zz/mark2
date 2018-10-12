@@ -5,4 +5,4 @@ CREATE TABLE `m2_category_manufacturers` (
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
   KEY `manufacturer_id` (`manufacturer_id`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

@@ -9,4 +9,4 @@ CREATE TABLE `m2_price_types` (
   `article` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `order` (`order`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

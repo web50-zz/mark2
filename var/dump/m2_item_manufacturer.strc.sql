@@ -7,4 +7,4 @@ CREATE TABLE `m2_item_manufacturer` (
   KEY `ssgn_project_id` (`item_id`),
   KEY `order` (`order`),
   KEY `manufacturer_id` (`manufacturer_id`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

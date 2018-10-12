@@ -6,4 +6,4 @@ CREATE TABLE `m2_item_category` (
   UNIQUE KEY `id` (`id`),
   KEY `NewIndex1` (`category_id`),
   KEY `NewIndex2` (`item_id`)
-) ENGINE=MyISAMDEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

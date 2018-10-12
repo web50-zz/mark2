@@ -4,5 +4,4 @@ CREATE TABLE `m2_category_price` (
   `min_price` int(11) unsigned DEFAULT '0',
   `max_price` int(11) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
