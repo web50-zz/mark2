@@ -373,6 +373,42 @@ class di_m2_url_indexer extends data_interface
 		$this->pop_args();
 	}
 
+	public function reindex()
+	{
+		$our = array();
+		$sql = "select id,uri from m2_category where id > 1";
+		$cats = $this->_get($sql)->get_results();
+		foreach($cats as $k=>$v)
+		{
+			$out .= '("",0,'.$v->id.',"'.$v->uri.'"),';
+		}
+		$sql = "select item_id,name,category_list from m2_item_indexer";
+		$res = $this->_get($sql)->get_results();
+		foreach($res as $k=>$v)
+		{
+			$out .= '("",'.$v->item_id.',0,"/'.$v->name.'/"),';
+			if($v->category_list != '[]' && $v->category_list != '')
+			{
+				$lst = json_decode($v->category_list);
+				if(is_array($lst))
+				{
+					if(count($lst) > 0)
+					{
+						foreach($lst as $k1=>$v1)
+						{
+							$out .= '("",'.$v->item_id.','.$v1->category_id.',"'.$v1->uri.$v->name.'/"),';
+						}
+					}
+				}
+			}
+		}
+		$sql = 'truncate table m2_url_indexer';
+		$this->get_connector()->exec($sql);
+		$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
+		$this->get_connector()->exec($sql);
+	}
+
+
 	public function _listeners()
 	{
 		return array(

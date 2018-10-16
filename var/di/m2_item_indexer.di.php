@@ -244,8 +244,9 @@ class di_m2_item_indexer extends di_index_processor
 		$this->connector->exec('truncate table m2_item_indexer');
 		$this->connector->exec($sql);
 		$time_end = microtime(true);
+		$di = data_interface::get_instance('m2_url_indexer');
+		$di->reindex();
 		$execution_time = ($time_end - $time_start)/60;
-//		var_dump($execution_time);
 	}
 
 	public function prepare_data()
