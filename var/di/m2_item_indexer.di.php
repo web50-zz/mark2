@@ -204,8 +204,11 @@ class di_m2_item_indexer extends di_index_processor
 		$items = $this->prepare_data();
 		$flds = array_keys($this->settings['index_target']['fields_to_index']);
 		$out_vals = '';
+		$j = 0;
+		$this->connector->exec('truncate table m2_item_indexer');
 		foreach($this->keys_index['m2_item'] as $k=>$v)
 		{
+			$j++;
 			$tmp = array();
 			$tmp['id'] = '';
 			foreach($flds as $k1=>$v1)
@@ -238,10 +241,18 @@ class di_m2_item_indexer extends di_index_processor
 					$out_flds = $tmp;
 					$out_flds['last_changed'] = 1;
 				}
+			if($j  == 6000) 
+			{
+				$j = 0;
+				$flds_a = '(`'.implode('`,`',array_keys($out_flds)).'`)';
+				$sql = 'insert into m2_item_indexer '.$flds_a.' values '.implode(",\r\n",$out_vals);
+				$this->connector->exec($sql);
+				$out_vals = array();
+			}
+
 		}
-		$flds = '(`'.implode('`,`',array_keys($out_flds)).'`)';
-		$sql = 'insert into m2_item_indexer '.$flds.' values '.implode(",\r\n",$out_vals);
-		$this->connector->exec('truncate table m2_item_indexer');
+		$flds_a = '(`'.implode('`,`',array_keys($out_flds)).'`)';
+		$sql = 'insert into m2_item_indexer '.$flds_a.' values '.implode(",\r\n",$out_vals);
 		$this->connector->exec($sql);
 		$time_end = microtime(true);
 		$di = data_interface::get_instance('m2_url_indexer');
