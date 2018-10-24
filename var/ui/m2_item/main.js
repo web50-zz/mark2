@@ -61,7 +61,7 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 				var f = new ui.m2_import.item_form();
 				var w = new Ext.Window({iconCls: this.iconCls, title: this.titleAdd, maximizable: true, modal: true, layout: 'fit', width: f.formWidth, height: 100, items: f});
 				f.on({
-					data_saved: function(){},
+					data_saved: function(){this.store.reload(); w.destroy();},
 					cancelled: function(){w.destroy()},
 					scope: this
 				});
