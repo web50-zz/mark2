@@ -95,7 +95,7 @@ class di_m2_category_price extends data_interface
 		$sql = "select prices_list, category_list from m2_item_indexer where prices_list != '[]' && category_list != '[]' and not_available = 0";
 		$res = $di->_get($sql)->get_results();
 		$index = array();
-		$price_type = registry::get('MAIN_PRICE_TYPE');
+		$price_type = registry::get('INDEX_PRICE_TYPE');
 		foreach($res as $key=>$value)
 		{
 			$cats = json_decode($value->category_list);
