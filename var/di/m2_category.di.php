@@ -480,17 +480,21 @@ class di_m2_category extends data_interface
 		}
 	}
 
-	public function search_parent($array_in,$parent)
+	public function search_parent($array_in = array(),$parent)
 	{
-		foreach($array_in as $key=>$value)
+
+		if(is_array($array_in) && count($array_in)>0)
 		{
-			if($value['id'] == $parent)
+			foreach($array_in as $key=>$value)
 			{
-				$this->result = $value;
-				return;
-			}
-			else{
-				$this->search_parent($value['childs'],$parent);
+				if($value['id'] == $parent)
+				{
+					$this->result = $value;
+					return;
+				}
+				else{
+					$this->search_parent($value['childs'],$parent);
+				}
 			}
 		}
 	}

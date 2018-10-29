@@ -185,19 +185,13 @@ class di_m2_item_indexer extends di_index_processor
 	}
 
 	protected function sys_batch_reindex(){
-		$this->batch_reindex();
-		$i = 1;
-		if ($i > 0)
+		try{
+			$this->batch_reindex();
+			response::send(array('success' => true,'msg'=>'Переиндексировано'),'json');
+		}catch(Exception $e)
 		{
-			$result = array('success' => true,'msg'=>'Переиндексировано');
+			response::send(array('success' => false,'msg'=>$e->getMessage()),'json');
 		}
-		else
-		{
-			$result = array('success' => false);
-		}
-
-		response::send($result, 'json');
-
 	}
 	public function batch_reindex(){
 		$time_start = microtime(true); 
@@ -241,7 +235,7 @@ class di_m2_item_indexer extends di_index_processor
 					$out_flds = $tmp;
 					$out_flds['last_changed'] = 1;
 				}
-			if($j  == 6000) 
+			if($j  == 4000) 
 			{
 				$j = 0;
 				$flds_a = '(`'.implode('`,`',array_keys($out_flds)).'`)';
