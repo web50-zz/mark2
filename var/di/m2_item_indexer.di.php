@@ -235,7 +235,7 @@ class di_m2_item_indexer extends di_index_processor
 					$out_flds = $tmp;
 					$out_flds['last_changed'] = 1;
 				}
-			if($j  == 4000) 
+			if($j  == 3000) 
 			{
 				$j = 0;
 				$flds_a = '(`'.implode('`,`',array_keys($out_flds)).'`)';
