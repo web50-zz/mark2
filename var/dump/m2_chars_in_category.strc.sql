@@ -5,4 +5,4 @@ CREATE TABLE `m2_chars_in_category` (
   `index2` longtext,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
