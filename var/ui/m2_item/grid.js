@@ -79,6 +79,7 @@ ui.m2_item.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 					listful: true,
 					writeAllFields: false
 				}),
+				baseParams:{start:0,limit:50},
 				remoteSort: true,
 				autoLoad: true,
 				sortInfo: {field: 'order', direction: 'ASC'}

@@ -75,6 +75,7 @@ ui.m2_manufacturers.grid = Ext.extend(Ext.grid.EditorGridPanel, {
 				}),
 				remoteSort: true,
 				autoLoad: true,
+				baseParams:{start:0,limit:50},
 				sortInfo: {field: 'order', direction: 'ASC'}
 			})
 		});
