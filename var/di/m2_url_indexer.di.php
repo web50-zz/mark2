@@ -382,10 +382,17 @@ class di_m2_url_indexer extends data_interface
 		{
 			$out .= '("",0,'.$v->id.',"'.$v->uri.'"),';
 		}
-		$sql = "select item_id,name,category_list from m2_item_indexer";
+		$sql = 'truncate table m2_url_indexer';
+		$this->get_connector()->exec($sql);
+		$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
+		$this->get_connector()->exec($sql);
+		$out = '';
+		$sql = "select item_id,name,category_list from m2_item_indexer where not_available = 0";
 		$res = $this->_get($sql)->get_results();
+		$j = 0;
 		foreach($res as $k=>$v)
 		{
+			$j++;
 			$out .= '("",'.$v->item_id.',0,"/'.$v->name.'/"),';
 			if($v->category_list != '[]' && $v->category_list != '')
 			{
@@ -401,9 +408,14 @@ class di_m2_url_indexer extends data_interface
 					}
 				}
 			}
+			if($j == 1000)
+			{
+				$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
+				$this->get_connector()->exec($sql);
+				$out = '';
+				$j = 0;
+			}
 		}
-		$sql = 'truncate table m2_url_indexer';
-		$this->get_connector()->exec($sql);
 		$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
 		$this->get_connector()->exec($sql);
 	}
