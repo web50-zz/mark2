@@ -235,7 +235,7 @@ class di_m2_item_indexer extends di_index_processor
 					$out_flds = $tmp;
 					$out_flds['last_changed'] = 1;
 				}
-			if($j  == 1000) 
+			if($j  == 500) 
 			{
 				$j = 0;
 				$flds_a = '(`'.implode('`,`',array_keys($out_flds)).'`)';
@@ -249,6 +249,9 @@ class di_m2_item_indexer extends di_index_processor
 		$sql = 'insert into m2_item_indexer '.$flds_a.' values '.implode(",\r\n",$out_vals);
 		$this->connector->exec($sql);
 		$time_end = microtime(true);
+		$sql = '';
+		$out_vals = '';
+		$this->keys_index = array();
 		$di = data_interface::get_instance('m2_url_indexer');
 		$di->reindex();
 		$execution_time = ($time_end - $time_start)/60;

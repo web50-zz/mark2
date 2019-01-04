@@ -373,6 +373,9 @@ class di_m2_url_indexer extends data_interface
 		$this->pop_args();
 	}
 
+	public function sys_reindex(){
+		$this->reindex();
+	}
 	public function reindex()
 	{
 		$our = array();
@@ -408,11 +411,12 @@ class di_m2_url_indexer extends data_interface
 					}
 				}
 			}
-			if($j == 1000)
+			if($j == 250)
 			{
 				$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
 				$this->get_connector()->exec($sql);
 				$out = '';
+				$sql = '';
 				$j = 0;
 			}
 		}
