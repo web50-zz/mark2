@@ -254,6 +254,7 @@ class di_m2_item_indexer extends di_index_processor
 		$this->keys_index = array();
 		$di = data_interface::get_instance('m2_url_indexer');
 		$di->reindex();
+//		dbg::write("Memory use after ALL : ".memory_get_peak_usage(true)/1024 ."K");
 		$execution_time = ($time_end - $time_start)/60;
 	}
 
@@ -300,12 +301,29 @@ class di_m2_item_indexer extends di_index_processor
 			{
 				$ORDER = ' order by `'.$v['order_field'] .'` '.$v['order_type'];
 			}
+			//dbg::write("Memory use before query : ".memory_get_peak_usage(true)/1024 ."K");
+			//dbg::write("$sql");
+
+			//Вариант 1 на версии php5.4 жрет меньше памяти чем вариант два на версии 5.6 как нистранно наоборот.
 			$sql = 'SELECT '.implode(",",$fields).' FROM '.$table.' t '.$JOINS.' '.$ORDER.';';
-			$tmp = $this->_get($sql)->get_results();
+			$c = $this->get_connector();
+			$c->fetchMethod = PDO::FETCH_ASSOC;
+			$c->exec($sql,array(),true,true);
+			$tmp = $this->get_results();
+			/*
+			//Вариант 2
+			$dbh = glob::get('dbh');
+			$dbh->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, FALSE);
+			$sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$sth->execute();
+			while($rows = $sth->fetch(PDO::FETCH_ASSOC)) 
+			{
+			    $tmp[] = $rows;
+			}
+			*/
 			foreach($tmp as $k5=>$k6)
 			{
-				$t = (array)$k6;
-				$item_id = $t[$v['di_key']];
+				$item_id = $k6[$v['di_key']];
 				if($item_id > 0)
 				{
 					if(!array_key_exists($item_id,$this->keys_index[$v['di_name']]))
@@ -317,6 +335,8 @@ class di_m2_item_indexer extends di_index_processor
 					$this->keys_index[$v['di_name']][$item_id][] = $k6;
 				}
 			}
+			//dbg::write("Memory use after query : ".memory_get_peak_usage(true)/1024 ."K");
+			$tmp = array();
 		}
 //		var_dump('data_mined');
 	}
