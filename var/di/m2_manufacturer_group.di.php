@@ -154,7 +154,6 @@ class di_m2_manufacturer_group extends data_interface
 		$lid = $this->get_args('lid', 0);
 		$this->_flush(true);
 		$tbl = $this->get_name();
-		$sbr = $this->join_with_di('mailer_include_group', array('id' => 'mail_group_id', $lid => 'hash_id'), array('id' => 'cid'));
 
 		list($query, $field) = array_values($this->get_args(array('query', 'field'), false));
 		if ($query && !$field)

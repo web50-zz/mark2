@@ -1,0 +1,130 @@
+
+{__(if(/records)__}
+<h2 class="h2-categories-thumbnails">Акции</h2>
+<div class="row">
+	<div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="thumbnail-list grid-3 balloon index-thumbnail-list">
+
+			{__(apply(/records)__}
+						{__set(#prices = json_decode($prices_list))__}
+						{__set(#files = json_decode($files_list))__}
+						{__set(#texts = json_decode($text_list))__}
+						{__set(#chars = json_decode($chars_list))__}
+						{__set(#categorys = json_decode($category_list))__}
+						{__set(#name = $name)__}
+						{__set(#title = $title)__}
+						{__set(#photo_exists = 0)__}
+					{__(apply(#prices)__}
+						{__(if($type == 5)__}
+						{__set(#type5 = $price_value)__}
+						{__if)__}
+						{__(if($type == 6)__}
+						{__set(#type6 = $price_value)__}
+						{__if)__}
+						{__(if($type == 8)__}
+						{__set(#type8 = $price_value)__}
+						{__if)__}
+						{__(if($type == 9)__}
+						{__set(#type9 = $price_value)__}
+						{__if)__}
+					{__apply)__}
+
+			<section class="product-thumbnail">
+					{__(apply(#chars)__} 
+					{__(if($type_id == '128')__}
+							{__(if($variable_value > 0)__}
+								<div class="discount_perc">
+									<div style="margin-left: -5px;">
+									-{__variable_value__} <span style="font-size:14px;margin-left:-3px;">%</span>
+									</div>
+								</div>
+							{__if)__}
+						{__if)__}
+					{__(if($type_id == '133')__}
+							{__(if($type_value==  134)__}
+								<div class="hit_sale">
+									<div style="margin-left: -5px;">
+									</div>
+								</div>
+							{__if)__}
+						{__if)__}
+
+					{__apply)__}
+				<div class="product-caption2">
+					<div class="product-header">
+						<h3 class="">
+							<a href="/catalog/items/{__#name__}/">{__title__}</a>
+						</h3>
+					</div>
+				</div>
+				<div class="product-pictures" data-url="/catalog/items/{__#name__}/" data-id="{__item_id__}" >
+					<a href="/catalog/items/{__name__}/">
+						{__(apply(#files)__}
+							{__(if(@position == 1)__}
+								{__set(#photo_exists = 1)__}
+						<img class="img-responsive" title="{__php::str_replace('"','',#title)__}" alt="{__php::str_replace('"','',#title)__}" src="/filestorage/mark2/m2_item_files/thomb-{__real_name__}"/>
+							{__if)__}
+						{__apply)__}
+						{__(if(#photo_exists == 0)__}
+						<img  class="img-responsive" title="{__php::str_replace('"','',#title)__}" alt="{__php::str_replace('"','',#title)__}" src="/themes/termt/img/nophoto.png"/>
+						{__if)__}
+					</a>
+				</div>
+				<div class="product-caption">
+						<div class="plsmnswrap">
+							<table class="plsmnsl">
+							<tbody><tr>
+							<td class="mns">
+								<div>-</div>
+							</td>
+							<td>
+							<input class="count" name="count" value="1" data-id="60" size="2" style="text-align: center" type="text"> 
+							</td>
+							<td class="pls">
+								<div>+</div> 
+							</td>
+							<td><div style="font-size: 14px;font-weight: normal;margin-top: -2px;">{REM}уп.{MER}</div></td>
+							</td>
+							</tr>
+							</tbody></table> 					
+						</div>
+
+					<div class="product-price">
+						<p class="price">
+						{REM}
+							<span>опт уп./бут.</span><br>
+							{__#type9__} <i class="fa fa-rub"></i> / {__#type8__} <i class="fa fa-rub"></i><br>
+							{MER}
+							<span>розница уп./бут.</span><br>
+							{__#type6__} <i class="fa fa-rub"></i> / {__#type5__} <i class="fa fa-rub"></i>
+						</p>
+					</div>
+					<div class="id">
+						<span>{__article__}</span>
+					</div>
+					<div class="product-text">
+				{__(apply(#texts)__}
+						{__(if($type == 5)__}
+			                    {__content__}
+						{__if)__}
+				{__apply)__}
+					</div>
+					<div class="product-buy">
+
+						<span data-title="{__php::str_replace('"','',$title)__}" data-id="{__item_id__}"  style="{__(if(/basket[$item_id])__}display: none; {__else__} display: block{__if)__}" class="btn_buy add_to_cart"> 
+							<div class=""></div> 
+						</span>
+						<span data-title="{__php::str_replace('"','',$title)__}" data-id="{__item_id__}"   style="{__(if(/basket[$item_id])__}display: block; {__else__} display:none{__if)__}" data-id="{__item_id__}" class=" remove_from_cart unorder_btn btn_unbuy"> 
+							<div class=""></div> 
+						</span>
+					</div>
+				</div>
+			</section>
+
+
+
+			{__apply)__}
+		</div>
+	</div>
+</div>
+{__if)__}

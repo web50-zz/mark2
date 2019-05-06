@@ -423,7 +423,7 @@ class di_m2_category extends data_interface
 		return $this->data['records'][0];
 	}
 
-	public function get_all_simple()
+	public function get_all_simple($params= array())
 	{
 		$parent = 1;
 		$this->_flush();
@@ -452,6 +452,27 @@ class di_m2_category extends data_interface
 			array('di'=>$d2,'name'=>'brief'),
 		);
 		$this->data =  $this->extjs_grid_json($flds,false);
+		if($params['with_manufacturers'] == 'true')
+		{
+			$index = array();
+			$ids = array();
+			foreach($this->data['records'] as $key=>$value)
+			{
+				$ids[] = $value['id'];
+				$index[$value['id']] = $key;
+			}
+			$di = data_interface::get_instance('m2_category_manufacturers');
+			$dt = $di->get_manufacturers_for_category_list_simple($ids);
+			foreach($dt as $key=>$value)
+			{
+				if(!$this->data['records'][$index[$value->category_id]]['manufacturers'])
+				{
+					$this->data['records'][$index[$value->category_id]]['manufacturers'] = array();
+				}
+				$this->data['records'][$index[$value->category_id]]['manufacturers'][] = $value;
+			}
+
+		}
 		$this->get_childs(0);
 		$this->correct_links();
 		$this->get_childs(0);
@@ -480,17 +501,21 @@ class di_m2_category extends data_interface
 		}
 	}
 
-	public function search_parent($array_in,$parent)
+	public function search_parent($array_in = array(),$parent)
 	{
-		foreach($array_in as $key=>$value)
+
+		if(is_array($array_in) && count($array_in)>0)
 		{
-			if($value['id'] == $parent)
+			foreach($array_in as $key=>$value)
 			{
-				$this->result = $value;
-				return;
-			}
-			else{
-				$this->search_parent($value['childs'],$parent);
+				if($value['id'] == $parent)
+				{
+					$this->result = $value;
+					return;
+				}
+				else{
+					$this->search_parent($value['childs'],$parent);
+				}
 			}
 		}
 	}

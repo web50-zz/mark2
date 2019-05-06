@@ -17,6 +17,10 @@ class ui_m2_item extends user_interface
 		'item_selection' => array(
 			'm2_item.grid',
 		),
+		'choice' => array(
+			'm2_item.grid2',
+		),
+
 	);
 	
 	public function __construct ()
@@ -59,6 +63,21 @@ class ui_m2_item extends user_interface
 	public function sys_item_selection()
 	{
 		$tmpl = new tmpl($this->pwd() . 'item_selection.js');
+		response::send($tmpl->parse($this), 'js');
+	}
+	/* 
+	*	Селектор предмета версия с мультивыбором
+	*/
+
+	public function sys_choice()
+	{
+		$tmpl = new tmpl($this->pwd() . 'choice.js');
+		response::send($tmpl->parse($this), 'js');
+	}
+
+	public function sys_grid2()
+	{
+		$tmpl = new tmpl($this->pwd() . 'grid2.js');
 		response::send($tmpl->parse($this), 'js');
 	}
 

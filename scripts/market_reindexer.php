@@ -17,10 +17,11 @@ $posts = get_items();
 foreach($posts as $key=>$value)
 {
 	$j++;
-	echo("\r\n iteration: $j\r\n");
+	echo("iteration: $j\r\n");
 	echo("id: {$value->id} {$value->name}  {$value->articul} \r\n");
 	$post_args = array(
 		'_sid'=>$value->id,
+		'title'=>$value->title,
 		'order'=>$value->order,
 	);
 	if(!($EMULATE == true))
@@ -31,8 +32,8 @@ foreach($posts as $key=>$value)
 	}
 	else{
 	}
-	var_dump($res);
-	echo("Post reindexed\r\n");
+//	var_dump($res);
+//	echo("Post reindexed\r\n");
 }
 
 echo("done\r\n");
@@ -43,7 +44,7 @@ echo("done\r\n");
 function get_items()
 {
 	$di = data_interface::get_instance('m2_item');
-	$di->what = array('id','order');
+	$di->what = array('id','order','title');
 	$results = $di->_get()->get_results();
 	return $results;
 }

@@ -18,4 +18,4 @@ CREATE TABLE `m2_item_files` (
   PRIMARY KEY (`id`),
   KEY `order` (`order`),
   KEY `m2_item` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2686 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

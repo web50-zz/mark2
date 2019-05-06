@@ -11,4 +11,4 @@ CREATE TABLE `m2_item_price` (
   KEY `type` (`type`),
   KEY `price_value` (`price_value`),
   KEY `item_id` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3405 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

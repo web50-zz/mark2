@@ -12,4 +12,4 @@ CREATE TABLE `m2_item_variation_chars` (
   `order` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `ssgn_project_id` (`m2_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=267 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8

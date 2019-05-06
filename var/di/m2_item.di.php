@@ -49,6 +49,11 @@ class di_m2_item extends data_interface
 		$this->_flush();
 		//$this->set_order('order', 'ASC');
 		list($field, $query) = array_values($this->get_args(array('field', 'query')));
+		$sort_price_type = registry::get('MAIN_PRICE_TYPE');
+		if(!$sort_price_type)
+		{
+			$sort_price_type = 5;
+		}
 		if (!empty($field) && !empty($query))
 		{
 			if($this->args['field'] != 'id')
@@ -62,7 +67,7 @@ class di_m2_item extends data_interface
 			$this->sys_search_by_category();
 		}
 		$di2 = $this->join_with_di('m2_chars',array('id'=>'m2_id','128'=>'type_id'),array('variable_value'=>'discount'));
-		$di3 = $this->join_with_di('m2_item_price',array('id'=>'item_id','9'=>'type'),array('price_value'=>'cprice'));
+		$di3 = $this->join_with_di('m2_item_price',array('id'=>'item_id',$sort_price_type=>'type'),array('price_value'=>'cprice'));
 		$this->extjs_grid_json(array(
 			'id', 
 			'order', 
@@ -111,6 +116,10 @@ class di_m2_item extends data_interface
 		$args =  $this->get_args();
 		$args['name'] = $this->prepare_uri();
 		if (!($id > 0))
+		{
+			$args['order'] = $this->get_new_order();
+		}
+		else if(array_key_exists('order',$args) && $args['order'] == '0')
 		{
 			$args['order'] = $this->get_new_order();
 		}
@@ -195,5 +204,36 @@ class di_m2_item extends data_interface
 		}
 		return $uri;
 	}
+// это для поиска предметов в группе товаров  винтерфкейсе m2_item_in_groups
+
+	protected function sys_choice()
+	{
+		response::send($this->choice(), 'json');
+	}
+	
+	public function choice()
+	{
+		$lid = $this->get_args('lid', 0);
+		$this->_flush(true);
+		$tbl = $this->get_name();
+		$sbr = $this->join_with_di('m2_item_in_groups', array('id' => 'item_id', $lid => 'group_id'), array('id' => 'cid'));
+
+		list($query, $field) = array_values($this->get_args(array('query', 'field'), false));
+		if ($query && !$field)
+		{
+			$this->where = "(`{$tbl}`.`title` LIKE '%{$query}%'";
+		}
+		else
+		{
+			$this->set_args(array("_s{$field}" => "%{$query}%"), true);
+		}
+
+		return $this->extjs_grid_json(array(
+			'id',
+			'title' => 'title',
+		), false);
+	}
+
+
 }
 ?>

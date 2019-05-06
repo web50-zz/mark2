@@ -87,8 +87,7 @@ class di_m2_category_manufacturers extends data_interface
 		response::send($data, 'json');
 	}
 
-	public function recache()
-	{
+	public function recache(){
 		$di = data_interface::get_instance('m2_item_indexer');
 		$di->_flush();
 		$di->where = "manufacturers_list != '[]' && category_list != '[]' and not_available = 0";
@@ -130,14 +129,41 @@ class di_m2_category_manufacturers extends data_interface
 		$scope = $ui->get_scope();
 		if(count($scope)>0)
 		{
+			
 			$ids = implode(',',array_keys($scope));
-			$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
+			/* альтернативный вариант без индекса на лету плюс прощет количества товаров сэтим производителем */
+			$sql = "SELECT m.title,im.manufacturer_id,COUNT(im.item_id) as cnt 
+					FROM m2_item_manufacturer im 
+					LEFT JOIN m2_item_category ic ON im.item_id = ic.item_id 
+					LEFT JOIN m2_manufacturers m ON im.manufacturer_id = m.id 
+					WHERE ic.category_id IN($ids) 
+					GROUP BY manufacturer_id 
+					order by m.title ASC";
+			/* первый вариант с выборкой из закэшированнной таблицы  без просчета товаров в выборке */
+			//$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
 			$data = $this->_get($sql)->get_results();
 		}
 		return $data;
 	}
 
 	public function get_manufacturers_for_category_list($ids = array())
+	{
+		$this->_flush();
+		$ids = implode(',',$ids);
+//		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) order by m.title ASC ";
+			$sql = "SELECT m.title,im.manufacturer_id,COUNT(im.item_id) as cnt
+					FROM m2_item_manufacturer im 
+					LEFT JOIN m2_item_category ic ON im.item_id = ic.item_id 
+					LEFT JOIN m2_manufacturers m ON im.manufacturer_id = m.id 
+					WHERE ic.category_id IN($ids) 
+					GROUP BY manufacturer_id 
+					order by m.title ASC";
+
+		return $this->_get($sql)->get_results();
+	}
+
+	// использутеся в навигации для получения связи списка производителей с нужной категорией чтобы выводить например в меню всех проиводитедей для категорий
+	public function get_manufacturers_for_category_list_simple($ids = array())
 	{
 		$this->_flush();
 		$ids = implode(',',$ids);
