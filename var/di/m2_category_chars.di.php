@@ -6,7 +6,7 @@
 */
 class di_m2_category_chars extends data_interface
 {
-	public $title = 'm2: Маркет 2 -  характеристики';
+	public $title = 'm2: Маркет 2 -  характеристики для категорий. Внимание - не товаров, а категорий';
 
 	/**
 	* @var	string	$cfg	Имя конфигурации БД
