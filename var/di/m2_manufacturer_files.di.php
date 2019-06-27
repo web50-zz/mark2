@@ -265,7 +265,11 @@ class di_m2_manufacturer_files extends data_interface
 					}
 				}
 			}
-
+			//если имя файла задано принудительно через аргументы то оверлоадим его(используется в оснвоном в миграционных целях)
+			if($this->args['name'] != '')
+			{
+				$file['name'] = $this->args['name'];
+			}
 			$this->set_args($file, true);
 			$this->_flush();
 			$this->insert_on_empty = true;
@@ -356,7 +360,7 @@ class di_m2_manufacturer_files extends data_interface
 	*	Удалить файл[ы]
 	* @access protected
 	*/
-	protected function sys_unset($silent = false)
+	public function sys_unset($silent = false)
 	{
 		if ($this->args['records'] && !$this->args['_sid'])
 		{
