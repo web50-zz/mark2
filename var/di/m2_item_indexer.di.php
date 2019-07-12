@@ -197,7 +197,7 @@ class di_m2_item_indexer extends di_index_processor
 		$time_start = microtime(true); 
 		$items = $this->prepare_data();
 		$flds = array_keys($this->settings['index_target']['fields_to_index']);
-		$out_vals = '';
+		$out_vals = array();
 		$j = 0;
 		$this->connector->exec('truncate table m2_item_indexer');
 		foreach($this->keys_index['m2_item'] as $k=>$v)
