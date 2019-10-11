@@ -122,7 +122,7 @@ class di_m2_category_manufacturers extends data_interface
 		$this->connector->exec($sql);
 	}
 
-	public function get_manufacturers_for_category()
+	public function get_manufacturers_for_category($type = 0)
 	{
 		$this->_flush();
 		$ui = user_interface::get_instance('mf2_catalogue_nav');
@@ -132,6 +132,8 @@ class di_m2_category_manufacturers extends data_interface
 			
 			$ids = implode(',',array_keys($scope));
 			/* альтернативный вариант без индекса на лету плюс прощет количества товаров сэтим производителем */
+			if($type == 0)
+			{
 			$sql = "SELECT m.title,im.manufacturer_id,COUNT(im.item_id) as cnt 
 					FROM m2_item_manufacturer im 
 					LEFT JOIN m2_item_category ic ON im.item_id = ic.item_id 
@@ -139,8 +141,12 @@ class di_m2_category_manufacturers extends data_interface
 					WHERE ic.category_id IN($ids) 
 					GROUP BY manufacturer_id 
 					order by m.title ASC";
-			/* первый вариант с выборкой из закэшированнной таблицы  без просчета товаров в выборке */
-			//$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
+			}
+			else
+			{
+				/* первый вариант с выборкой из закэшированнной таблицы  без просчета товаров в выборке */
+				$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) group by m.id order by m.title ASC ";
+			}
 			$data = $this->_get($sql)->get_results();
 		}
 		return $data;
