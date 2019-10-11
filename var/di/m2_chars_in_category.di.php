@@ -194,6 +194,7 @@ class di_m2_chars_in_category extends data_interface
 				}
 			}
 		}
+		ksort($data);
 		return $data;
 	}
 
