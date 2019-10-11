@@ -7,6 +7,7 @@
 class ui_m2_item_group extends user_interface
 {
 	public $title = 'mark2: Группы товаров';
+	public $data_buffer = array(); //сюда складываем чтото из внешних уи ди для парсинга в шаблон
 
 	protected $deps = array(
 		'main' => array(
@@ -112,6 +113,8 @@ class ui_m2_item_group extends user_interface
 		$data['records'] = $res;
 		$data['args'] = $args;
 		$data['basket'] = $_SESSION['mf2_cart'];
+		$this->fire_event('before_parse', array($this));
+		$data = array_merge($data,$this->data_buffer);
 		return $this->parse_tmpl($template,$data);
 
 	}
