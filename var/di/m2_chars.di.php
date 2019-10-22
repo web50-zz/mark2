@@ -30,6 +30,7 @@ class di_m2_chars extends data_interface
 	public $fields = array(
 		'id' => array('type' => 'integer', 'serial' => TRUE, 'readonly' => TRUE),
 		'm2_id' => array('type' => 'integer', 'alias' => 'pid'),
+		'parent_id'=>array('type'=>'ineger'),
 		'type_value' => array('type' => 'integer'),// id значение из справочника  если оно выбирается из фиксироанных
 		'type_id' => array('type' => 'integer'),// id парамера из справочника
 		'type_value_str'=>array('type'=>'string'),// строковое наименование ввыбранного фиксированного значени из справочника если  выбор шел из фиксированных

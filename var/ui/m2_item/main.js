@@ -3,6 +3,7 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 	bttEdit: "Редактировать",
 	bttDelete: "Удалить",
 	bttReindex: "Реиндексировать",
+	bttDuplicate: "Создать копию",
 	bttXls:"Получить в формате эксель",
 	addTitle: "Добавление",
 	editTitle: "Редактирование",
@@ -49,6 +50,46 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 			scope: this
 		});
 		app.Load('m2_item', 'form');
+	},
+	Duplicate: function(){
+		var row = this.getSelectionModel().getSelected();
+		var id = row.get('id');
+		Ext.Msg.confirm(this.cnfrmTitle, 'Вы хотите создать копию карточки товара ID: '+id +'?', function(btn){
+			if (btn == "yes") {
+			 Ext.MessageBox.show({
+				title: 'Статус',
+				progressText: 'В процессе ...',
+				width:300,
+				progress:true,
+				closable:false,
+				wait: true,
+				waitConfig : 
+				        {
+						duration : 20000,
+						increment : 15,
+						text : 'В процессе .... ',
+						scope : this,
+						fn : function(){
+							Ext.MessageBox.hide();
+						}
+					}
+		             });
+			Ext.Ajax.request({
+					url: 'di/m2_item/make_copy.do',
+					params: {_sid: id},
+					callback: function(options, success, response){
+						var d = Ext.util.JSON.decode(response.responseText);
+						if (d.success){
+							Ext.Msg.alert('',d.msg);
+							this.fireEvent('copy_done', id);
+						}else{
+							showError('Во время копирования возникли ошибки. ' + d.msg);
+						}
+					},
+					scope: this
+				});
+		}
+		}, this);
 	},
 	xls: function(){
 		document.location = 'di/m2_export_xls/list.js';
@@ -149,6 +190,7 @@ ui.m2_item.main = Ext.extend(ui.m2_item.grid, {
 				grid.getSelectionModel().selectRow(rowIndex);
 				var cmenu = new Ext.menu.Menu({items: [
 					{iconCls: 'note_edit', text: this.bttEdit, handler: this.Edit, scope: this},
+					{iconCls: 'note_add', text: this.bttDuplicate, handler: this.Duplicate, scope: this},
 					{iconCls: 'note_delete', text: this.bttDelete, handler: this.Delete, scope: this},
 					'-'
 				]});

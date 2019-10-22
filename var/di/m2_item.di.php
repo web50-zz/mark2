@@ -200,7 +200,7 @@ class di_m2_item extends data_interface
 		}
 		catch(exception $e)
 		{
-			dbg::write($e->getMessage());
+			//dbg::write($e->getMessage());
 		}
 		return $uri;
 	}
@@ -232,6 +232,118 @@ class di_m2_item extends data_interface
 			'id',
 			'title' => 'title',
 		), false);
+	}
+
+	protected function sys_make_copy()
+	{
+		try
+		{
+			$id = $this->get_args('_sid');
+			if(!($id>0))
+			{
+				throw new Exception('Не задан ID');
+			}
+			$this->_flush();
+			$res = $this->extjs_form_json(false,false);
+			$title = $res['data']['title'];// это для реиндекса внизу
+			if(!($res['success'] == true))
+			{
+				throw new Exception('Не найден');
+			}
+			$input = $res['data'];
+			unset($input['id']);
+			unset($input['order']);
+			unset($input['name']);
+			$input['article'] = $this->prepare_article();
+			$this->set_args($input);
+			$res = $this->sys_set(true);
+			if(!($res['success'] == true))
+			{
+				throw new Exception('Ошибка копирования товара');
+			}
+			$new_id = $res['data']['id'];
+			$tbls = array('m2_chars','m2_item_price','m2_item_manufacturer','m2_item_category','m2_item_text','m2_item_links','m2_item_files');
+			foreach($tbls as $k1=>$v1)
+			{
+				$f = 'item_id';
+				if($v1 == 'm2_chars')
+				{
+					$f = 'm2_id';
+				}
+				$di = data_interface::get_instance($v1);
+				$di ->set_args(array("_s{$f}"=>$id));
+				$res = $di->extjs_grid_json(false,false);
+				$vals = '';
+				if($res['success'] == true)
+				{
+					if(is_array($res['records']) && count($res['records'])>0)
+					{
+						foreach($res['records'] as $k=>$v)
+						{
+							unset($v['id']);
+							$v[$f] = $new_id;
+							if($v1 == 'm2_item_files')
+							{
+								$d = data_interface::get_instance('m2_item_files');
+								$path = $d->get_path_to_storage();
+								$fl = $path.$v['real_name'];
+								if(is_file($fl))
+								{
+									$df = data_interface::get_instance('m2_item_files');
+									$input = $v;
+									unset($input['id']);
+									unset($input['real_name']);
+									$input['source'] =$fl;
+									$df->set_args($input);
+									$df->sys_set(true);
+								}
+							}
+							$vals.= ",('','".implode("','",$v)."')";
+
+						}
+						if($v1 != 'm2_item_files')
+						{
+							$sql = "insert into $v1 "."(`".implode("`,`",array_keys($res['records'][0]))."`)"." values ".substr($vals,1);
+							$con = $di->get_connector();
+							$con->exec($sql);
+						}
+					}
+				}
+			}
+			//reindex
+			$input = array('_sid'=>$new_id,'title'=>$title);
+			$this->set_args($input);
+			$res = $this->sys_set(true);
+
+		}
+		catch (exception $e)
+		{
+			response::send(array('success' => false,'msg'=>$e->getMessage()),'json');
+		}
+		response::send(array('success' => true,'msg'=>'Копирование прошло успешно. Новый ID:'.$new_id),'json');
+	}
+
+
+	protected function prepare_article()
+	{
+		$n = substr(md5(time().rand()),0,7);
+		if($this->check_article_uniq($n))
+		{
+			return $n;
+		}
+		$this->prepare_article();
+	}
+
+	// проверяем есть ли такой артикул уже. Если нет возвращаем true
+	protected function check_article_uniq($a)
+	{
+		$sql = 'select count(*) as a from '.$this->name." where `article` = '$a'";
+		$res = $this->_get($sql)->get_results($sql);
+		if($res->a >0)
+		{
+			return false;	
+		}
+		return true;
 	}
 
 
