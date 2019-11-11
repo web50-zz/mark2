@@ -254,6 +254,7 @@ class di_m2_item_indexer extends di_index_processor
 		$this->keys_index = array();
 		$di = data_interface::get_instance('m2_url_indexer');
 		$di->reindex();
+		$this->fire_event('after_reindex', array());
 //		dbg::write("Memory use after ALL : ".memory_get_peak_usage(true)/1024 ."K");
 		$execution_time = ($time_end - $time_start)/60;
 	}
