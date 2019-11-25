@@ -396,32 +396,38 @@ class di_m2_url_indexer extends data_interface
 		foreach($res as $k=>$v)
 		{
 			$j++;
-			$out .= '("",'.$v->item_id.',0,"/'.$v->name.'/"),';
-			if($v->category_list != '[]' && $v->category_list != '')
+			if($v->item_id>0)
 			{
-				$lst = json_decode($v->category_list);
-				if(is_array($lst))
+				$out .= '("",'.$v->item_id.',0,"/'.$v->name.'/"),';
+				if($v->category_list != '[]' && $v->category_list != '')
 				{
-					if(count($lst) > 0)
+					$lst = json_decode($v->category_list);
+					if(is_array($lst))
 					{
-						foreach($lst as $k1=>$v1)
+						if(count($lst) > 0)
 						{
-							$out .= '("",'.$v->item_id.','.$v1->category_id.',"'.$v1->uri.$v->name.'/"),';
+							foreach($lst as $k1=>$v1)
+							{
+								$out .= '("",'.$v->item_id.','.$v1->category_id.',"'.$v1->uri.$v->name.'/"),';
+							}
 						}
 					}
 				}
-			}
-			if($j == 250)
-			{
-				$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
-				$this->get_connector()->exec($sql);
-				$out = '';
-				$sql = '';
-				$j = 0;
+				if($j == 500)
+				{
+					$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
+					$this->get_connector()->exec($sql);
+					$out = '';
+					$sql = '';
+					$j = 0;
+				}
 			}
 		}
-		$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
-		$this->get_connector()->exec($sql);
+		if($out != '')
+		{
+			$sql = 'insert into m2_url_indexer (`id`,`item_id`,`category_id`,`url`) values '.rtrim($out,',');
+			$this->get_connector()->exec($sql);
+		}
 	}
 
 
