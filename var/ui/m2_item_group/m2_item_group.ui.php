@@ -107,6 +107,11 @@ class ui_m2_item_group extends user_interface
 		{
 			return '';
 		}
+		$di1 = data_interface::get_instance('m2_item_group');
+		$di1->_flush();
+		$di1->set_args(array('_sid'=>$group_id));
+		$res = $di1->extjs_grid_json(false,false);
+		$data['group'] = $res['records'][0];
 		$di = data_interface::get_instance('m2_item_in_groups');
 		$di->set_args(array('sort'=>$sort,'dir'=>$dir,'id'=>$group_id));
 		$res =  $di->get_list();
