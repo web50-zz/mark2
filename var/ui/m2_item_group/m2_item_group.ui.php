@@ -113,7 +113,7 @@ class ui_m2_item_group extends user_interface
 		$res = $di1->extjs_grid_json(false,false);
 		$data['group'] = $res['records'][0];
 		$di = data_interface::get_instance('m2_item_in_groups');
-		$di->set_args(array('sort'=>$sort,'dir'=>$dir,'id'=>$group_id));
+		$di->set_args(array('sort'=>$sort,'dir'=>$dir,'id'=>$group_id,'limit'=>$limit));
 		$res =  $di->get_list();
 		$data['records'] = $res;
 		$data['args'] = $args;
