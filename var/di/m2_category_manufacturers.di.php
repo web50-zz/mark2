@@ -87,25 +87,30 @@ class di_m2_category_manufacturers extends data_interface
 		response::send($data, 'json');
 	}
 
-	public function recache(){
-		$di = data_interface::get_instance('m2_item_indexer');
-		$di->_flush();
-		$di->where = "manufacturers_list != '[]' && category_list != '[]' and not_available = 0";
-		$res = $di->_get()->get_results();
+	public function recache($res = array())
+	{
+		if(!count($res)>0)
+		{
+			$where = "manufacturers_list != '[]' && category_list != '[]' and not_available = 0";
+			$res = $this->_get('select * from m2_item_indexer where ' .$where)->get_results();
+		}
 		$index = array();
 		foreach($res as $key=>$value)
 		{
 			$cats = json_decode($value->category_list);
 			$mans = json_decode($value->manufacturers_list);
-			foreach($cats as $key=>$value)
+			if(count($cats) >0 && count($mans) >0)
 			{
-				if(!array_key_exists($value->category_id,$index))
+				foreach($cats as $key=>$value)
 				{
-					$index[$value->category_id] = array();	
-				}
-				foreach($mans as $key2=>$value2)
-				{
-					$index[$value->category_id][$value2->manufacturer_id] = 1;
+					if(!array_key_exists($value->category_id,$index))
+					{
+						$index[$value->category_id] = array();	
+					}
+					foreach($mans as $key2=>$value2)
+					{
+						$index[$value->category_id][$value2->manufacturer_id] = 1;
+					}
 				}
 			}
 		}
@@ -120,6 +125,8 @@ class di_m2_category_manufacturers extends data_interface
 		$this->connector->exec($sql);
 		$sql = "insert into $this->name values ".implode(',',$vals);
 		$this->connector->exec($sql);
+		unset($res);
+		unset($index);
 	}
 
 	public function get_manufacturers_for_category($type = 0)

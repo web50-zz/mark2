@@ -88,37 +88,41 @@ class di_m2_category_price extends data_interface
 		response::send($data, 'json');
 	}
 
-	public function recache()
+	public function recache($res = array())
 	{
-		$di = data_interface::get_instance('m2_item_indexer');
-		$di->_flush();
-		$sql = "select prices_list, category_list from m2_item_indexer where prices_list != '[]' && category_list != '[]' and not_available = 0";
-		$res = $di->_get($sql)->get_results();
+		if(!count($res)>0)
+		{
+			$sql = "select prices_list, category_list from m2_item_indexer where prices_list != '[]' && category_list != '[]' and not_available = 0";
+			$res = $this->_get($sql)->get_results();
+		}
 		$index = array();
 		$price_type = registry::get('INDEX_PRICE_TYPE');
 		foreach($res as $key=>$value)
 		{
 			$cats = json_decode($value->category_list);
 			$price = json_decode($value->prices_list);
-			foreach($cats as $key=>$value)
+			if(count($cats) >0 && count($price) >0)
 			{
-				if(!array_key_exists($value->category_id,$index))
+				foreach($cats as $key=>$value)
 				{
-					$index[$value->category_id] = array('min'=>'20000000','max'=>0);	
-				}
-				foreach($price as $key2=>$value2)
-				{
-					if($value2->type == $price_type)
+					if(!array_key_exists($value->category_id,$index))
 					{
-						if($value2->price_value < $index[$value->category_id]['min'])
+						$index[$value->category_id] = array('min'=>'20000000','max'=>0);	
+					}
+					foreach($price as $key2=>$value2)
+					{
+						if($value2->type == $price_type)
 						{
-							$index[$value->category_id]['min'] = floor($value2->price_value);
+							if($value2->price_value < $index[$value->category_id]['min'])
+							{
+								$index[$value->category_id]['min'] = floor($value2->price_value);
+							}
+							if($value2->price_value > $index[$value->category_id]['max'])
+							{
+								$index[$value->category_id]['max'] = ceil($value2->price_value);
+							}
+					
 						}
-						if($value2->price_value > $index[$value->category_id]['max'])
-						{
-							$index[$value->category_id]['max'] = ceil($value2->price_value);
-						}
-				
 					}
 				}
 			}
@@ -131,6 +135,9 @@ class di_m2_category_price extends data_interface
 		$this->connector->exec($sql);
 		$sql = "insert into $this->name values ".implode(',',$vals);
 		$this->connector->exec($sql);
+		unset($res);
+		unset($index);
+		unset($sql);
 	}
 
 	public function get_price_for_category($scope = array())

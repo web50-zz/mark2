@@ -88,45 +88,50 @@ class di_m2_chars_in_category extends data_interface
 		response::send($data, 'json');
 	}
 
-	public function recache()
+	public function recache($res = array())
 	{
-		$di = data_interface::get_instance('m2_item_indexer');
-		$di->_flush();
-		$di->where = "chars_list != '[]' && category_list != '[]' and not_available = 0 ";
-		$res = $di->_get()->get_results();
+		if(!count($res)>0)
+		{
+			$where = "chars_list != '[]' && category_list != '[]' and not_available = 0 ";
+			$res = $this->_get('select * from m2_item_indexer where ' .$where)->get_results();
+		}
 		$index = array();
 		$type_values = array();
 		foreach($res as $key1=>$value1)
 		{
 			$cats = json_decode($value1->category_list);
 			$chars = json_decode($value1->chars_list);
-			foreach($cats as $key=>$value)
+
+			if(count($cats) >0 && count($chars) >0)
 			{
-				if(!array_key_exists($value->category_id,$index))
+				foreach($cats as $key=>$value)
 				{
-					$index[$value->category_id] = array();	
-				}
-				foreach($chars as $key2=>$value2)
-				{
-					$tmp = array();
-					if($value2->type_value_str != '')
+					if(!array_key_exists($value->category_id,$index))
 					{
-						$val = $value2->type_value_str;
+						$index[$value->category_id] = array();	
 					}
-					if($value2->variable_value != '')
+					foreach($chars as $key2=>$value2)
 					{
-						$val = $value2->variable_value;
+						$tmp = array();
+						if($value2->type_value_str != '')
+						{
+							$val = $value2->type_value_str;
+						}
+						if($value2->variable_value != '')
+						{
+							$val = $value2->variable_value;
+						}
+						$type_values[$value2->type_id][$val] = $value2->type_value;
+						if(!array_key_exists($value2->type_id,$index[$value->category_id]))
+						{
+							$index[$value->category_id][$value2->type_id] = array();
+						}
+						if(!array_key_exists($val,$index[$value->category_id][$value2->type_id]))
+						{
+							$index[$value->category_id][$value2->type_id][$val] = array();
+						}
+						$index[$value->category_id][$value2->type_id][$val][$value1->item_id] = 1;
 					}
-					$type_values[$value2->type_id][$val] = $value2->type_value;
-					if(!array_key_exists($value2->type_id,$index[$value->category_id]))
-					{
-						$index[$value->category_id][$value2->type_id] = array();
-					}
-					if(!array_key_exists($val,$index[$value->category_id][$value2->type_id]))
-					{
-						$index[$value->category_id][$value2->type_id][$val] = array();
-					}
-					$index[$value->category_id][$value2->type_id][$val][$value1->item_id] = 1;
 				}
 			}
 		}
@@ -152,6 +157,9 @@ class di_m2_chars_in_category extends data_interface
 		$this->connector->exec($sql);
 		$sql = "insert into $this->name values ".implode(',',$vals);
 		$this->connector->exec($sql);
+		unset($res);
+		unset($index);
+		unset($index2);
 	}
 
 	//9*  custom cyrillic fix. for json_encode
