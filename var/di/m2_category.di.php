@@ -430,11 +430,22 @@ class di_m2_category extends data_interface
 		if($this->args['parent']>0){
 			$parent = $this->args['parent'];
 		}
-		$this->set_args(array(
+		if($params['ignore_visibility'] == 1)
+		{
+			$this->set_args(array(
+				'sort'=>'left',
+				'dir'=>'ASC',
+				));
+
+		}
+		else
+		{
+			$this->set_args(array(
 				'sort'=>'left',
 				'dir'=>'ASC',
 				'_svisible'=>'1',
 				));
+		}
 		$d2 = $this->join_with_di('m2_category',array('link_id'=>'id'),array('uri'=>'l_uri','name'=>'l_name','brief'=>'l_brief'));
 		$flds = array(
 			'id',

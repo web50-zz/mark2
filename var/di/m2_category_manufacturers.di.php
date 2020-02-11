@@ -178,10 +178,14 @@ class di_m2_category_manufacturers extends data_interface
 	// использутеся в навигации для получения связи списка производителей с нужной категорией чтобы выводить например в меню всех проиводитедей для категорий
 	public function get_manufacturers_for_category_list_simple($ids = array())
 	{
-		$this->_flush();
-		$ids = implode(',',$ids);
-		$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) order by m.title ASC ";
-		return $this->_get($sql)->get_results();
+		if(count($ids)>0)
+		{
+			$this->_flush();
+			$ids = implode(',',$ids);
+			$sql = "select * from $this->name a left join m2_manufacturers m on a.manufacturer_id = m.id where a.category_id in($ids) order by m.title ASC ";
+			return $this->_get($sql)->get_results();
+		}
+		return array();
 	}
 
 }
